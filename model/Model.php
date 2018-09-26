@@ -7,12 +7,11 @@ session_start();
 //
 //Visit   localhost/ict3104-team07-2018/model/Model.php   to test the commands below (if using netbeans, CTRL / to uncomment)
 //
+$model = Model::getInstance(); // Instantiate Object
 // Example 0 - Only run this function ONCE to insert data to database if necessary
-//$model = Model::getInstance();
 //$model->insertData();
 
 // Example 1 - Login and store to session
-//$model = Model::getInstance();
 //$user = $model->login("customer1", "123");
 //if ($user) {
 //    $user = unserialize($_SESSION['user']);
@@ -24,19 +23,13 @@ session_start();
 //}
 
 // Example 2 - Register
-// $model = Model::getInstance();
 // $user = new User("manager", "managerName", "s9876543c", "98765432", "email@hotmail.com", $username = "abc", $password = "abc");
 // if ($model->register($user)) { echo "Registration Successful!"; }
 
 // Example 3 - Get List of customers CHOOSE 1 method
-$model = Model::getInstance();
+
 //foreach($model->getCustomers() as $customer) {
 //    echo $customer->name . "<br>";
-//} 
-// foreach($model->getCustomers2() as $customer) {
-   // echo $customer->name . "<br>";
-// }
-var_dump($model->getCustomers3());
 
 
 //TEST CODE END (REMOVE THIS SECTION BEFORE SUBMITTING)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -240,26 +233,7 @@ class Model {
         $result = $this->performQuery($sql);
     }
     
-    // TO-DO Choose 1  METHOD
     public function getCustomers() {
-        $sql = "SELECT * FROM User";
-        $result = $this->performQuery($sql);
-        while ($user = mysqli_fetch_object($result)) {
-            yield $user;
-        }
-    }
-    
-    public function getCustomers2() {
-        $sql = "SELECT * FROM User";
-        $result = $this->performQuery($sql);
-        $userArray = array();
-        while ($user = mysqli_fetch_object($result)) {
-            array_push($userArray, $user);
-        }
-        return $userArray;
-    }
-    
-    public function getCustomers3() {
         $sql = "SELECT * FROM User";
         $result = $this->performQuery($sql);
         $userArray = array();
@@ -268,7 +242,56 @@ class Model {
         }
         return json_encode($userArray);
     }
+
+    public function getCustomersPending() {
+        $sql = "SELECT * FROM User WHERE status = '0'";
+        $result = $this->performQuery($sql);
+        $userArray = array();
+        while ($user = mysqli_fetch_object($result)) {
+            array_push($userArray, $user);
+        }
+        return json_encode($userArray);
+    }
+
+    public function getCustomersApproved() {
+        $sql = "SELECT * FROM User WHERE status = '1'";
+        $result = $this->performQuery($sql);
+        $userArray = array();
+        while ($user = mysqli_fetch_object($result)) {
+            array_push($userArray, $user);
+        }
+        return json_encode($userArray);
+    }
+
+    public function getCustomersCreated() {
+        $sql = "SELECT * FROM User WHERE status = '2'";
+        $result = $this->performQuery($sql);
+        $userArray = array();
+        while ($user = mysqli_fetch_object($result)) {
+            array_push($userArray, $user);
+        }
+        return json_encode($userArray);
+    }
     
+    public function getCustomersActive() {
+        $sql = "SELECT * FROM User WHERE isActive = TRUE";
+        $result = $this->performQuery($sql);
+        $userArray = array();
+        while ($user = mysqli_fetch_object($result)) {
+            array_push($userArray, $user);
+        }
+        return json_encode($userArray);
+    }
+
+    public function getCustomersInActive() {
+        $sql = "SELECT * FROM User WHERE isActive = FALSE";
+        $result = $this->performQuery($sql);
+        $userArray = array();
+        while ($user = mysqli_fetch_object($result)) {
+            array_push($userArray, $user);
+        }
+        return json_encode($userArray);
+    }
     
     public function getCustomerDetails($userID) {
         $sql = "SELECT * FROM User WHERE userID = '$userID'";
