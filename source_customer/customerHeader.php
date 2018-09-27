@@ -63,7 +63,7 @@
 														</a>
 													</li>
 													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
-														<a  href="customerApproveAccountList.php" class="m-menu__link ">
+														<a  href="#" class="m-menu__link ">
 															<i class="m-menu__link-icon flaticon-graphic-2"></i>
 															<span class="m-menu__link-text">
 																Check My Balance
@@ -86,7 +86,7 @@
 												<span class="m-menu__arrow m-menu__arrow--adjust"></span>
 												<ul class="m-menu__subnav">
 													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
-														<a  href="#" class="m-menu__link ">
+														<a  href="customerTransfer.php" class="m-menu__link ">
 															<i class="m-menu__link-icon flaticon-analytics"></i>
 															<span class="m-menu__link-text">
 																Transfer 
@@ -94,7 +94,7 @@
 														</a>
 													</li>
 													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
-														<a  href="#" class="m-menu__link ">
+														<a  href="customerDeposit.php" class="m-menu__link ">
 															<i class="m-menu__link-icon flaticon-notes"></i>
 															<span class="m-menu__link-text">
 																Deposit
@@ -102,7 +102,7 @@
 														</a>
 													</li>
 													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
-														<a  href="#" class="m-menu__link ">
+														<a  href="customerWithdraw.php" class="m-menu__link ">
 															<i class="m-menu__link-icon flaticon-notes"></i>
 															<span class="m-menu__link-text">
 																Withdraw
