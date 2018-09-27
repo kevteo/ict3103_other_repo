@@ -300,7 +300,37 @@ class Model {
         return mysqli_fetch_object($result);
     }
     
+    //manager view pending approve account
+    public function viewPendingAccount() {
+        $sql = "SELECT nric, name, mobileNumber, email FROM User where status = 0";
+        $result = $this->performQuery($sql);
+        $userArray = array();
+        while ($user = mysqli_fetch_object($result)) {
+            array_push($userArray, $user);
+        }
+        return $userArray;
+    }
     
+    //manager approve aacount
+    public function approveCustomerAccount($user) {
+        if ($user->role == 'manager') {
+            $sql = "UPDATE User SET status = 1 WHERE userID = '$user->userID'";
+            $result = $this->performQuery($sql);
+            if ($result) { return true; } else { return null; }
+        }
+        return false;
+    }
+    
+    //manager reject account
+    public function rejectCustomerAccount($user) {
+        //TO-DO send email to the user
+        if ($user->role == 'manager') {
+            $sql = "UPDATE User SET status = -1 WHERE userID = '$user->userID'";
+            $result = $this->performQuery($sql);
+            if ($result) { return true; } else { return null; }
+        }
+        return false;
+    }
     
     
     
