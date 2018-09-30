@@ -17,7 +17,7 @@
 						<div class="d-flex align-items-center">
 							<div class="mr-auto">
 								<h3 class="m-subheader__title ">
-									Manager
+									Existing Customers
 								</h3>
 							</div>
 						</div>
@@ -26,6 +26,15 @@
 					<div class="m-content">
 						<!--begin::Section-->
 						<div class="row">
+						<div class="col-xl-12">
+						
+					
+					<!--begin: Datatable -->
+                            <div class="manager_dashboard" id="manager_dashboard"></div>
+                            <!--end: Datatable -->
+						
+						
+						</div>
 						
 						
 						

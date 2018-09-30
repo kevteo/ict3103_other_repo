@@ -39,12 +39,29 @@ var DefaultDatatableManager = function() {
                     input: $("#generalSearch")
                 },
                 columns: [{
-                    field: "id",
-                    title: "Application ID",
+                    field: "userID",
+                    title: "User ID",
+                    sortable: "asc"
+                },
+				{
+                    field: "username",
+                    title: "Username",
+                    sortable: "asc"
+                },{
+                    field: "name",
+                    title: "Name",
                     sortable: "asc"
                 }, {
-                    field: "name",
-                    title: "Applicant Name",
+                    field: "mobileNumber",
+                    title: "Mobile Number",
+                    sortable: "asc"
+                },{
+                    field: "email",
+                    title: "Email",
+                    sortable: "asc"
+                },{
+                    field: "balance",
+                    title: "Balance",
                     sortable: "asc"
                 }, {
                     field: "Actions",
