@@ -45,13 +45,17 @@
 													Full Name:
 												</label>
 												<div class="col-lg-4">
-													<input style="background: transparent; border: none;" type="text" class="form-control m-input" placeholder="Jack Wills" disabled>
+													<input type="text" class="form-control m-input" placeholder="Jack Wills" disabled>
+													<span class="m-form__help">
+													</span>
 												</div>
 												<label class="col-lg-2 col-form-label">
 													Contact Number:
 												</label>
 												<div class="col-lg-4">
-													<input style="background: transparent; border: none;" type="number" class="form-control m-input" placeholder="82222222" disabled>
+													<input type="number" class="form-control m-input" placeholder="82222222" disabled>
+													<span class="m-form__help">
+													</span>
 												</div>
 											</div>
 											<div class="form-group m-form__group row">
@@ -59,15 +63,17 @@
 													NRIC:
 												</label>
 												<div class="col-lg-4">
-													<input style="background: transparent; border: none;" type="text" class="form-control m-input" placeholder="S9645345E" disabled>
-													
+													<input type="text" class="form-control m-input" placeholder="S9645345E" disabled>
+													<span class="m-form__help">
+													</span>
 												</div>
 												<label class="col-lg-2 col-form-label">
 													Email:
 												</label>
 												<div class="col-lg-4">
-													<input style="background: transparent; border: none;" type="email" class="form-control m-input" placeholder="customer@gmail.com" disabled>
-													
+													<input type="email" class="form-control m-input" placeholder="customer@gmail.com" disabled>
+													<span class="m-form__help">
+													</span>
 												</div>
 											</div>
 											<div class="form-group m-form__group row">
@@ -76,28 +82,30 @@
 												</label>
 												<div class="col-lg-4">
 													<div class="m-input-icon m-input-icon--right">
-														<input style="background: transparent; border: none;" type="text" class="form-control m-input" placeholder="Ang Mo Kio Avenue 4" disabled>
+														<input type="text" class="form-control m-input" placeholder="Ang Mo Kio Avenue 4" disabled>
 														<span class="m-input-icon__icon m-input-icon__icon--right">
 															<span>
 																<i class="la la-map-marker"></i>
 															</span>
 														</span>
 													</div>
-													
+													<span class="m-form__help">
+													</span>
 												</div>
 												<label class="col-lg-2 col-form-label">
 													Postcode:
 												</label>
 												<div class="col-lg-4">
 													<div class="m-input-icon m-input-icon--right">
-														<input style="background: transparent; border: none;" type="text" class="form-control m-input" placeholder="123456" disabled>
+														<input type="text" class="form-control m-input" placeholder="123456" disabled>
 														<span class="m-input-icon__icon m-input-icon__icon--right">
 															<span>
 																<i class="la la-bookmark-o"></i>
 															</span>
 														</span>
 													</div>
-													
+													<span class="m-form__help">
+													</span>
 												</div>
 											</div>
 											<div class="form-group m-form__group row">
@@ -105,8 +113,20 @@
 													Account Type:
 												</label>
 												<div class="col-lg-4">
-													<input style="background: transparent; border: none;" type="email" class="form-control m-input" placeholder="Savings Account" disabled>
-													
+													<div class="m-radio-inline">
+														<label class="m-radio m-radio--solid">
+															<input type="radio" name="" checked value="1" disabled>
+															Savings
+															<span></span>
+														</label>
+														<label class="m-radio m-radio--solid">
+															<input type="radio" name="" value="2" disabled>
+															Investment
+															<span></span>
+														</label>
+													</div>
+													<span class="m-form__help">
+													</span>
 												</div>
 											</div>
 										</div>
