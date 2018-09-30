@@ -53,7 +53,7 @@
 																	
 																	<li class="m-nav__separator m-nav__separator--fit"></li>
 																	<li class="m-nav__item">
-																		<a href="../source_home/login.php?logout=1" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">
+																		<a href="login.php" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">
 																			Logout
 																		</a>
 																	</li>

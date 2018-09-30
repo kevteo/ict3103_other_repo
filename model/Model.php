@@ -99,13 +99,9 @@ class Model {
             
             $sql = "UPDATE User SET lastActive = '$datetime' WHERE userID = '$user->userID'";
             $result = $this->performQuery($sql);
-			
             $_SESSION['user'] = serialize($user);
-			
             return true;
         }
-		
-		//var_dump($user);
         return false;
     }
 
@@ -130,7 +126,7 @@ class Model {
             //$user->username = "?";
             //$user->password = "?";
             
-            $sql = "INSERT INTO User VALUES (NULL, '$user->username', '$user->password', '$user->role', '$user->name', '$user->nric', '$user->mobileNumber', '$user->email','$user->address', '$user->balance', '$user->status', $user->isActive, $user->requestToggleActive, NULL, $user->isTerminated)";
+            $sql = "INSERT INTO User VALUES (NULL, '$user->username', '$user->password', '$user->role', '$user->name', '$user->nric', '$user->mobileNumber', '$user->email', '$user->balance', '$user->status', $user->isActive, $user->requestToggleActive, NULL, $user->isTerminated)";
             $result = $this->performQuery($sql);
             return true;
         }
@@ -352,19 +348,19 @@ class Model {
         $currentDate = $date->format('Y-m-d H-i-s');
 
         // User accounts
-        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer1', '123', 'customer', 'customer1', 's9999901c', '97832323', 'kevin9001@live.com','Tampines st 91, Blk999 #09-999, Singapore 520999', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
-        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer2', '123', 'customer', 'customer2', 's9999902c', '97832323', 'leexd1994@gmail.com', 'Jurong st 91, Blk929 #09-929, Singapore 500929','50', '2', TRUE, FALSE, '$currentDate', FALSE)");
-        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer3', '123', 'customer', 'customer3', 's9999903c', '97832323', 'jeremy.nogi46@gmail.com', 'Sengkang st 91, Blk829 #09-829, Singapore 510829','50', '2', TRUE, FALSE, '$currentDate', FALSE)");
-        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer4', '123', 'customer', 'customer4', 's9999904c', '97832323', 'MissKYH.sg@gmail.com','Seragoon st 95, Blk995 #09-995, Singapore 550995', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
-        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer5', '123', 'customer', 'customer5', 's9999905c', '97832323', 'KheoYanHsia@gmail.com','Bedok st 85, Blk985 #08-985, Singapore 520985', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
-        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer6', '123', 'customer', 'customer6', 's9999906c', '97832323', 'gohchoongiap@gmail.com','Geylang st 81, Blk981 #09-981, Singapore 520981', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
-        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer7', '123', 'customer', 'customer7', 's9999907c', '97832323', 'kwanlamyujoey@gmail.com', 'Yishun st 91, Blk911 #09-911, Singapore 540911','50', '2', TRUE, FALSE, '$currentDate', FALSE)");
+        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer1', '123', 'customer', 'customer1', 's9999901c', '97832323', 'kevin9001@live.com', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
+        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer2', '123', 'customer', 'customer2', 's9999902c', '97832323', 'leexd1994@gmail.com', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
+        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer3', '123', 'customer', 'customer3', 's9999903c', '97832323', 'jeremy.nogi46@gmail.com', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
+        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer4', '123', 'customer', 'customer4', 's9999904c', '97832323', 'MissKYH.sg@gmail.com', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
+        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer5', '123', 'customer', 'customer5', 's9999905c', '97832323', 'KheoYanHsia@gmail.com', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
+        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer6', '123', 'customer', 'customer6', 's9999906c', '97832323', 'gohchoongiap@gmail.com', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
+        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer7', '123', 'customer', 'customer7', 's9999907c', '97832323', 'kwanlamyujoey@gmail.com', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
 
-        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'manager1', '123', 'manager', 'manager1', 's9999908c', '97832323', 'kevin9001@live.com', 'Orchard st 32, Blk32 #02-32, Singapore 520132','50', '2', TRUE, FALSE, '$currentDate', FALSE)");
+        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'manager1', '123', 'manager', 'manager1', 's9999908c', '97832323', 'kevin9001@live.com', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
         array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'manager2', '123', 'manager', 'manager2', 's9999909c', '97832323', 'kwanlamyujoey@gmail.com', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
 
-        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'admin1', '123', 'admin', 'admin1', 's9999910c', '97832323', 'kevin9001@live.com','Orchard st 32, Blk32 #02-32, Singapore 520132', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
-        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'admin2', '123', 'admin', 'admin2', 's9999911c', '97832323', 'leexd1994@gmail.com','Novena st 11, Blk11 #09-11, Singapore 520111', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
+        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'admin1', '123', 'admin', 'admin1', 's9999910c', '97832323', 'kevin9001@live.com', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
+        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'admin2', '123', 'admin', 'admin2', 's9999911c', '97832323', 'leexd1994@gmail.com', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
 
         // Deposit
         array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 30, 1, NULL, '$currentDate')");
