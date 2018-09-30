@@ -1,4 +1,16 @@
 <?php
+//Backend
+require_once('../model/Model.php');
+$model = Model::getInstance();
+
+if(isset($_COOKIE['payeeID']) && isset($_COOKIE['amount'])) {
+	echo "send over";
+}
+else{
+	echo "no";
+}
+
+//Frontend
    include("../source_include/header.php");
    
    $title = "My Bank | Customer";
@@ -6,7 +18,7 @@
    echo $output;
    
    include("customerHeader.php");
-   ?>
+?>
 <!-- begin:: Page -->
 <div class="m-grid m-grid--hor m-grid--root m-page">
 <!-- begin::Body -->
@@ -43,13 +55,16 @@
                                  </label>
 								 </div>
                               </div>
-                           <div class="form-group m-form__group">
+                           <div class="form-group m-form__group"  action="" method="post">
                              <label for="">
                               To Account No. : 
+							  <?php 
+							  
+							  ?>
                               </label>
 							  
 							  <div class="input-group">
-                                 <input type="text" class="form-control m-input" placeholder="194 - 41343 - 0">
+                                 <input type="text" name="payeeID" class="form-control m-input" placeholder="194 - 41343 - 0">
                               </div>
 							  <!--
                                  <select class="form-control m-select2" id="m_select2_1" name="param">
@@ -80,7 +95,7 @@
                                     $
                                     </span>
                                  </div>
-                                 <input type="text" class="form-control m-input" placeholder="99.9">
+                                 <input type="text" name="amount" class="form-control m-input" placeholder="99.9">
                               </div>
                            </div>
                         </div>
