@@ -58,7 +58,7 @@
 														<a  href="managerDashboard.php" class="m-menu__link ">
 															<i class="m-menu__link-icon flaticon-support"></i>
 															<span class="m-menu__link-text">
-																Dashboard
+																Existing Clients
 															</span>
 														</a>
 													</li>
@@ -69,49 +69,6 @@
 																Approve New Accounts
 															</span>
 														</a>
-													</li>
-												</ul>
-											</div>
-										</li>
-										
-										<li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs"  m-menu-submenu-toggle="tab" aria-haspopup="true">
-											<a  href="javascript:;" class="m-menu__link m-menu__toggle">
-												<span class="m-menu__link-text">
-													Need Second Tab?
-												</span>
-												<i class="m-menu__hor-arrow la la-angle-down"></i>
-												<i class="m-menu__ver-arrow la la-angle-right"></i>
-											</a>
-											<div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left m-menu__submenu--tabs">
-												<span class="m-menu__arrow m-menu__arrow--adjust"></span>
-												<ul class="m-menu__subnav">
-													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
-														<a  href="#" class="m-menu__link ">
-															<i class="m-menu__link-icon flaticon-analytics"></i>
-															<span class="m-menu__link-text">
-																Placeholder
-															</span>
-														</a>
-													</li>
-													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
-														<a  href="#" class="m-menu__link ">
-															<i class="m-menu__link-icon flaticon-notes"></i>
-															<span class="m-menu__link-text">
-																Placeholder
-															</span>
-														</a>
-													</li>
-													<li class="m-menu__item  m-menu__item--actions"  aria-haspopup="true">
-														<div class="m-menu__link m-menu__link--toggle-skip">
-															<a href="#" class="btn btn-danger m-btn m-btn--icon m-btn--pill">
-																<span>
-																	<i class="la la-cloud-download"></i>
-																	<span>
-																		Placeholder
-																	</span>
-																</span>
-															</a>
-														</div>
 													</li>
 												</ul>
 											</div>

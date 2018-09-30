@@ -32,7 +32,7 @@
 													<i class="la la-gear"></i>
 												</span>
 												<h3 class="m-portlet__head-text">
-													Application ID: 12
+													Application ID: <?php echo $_GET["user"]; ?>
 												</h3>
 											</div>
 										</div>
@@ -42,104 +42,25 @@
 										<div class="m-portlet__body">
 											<div class="form-group m-form__group row">
 												<label class="col-lg-2 col-form-label">
-													Full Name:
-												</label>
-												<div class="col-lg-4">
-													<input type="text" class="form-control m-input" placeholder="Jack Wills" disabled>
-													<span class="m-form__help">
-													</span>
-												</div>
-												<label class="col-lg-2 col-form-label">
-													Contact Number:
-												</label>
-												<div class="col-lg-4">
-													<input type="number" class="form-control m-input" placeholder="82222222" disabled>
-													<span class="m-form__help">
-													</span>
-												</div>
-											</div>
-											<div class="form-group m-form__group row">
-												<label class="col-lg-2 col-form-label">
 													NRIC:
 												</label>
 												<div class="col-lg-4">
-													<input type="text" class="form-control m-input" placeholder="S9645345E" disabled>
-													<span class="m-form__help">
-													</span>
-												</div>
-												<label class="col-lg-2 col-form-label">
-													Email:
-												</label>
-												<div class="col-lg-4">
-													<input type="email" class="form-control m-input" placeholder="customer@gmail.com" disabled>
-													<span class="m-form__help">
-													</span>
+													<input style="background: transparent; border: none;" type="text" class="form-control m-input" placeholder="<?php echo $_GET["nric"]; ?>" disabled>
 												</div>
 											</div>
-											<div class="form-group m-form__group row">
-												<label class="col-lg-2 col-form-label">
-													Address:
-												</label>
-												<div class="col-lg-4">
-													<div class="m-input-icon m-input-icon--right">
-														<input type="text" class="form-control m-input" placeholder="Ang Mo Kio Avenue 4" disabled>
-														<span class="m-input-icon__icon m-input-icon__icon--right">
-															<span>
-																<i class="la la-map-marker"></i>
-															</span>
-														</span>
-													</div>
-													<span class="m-form__help">
-													</span>
-												</div>
-												<label class="col-lg-2 col-form-label">
-													Postcode:
-												</label>
-												<div class="col-lg-4">
-													<div class="m-input-icon m-input-icon--right">
-														<input type="text" class="form-control m-input" placeholder="123456" disabled>
-														<span class="m-input-icon__icon m-input-icon__icon--right">
-															<span>
-																<i class="la la-bookmark-o"></i>
-															</span>
-														</span>
-													</div>
-													<span class="m-form__help">
-													</span>
-												</div>
 											</div>
-											<div class="form-group m-form__group row">
-												<label class="col-lg-2 col-form-label">
-													Account Type:
-												</label>
-												<div class="col-lg-4">
-													<div class="m-radio-inline">
-														<label class="m-radio m-radio--solid">
-															<input type="radio" name="" checked value="1" disabled>
-															Savings
-															<span></span>
-														</label>
-														<label class="m-radio m-radio--solid">
-															<input type="radio" name="" value="2" disabled>
-															Investment
-															<span></span>
-														</label>
-													</div>
-													<span class="m-form__help">
-													</span>
-												</div>
-											</div>
-										</div>
+											
 										<div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
 											<div class="m-form__actions m-form__actions--solid">
 												<div class="row">
 													<div class="col-lg-4"></div>
 													<div class="col-lg-4">
-														<button type="" class="btn btn-primary">
+														<button onclick="createAccount()" class="btn btn-primary">
 															Create
 														</button>
-														<a href="../source_home/home.php" class="btn btn-danger">
-															Close
+														
+														<a href="../source_admin/adminCreateAccountList.php" class="btn btn-danger">
+															Back
 														</a>
 													</div>
 													<div class="col-lg-4"></div>
@@ -153,5 +74,16 @@
 				</div>
 			</div>
 			<!-- end::Body -->
+			
+			<script>
+			function createAccount() {
+      $.ajax({
+           type: "POST",
+           url: '../model/Model.php',
+           data:{user:''},
+
+      });
+ }
+			</script>
 
 <?php include("../source_include/footer.php"); ?>

@@ -44,5 +44,15 @@
 				</div>
 			</div>
 			<!-- end::Body -->
+			
+			<script>
+
+	
+
+        function approveUser(user, username, nric) {
+			var url = 'managerApproveAccount.php?user=' + user + '&nric=' + nric + '&username=' + username;
+			$(location).attr('href', url);
+        }
+		</script>
 
 <?php include("../source_include/footer.php"); ?>

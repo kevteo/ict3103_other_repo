@@ -333,12 +333,20 @@ class Model {
             $result = $this->performQuery($sql);
             if ($result) { return true; } else { return null; }
         }
+
+
+		}
+	
+	//admin create aacount
+    public function createCustomerAccount($user) {
+        if ($user->role == 'admin') {
+            $sql = "UPDATE User SET status = 2 WHERE userID = '$user->userID'";
+            $result = $this->performQuery($sql);
+            if ($result) { return true; } else { return null; }
+        }
         return false;
     }
-    
-    
-    
-    
+        
 
     /*
      * Run to this method to insert data to database

@@ -32,7 +32,6 @@
 					
 					<!--begin: Datatable -->
                             <div class="admin_create_table" id="admin_create_table"></div>
-                            <textarea id="m_datatable_console_client" class="form-control m--margin-top-30" style="display: none;"cols="100" rows="10" title="Console" readonly="readonly"></textarea>
                             <!--end: Datatable -->
 						
 						
@@ -45,5 +44,17 @@
 				</div>
 			</div>
 			<!-- end::Body -->
+			
+			<script>
+
+	
+
+        function createUser(user, nric) {
+			console.log(user);
+			console.log(nric);
+			var url = 'adminCreateAccount.php?user=' + user + '&nric=' + nric;
+			$(location).attr('href', url);
+        }
+		</script>
 
 <?php include("../source_include/footer.php"); ?>

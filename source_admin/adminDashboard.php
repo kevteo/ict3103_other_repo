@@ -17,7 +17,7 @@
 						<div class="d-flex align-items-center">
 							<div class="mr-auto">
 								<h3 class="m-subheader__title ">
-									Existing Customers
+									All Accounts
 								</h3>
 							</div>
 						</div>
@@ -27,7 +27,24 @@
 						<!--begin::Section-->
 						<div class="row">
 						<div class="col-xl-12">
-						
+															<a href="#" class="btn btn-success m-btn m-btn--icon m-btn--pill">
+																<span>
+																	<i class="fa fa-fw fa-refresh"></i>
+																	<span>
+																		Update
+																	</span>
+																</span>
+															</a>
+															
+															<a href="#" class="btn btn-success m-btn m-btn--icon m-btn--pill">
+																<span>
+																	<i class="fa fa-fw fa-floppy-o"></i>
+																	<span>
+																		Back Up
+																	</span>
+																</span>
+															</a>
+															<br><br>
 					
 					<!--begin: Datatable -->
                             <div class="admin_dashboard" id="admin_dashboard"></div>

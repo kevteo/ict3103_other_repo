@@ -32,7 +32,7 @@
 													<i class="la la-gear"></i>
 												</span>
 												<h3 class="m-portlet__head-text">
-													Application ID: 12
+													Application ID: <?php echo $_GET["user"]; ?>
 												</h3>
 											</div>
 										</div>
@@ -42,71 +42,16 @@
 										<div class="m-portlet__body">
 											<div class="form-group m-form__group row">
 												<label class="col-lg-2 col-form-label">
-													Full Name:
+													Username:
 												</label>
 												<div class="col-lg-4">
-													<input style="background: transparent; border: none;" type="text" class="form-control m-input" placeholder="Jack Wills" disabled>
+													<input style="background: transparent; border: none;" type="text" class="form-control m-input" placeholder="<?php echo $_GET["username"]; ?>" disabled>
 												</div>
-												<label class="col-lg-2 col-form-label">
-													Contact Number:
-												</label>
-												<div class="col-lg-4">
-													<input style="background: transparent; border: none;" type="number" class="form-control m-input" placeholder="82222222" disabled>
-												</div>
-											</div>
-											<div class="form-group m-form__group row">
 												<label class="col-lg-2 col-form-label">
 													NRIC:
 												</label>
 												<div class="col-lg-4">
-													<input style="background: transparent; border: none;" type="text" class="form-control m-input" placeholder="S9645345E" disabled>
-													
-												</div>
-												<label class="col-lg-2 col-form-label">
-													Email:
-												</label>
-												<div class="col-lg-4">
-													<input style="background: transparent; border: none;" type="email" class="form-control m-input" placeholder="customer@gmail.com" disabled>
-													
-												</div>
-											</div>
-											<div class="form-group m-form__group row">
-												<label class="col-lg-2 col-form-label">
-													Address:
-												</label>
-												<div class="col-lg-4">
-													<div class="m-input-icon m-input-icon--right">
-														<input style="background: transparent; border: none;" type="text" class="form-control m-input" placeholder="Ang Mo Kio Avenue 4" disabled>
-														<span class="m-input-icon__icon m-input-icon__icon--right">
-															<span>
-																<i class="la la-map-marker"></i>
-															</span>
-														</span>
-													</div>
-													
-												</div>
-												<label class="col-lg-2 col-form-label">
-													Postcode:
-												</label>
-												<div class="col-lg-4">
-													<div class="m-input-icon m-input-icon--right">
-														<input style="background: transparent; border: none;" type="text" class="form-control m-input" placeholder="123456" disabled>
-														<span class="m-input-icon__icon m-input-icon__icon--right">
-															<span>
-																<i class="la la-bookmark-o"></i>
-															</span>
-														</span>
-													</div>
-													
-												</div>
-											</div>
-											<div class="form-group m-form__group row">
-												<label class="col-lg-2 col-form-label">
-													Account Type:
-												</label>
-												<div class="col-lg-4">
-													<input style="background: transparent; border: none;" type="email" class="form-control m-input" placeholder="Savings Account" disabled>
-													
+													<input style="background: transparent; border: none;" type="number" class="form-control m-input" placeholder="<?php echo $_GET["nric"]; ?>" disabled>
 												</div>
 											</div>
 										</div>

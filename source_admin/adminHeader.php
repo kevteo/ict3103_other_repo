@@ -58,7 +58,7 @@
 														<a  href="adminDashboard.php" class="m-menu__link ">
 															<i class="m-menu__link-icon flaticon-support"></i>
 															<span class="m-menu__link-text">
-																Dashboard
+																All Accounts
 															</span>
 														</a>
 													</li>
@@ -73,7 +73,7 @@
 												</ul>
 											</div>
 										</li>
-										
+										<!--
 										<li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs"  m-menu-submenu-toggle="tab" aria-haspopup="true">
 											<a  href="javascript:;" class="m-menu__link m-menu__toggle">
 												<span class="m-menu__link-text">
@@ -115,7 +115,7 @@
 													</li>
 												</ul>
 											</div>
-										</li>
+										</li> -->
 									</ul>
 								</div>
 							</div>

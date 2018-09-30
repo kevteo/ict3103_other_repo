@@ -40,11 +40,6 @@ var DefaultDatatableAdminDash = function() {
                 },
                 columns: [
 				{
-                    field: "applicationID",
-                    title: "Application ID",
-                    sortable: "asc"
-                },
-				{
                     field: "username",
                     title: "Username",
                     sortable: "asc"
@@ -54,17 +49,25 @@ var DefaultDatatableAdminDash = function() {
                     sortable: "asc"
                 },
 				{
-                    field: "Actions",
-                    width: 110,
-                    title: "Actions",
-                    sortable: !1,
-					filterable: !1,
-                    overflow: "visible",
-                    template: function(t, a, e) {
-                        var stringUser = "'" + t.username + "'";
-                        var stringEmail = "'" + t.email + "'";
-                        return '\t\t\t\t\t\t<div class="dropdown ' + (e.getPageSize() - a <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t\<a href="#editModal" data-toggle="modal" onclick="updateEdit(' + stringUser + ',' + stringEmail + ');" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\t\t\t\t\t\t\t<i class="la la-edit"></i>\t\t\t\t\t\t</a>\t\t\t\t\t\t\<a href="#deleteModal" data-toggle="modal" onclick="updateDelete(' + stringUser + ',' + stringEmail + ');" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">\t\t\t\t\t\t\t<i class="la la-trash"></i>\t\t\t\t\t\t</a>\t\t\t\t\t'
-                        
+                    field: "lastActive",
+                    title: "Last Active",
+                    sortable: "asc"
+                },
+				{
+                    field: "isActive",
+                    title: "Status",
+                    template: function(t) {
+                        var a = {
+                            1: {
+                                title: "Active",
+                                class: " m-badge--accent"
+                            },
+                            0: {
+                                title: "Inactive",
+                                class: " m-badge--danger"
+                            }
+                        };
+                        return '<span class="m-badge ' + a[t.isActive].class + ' m-badge--wide">' + a[t.isActive].title + "</span>"
                     }
                 }]
             }), $("#m_datatable_clear").on("click", function() {
