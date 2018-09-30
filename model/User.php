@@ -6,6 +6,7 @@ class User {
     public $nric;
     public $mobileNumber;
     public $email;
+	public $address; // new column
     public $username;
     public $password;
     public $userID;
@@ -30,6 +31,7 @@ class User {
         $this->nric = $nric;
         $this->mobileNumber = $mobileNumber;
         $this->email = $email;
+		$this->address = $address;
         $this->balance = $balance;
         $this->status = $status;
         $this->isActive = $isActive;

@@ -1,3 +1,35 @@
+<?php
+//* Git Commit 1 : Login Backend
+require_once('../model/Model.php');
+$model = Model::getInstance();
+
+if (isset($_POST['name'])){
+	echo isset($_POST['name']);
+	echo "Finally";
+}
+
+if
+(
+isset($_POST['name']) && isset($_POST['nric']) &&
+isset($_POST['mobileNumber']) && isset($_POST['email']) &&
+isset($_POST['address1']) && isset($_POST['address2']) &&
+isset($_POST['postalcode'])
+) 
+{
+	$clickLogin = true;
+	validateLogin($model,$_POST['username'] ,$_POST['password']);
+}
+
+
+else
+{
+	echo "something went wrong";
+}
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en" >
 <!-- begin::Head -->
@@ -48,8 +80,8 @@
 												</span>
 												<div>
 												<br>
-							<a href="#">
-								<img src="../img/logo/logo_inverse.png">
+							<a href="login.php">
+								<img src="../img/logo/logo.png">
 							</a>
 						</div>
 						<br>
@@ -145,7 +177,7 @@
 				
 									<!-- FORM STARTS HERE, Pls work with same id -->
 									
-									<form class="m-form m-form--label-align-left- m-form--state-" id="m_form">
+									<form class="m-form m-form--label-align-left- m-form--state-" id="m_form" class=""  action="registration.php" method="post" name="m_form" >
 										<!--begin: Form Body -->
 										<div class="m-portlet__body">
 											<!--begin: Form Wizard Step 1-->
@@ -174,7 +206,7 @@
 																	* NRIC:
 																</label>
 																<div class="col-xl-9 col-lg-9">
-																	<input type="text" name="name" class="form-control m-input" placeholder="" value="S9638937E">
+																	<input type="text" name="nric" class="form-control m-input" placeholder="" value="S9638937E">
 																	<span class="m-form__help">
 																		Please enter your Singapore NRIC
 																	</span>
@@ -202,7 +234,7 @@
 																				<i class="la la-phone"></i>
 																			</span>
 																		</div>
-																		<input type="text" name="" class="form-control m-input" placeholder="" value="81222222">
+																		<input type="number" name="mobileNumber" class="form-control m-input" placeholder="" value="81222222">
 																	</div>
 																	<span class="m-form__help">
 																		Enter your 8 digit contact number
@@ -234,7 +266,7 @@
 																	Address line 2:
 																</label>
 																<div class="col-xl-9 col-lg-9">
-																	<input type="text" name="address1" class="form-control m-input" placeholder="" value="Block 123 #12-22"
+																	<input type="text" name="address2" class="form-control m-input" placeholder="" value="Block 123 #12-22"
 																	<span class="m-form__help">
 																		Block/ Unit Number
 																	</span>
@@ -245,7 +277,7 @@
 																	* Postal Code:
 																</label>
 																<div class="col-xl-9 col-lg-9">
-																	<input type="text" name="address2" class="form-control m-input" placeholder="" value="540123">
+																	<input type="number" name="postalcode" class="form-control m-input" placeholder="" value="540123">
 																	<span class="m-form__help">
 																		6 Digit Postal Code
 																	</span>
@@ -288,6 +320,10 @@
 																</div>
 															</div>
 														</div>
+														
+														
+														<!-- Account type -->
+														<!--
 														<div class="m-separator m-separator--dashed m-separator--lg"></div>
 														<div class="m-form__section">
 															<div class="m-form__heading">
@@ -295,6 +331,8 @@
 																	Account Settings
 																</h3>
 															</div>
+												
+															
 															<div class="form-group m-form__group row">
 																<div class="col-lg-6 m-form__group-sub">
 																	<label class="form-control-label">
@@ -318,6 +356,7 @@
 																</div>
 															</div>
 														</div>
+														-->
 													</div>
 												</div>
 											</div>
@@ -491,7 +530,8 @@
 														</a>
 													</div>
 													<div class="col-lg-4 m--align-right">
-														<a href="#" class="btn btn-primary m-btn m-btn--custom m-btn--icon" data-wizard-action="submit">
+													
+														<button href="#" class="btn btn-primary m-btn m-btn--custom m-btn--icon" data-wizard-action="submit">
 															<span>
 																<i class="la la-check"></i>
 																&nbsp;&nbsp;
@@ -499,7 +539,8 @@
 																	Submit
 																</span>
 															</span>
-														</a>
+														</button>
+														
 														<a href="#" class="btn btn-warning m-btn m-btn--custom m-btn--icon" data-wizard-action="next">
 															<span>
 																<span>
