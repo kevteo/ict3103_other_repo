@@ -1,16 +1,32 @@
 <?php
+//* Git Commit 1 : Login Backend
 require_once('../model/Model.php');
+require_once('../validation/Validation.php');
 $model = Model::getInstance();
+//Purpose: Prompt error message
+$clickLogin = false; 
 
-if (isset($_POST['username'])) {
-	$user = $model->login($_POST['username'], $_POST['password']);
-	
-	var_dump($user);
-	
-	if ($user) {
-		$user = unserialize($_SESSION['user']);
-		echo $user->role;
+//If cookie have been set before
+if(isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
+	//if user logout, unset the cookie
+	if(isset($_GET['logout'])){
+			unset($_COOKIE['username']);
+			unset($_COOKIE['password']);
+			setcookie('username', null, -1, '/');
+			setcookie('password', null, -1, '/');
 	}
+	//if user access this webpage, will redirect them.
+	else{
+		validateLogin($model,$_COOKIE['username'] ,$_COOKIE['password']);
+	}
+
+	
+}
+
+//If user click Login
+if (isset($_POST['username']) && isset($_POST['password'])) {
+	$clickLogin = true;
+	validateLogin($model,$_POST['username'] ,$_POST['password']);
 }
 ?>
 <!DOCTYPE html>
@@ -56,9 +72,7 @@ if (isset($_POST['username'])) {
 						<div class="m-stack__item m-stack__item--fluid">
 							<div class="m-login__wrapper">
 								<div class="m-login__logo">
-									<a href="#">
 										<img src="../img/logo/logo_inverse.png">
-									</a>
 								</div>
 								
 								<!--begin::Login Form -->
@@ -67,11 +81,33 @@ if (isset($_POST['username'])) {
 									<form class="" action="" method="post">
 										<div class="form-group m-form__group">
 											<input class="form-control m-input" type="text" placeholder="Username" name="username" autocomplete="off">
+											
 										</div>
 										<div class="form-group m-form__group">
 											<input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password" name="password">
 										</div>
+										
+										<!-- start: : Error message for invalid password  or username -->
+										<?php 
+										if(isset($clickLogin)){
+										if ($clickLogin) { ?>
+										
+										<span class="m-form__help">
+											<center style="color:red;">*Invalid User Name or Passwords</center>
+										</span>
+										<br><br>
+										<?php 
+											//reset the value
+											$clickLogin=false;
+											
+											}
+										} ?>
+										
+										<!-- end: : Error message -->
+										
+										
 										<div class="row m-login__form-sub">
+										
 											<div class="col m--align-left">
 												<label class="m-checkbox m-checkbox--focus">
 													<input type="checkbox" name="remember">
@@ -92,6 +128,8 @@ if (isset($_POST['username'])) {
 								</div>
 								
 									<!--end::Login Form -->
+									
+									
 							</div>
 						</div>
 						
