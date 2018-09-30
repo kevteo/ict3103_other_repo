@@ -1,17 +1,17 @@
-var DefaultDatatableAdmin = function() {
+var DefaultDatatableAdminDash = function() {
     var e = function(t) {
-        var a = $("#m_datatable_console_client").append(t + "\t\n");
+        var a = $("#m_datatable_console_adminDash").append(t + "\t\n");
         $(a).scrollTop(a[0].scrollHeight - $(a).height())
     };
     return {
         init: function() {
             var t;
-            t = $(".admin_create_table").mDatatable({
+            t = $(".admin_dashboard").mDatatable({
                 data: {
                     type: "remote",
                     source: {
                         read: {
-                            url: "adminCreateAccount_json.php" 
+                            url: "adminDashboard_json.php" 
                         }
                     },
                     pageSize: 5,
@@ -38,7 +38,8 @@ var DefaultDatatableAdmin = function() {
                 search: {
                     input: $("#generalSearch")
                 },
-                columns: [{
+                columns: [
+				{
                     field: "applicationID",
                     title: "Application ID",
                     sortable: "asc"
@@ -51,7 +52,8 @@ var DefaultDatatableAdmin = function() {
                     field: "nric",
                     title: "NRIC",
                     sortable: "asc"
-                }, {
+                },
+				{
                     field: "Actions",
                     width: 110,
                     title: "Actions",
@@ -94,5 +96,5 @@ var DefaultDatatableAdmin = function() {
     }
 }();
 jQuery(document).ready(function() {
-    DefaultDatatableAdmin.init()
+    DefaultDatatableAdminDash.init()
 });

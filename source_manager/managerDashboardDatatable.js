@@ -1,17 +1,17 @@
-var DefaultDatatableAdmin = function() {
+var DefaultDatatableManagerDash = function() {
     var e = function(t) {
-        var a = $("#m_datatable_console_client").append(t + "\t\n");
+        var a = $("#m_datatable_console_managerDash").append(t + "\t\n");
         $(a).scrollTop(a[0].scrollHeight - $(a).height())
     };
     return {
         init: function() {
             var t;
-            t = $(".admin_create_table").mDatatable({
+            t = $(".manager_dashboard").mDatatable({
                 data: {
                     type: "remote",
                     source: {
                         read: {
-                            url: "adminCreateAccount_json.php" 
+                            url: "managerDashboard_json.php" 
                         }
                     },
                     pageSize: 5,
@@ -38,9 +38,10 @@ var DefaultDatatableAdmin = function() {
                 search: {
                     input: $("#generalSearch")
                 },
-                columns: [{
-                    field: "applicationID",
-                    title: "Application ID",
+                columns: [
+				{
+                    field: "userID",
+                    title: "User ID",
                     sortable: "asc"
                 },
 				{
@@ -48,10 +49,23 @@ var DefaultDatatableAdmin = function() {
                     title: "Username",
                     sortable: "asc"
                 },{
-                    field: "nric",
-                    title: "NRIC",
+                    field: "name",
+                    title: "Name",
                     sortable: "asc"
                 }, {
+                    field: "mobileNumber",
+                    title: "Mobile Number",
+                    sortable: "asc"
+                },{
+                    field: "email",
+                    title: "Email",
+                    sortable: "asc"
+                },{
+                    field: "balance",
+                    title: "Balance",
+                    sortable: "asc"
+                },
+				{
                     field: "Actions",
                     width: 110,
                     title: "Actions",
@@ -94,5 +108,5 @@ var DefaultDatatableAdmin = function() {
     }
 }();
 jQuery(document).ready(function() {
-    DefaultDatatableAdmin.init()
+    DefaultDatatableManagerDash.init()
 });
