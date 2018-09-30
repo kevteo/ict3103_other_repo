@@ -39,17 +39,12 @@ var DefaultDatatableAdmin = function() {
                     input: $("#generalSearch")
                 },
                 columns: [{
-                    field: "applicationID",
+                    field: "id",
                     title: "Application ID",
                     sortable: "asc"
-                },
-				{
-                    field: "username",
-                    title: "Username",
-                    sortable: "asc"
-                },{
-                    field: "nric",
-                    title: "NRIC",
+                }, {
+                    field: "name",
+                    title: "Applicant Name",
                     sortable: "asc"
                 }, {
                     field: "Actions",

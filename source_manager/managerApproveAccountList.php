@@ -32,6 +32,7 @@
 					
 					<!--begin: Datatable -->
                             <div class="manager_approve_table" id="manager_approve_table"></div>
+                            <textarea id="m_datatable_console_client" class="form-control m--margin-top-30" style="display: none;"cols="100" rows="10" title="Console" readonly="readonly"></textarea>
                             <!--end: Datatable -->
 						
 						
