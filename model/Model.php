@@ -23,7 +23,7 @@ $model = Model::getInstance(); // Instantiate Object
 //}
 
 // Example 2 - Register
-// $user = new User("manager", "managerName", "s9876543c", "98765432", "email@hotmail.com", $username = "abc", $password = "abc");
+// $user = new User("manager", "managerName", "s9876543c", "98765432", "email@hotmail.com","tampines st91, blk 999 st99, singapore 529999","024-61261-1","Below 2000");
 // if ($model->register($user)) { echo "Registration Successful!"; }
 
 // Example 3 - Get List of customers CHOOSE 1 method
@@ -101,6 +101,7 @@ class Model {
             $sql = "UPDATE User SET lastActive = '$datetime' WHERE userID = '$user->userID'";
             $result = $this->performQuery($sql);
 			
+			
             $_SESSION['user'] = serialize($user);
 			
             return true;
@@ -122,20 +123,14 @@ class Model {
      */
 
 
+	 /*YH: Tested with source_customer/customerTest.php. Code workable. Can uncomment if want to debug */
     public function register($user) {
-        $sql = "SELECT * FROM User WHERE username = '$user->username' OR nric = '$user->nric'";
-        $result = $this->performQuery($sql);
-        if ($result == null) { return null; }
-        if (mysqli_num_rows($result) == 0) {
-			
-			
-        
+		
 		//generate user name 
-		$randomUsername = substr(str_shuffle(str_repeat($string, 5)), 0, 5);
-		$user->username = $randomUsername.substr($user->nric,2,4);
-
-
-        //generate password
+		$randomUsername = substr(str_shuffle(str_repeat($user->name, 5)), 0, 5);
+		$user->username = $randomUsername."".substr($user->nric,2,4);
+		
+		//generate password
 		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
 		$pass = array(); //remember to declare $pass as an array
 		$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
@@ -145,12 +140,40 @@ class Model {
 		}
 		
 		$user->password =implode($pass);
-            
-            $sql = "INSERT INTO User VALUES (NULL, '$user->username', '$user->password', '$user->role', '$user->name', '$user->nric', '$user->mobileNumber', '$user->email','$user->address', $user->account,'$user->balance', '$user->status', $user->isActive, $user->requestToggleActive, NULL, $user->isTerminated)";
-            $result = $this->performQuery($sql);
-            return true;
-        }
-        return false;
+		
+		
+		//Database check if exist
+		
+        $sql = "SELECT * FROM User WHERE username='$user->username' or  nric = '$user->nric'";
+        $result = $this->performQuery($sql);
+        if (mysqli_num_rows($result)==0) {
+			//echo "new nric or username";
+			
+			//if not exist - database
+			if (mysqli_num_rows($result) == 0) {
+				$sql = "INSERT INTO User VALUES (NULL, '$user->username', '$user->password', '$user->role', '$user->name',
+				'$user->nric', '$user->mobileNumber', '$user->email','$user->address', '$user->account', 
+				'$user->salary','$user->balance', '$user->status', $user->isActive, $user->requestToggleActive, 
+				NULL, $user->isTerminated)";
+				
+				$result = $this->performQuery($sql);
+				
+				if (!$result){
+					//echo "<br><br>insert query fail ";
+					return false; 
+				}else{
+					//echo "<br><br>pass";
+					return true;
+				}
+			}
+		
+		}
+		else{
+			//echo "Existed Account ";
+			return false;
+		}
+		
+	
     }
 
     /*
@@ -266,6 +289,8 @@ class Model {
 			$sql = "UPDATE User SET balance = '$newBalance' WHERE userID = '$user->userID'";
 			$result = $this->performQuery($sql);
 			if (!$result){ return false; }
+			
+			
 			
 			
 			//Base on the sample data, when user withdraw or deposit, will auto update transaction too.

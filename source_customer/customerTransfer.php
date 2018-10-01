@@ -10,7 +10,7 @@
    //Backend
    	if(isset($_POST['transfer'])){
 	//echo $_POST['transfer'];
-	$isSuccess = $model->withdraw (121);
+	$isSuccess = $model->withdraw ($_POST['transfer']);
 	}
 	else{
 	}
