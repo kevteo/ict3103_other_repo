@@ -6,6 +6,7 @@
     echo $output;
 
 	include("adminHeader.php");
+	
 	?>
 	<!-- begin:: Page -->
 		<div class="m-grid m-grid--hor m-grid--root m-page">
@@ -55,13 +56,17 @@
 												<div class="row">
 													<div class="col-lg-4"></div>
 													<div class="col-lg-4">
-														<button onclick="createAccount()" class="btn btn-primary">
+													<form action="../source_admin/adminCreateAccount.php" method="GET">
+														<button type="submit" class="btn btn-primary" name="user" value="<?php echo $_GET["user"]; ?>">
 															Create
 														</button>
 														
+														$model->createCustomerAccount($_GET['user']);
+												
 														<a href="../source_admin/adminCreateAccountList.php" class="btn btn-danger">
 															Back
 														</a>
+														</form>
 													</div>
 													<div class="col-lg-4"></div>
 												</div>
@@ -74,16 +79,5 @@
 				</div>
 			</div>
 			<!-- end::Body -->
-			
-			<script>
-			function createAccount() {
-      $.ajax({
-           type: "POST",
-           url: '../model/Model.php',
-           data:{user:''},
-
-      });
- }
-			</script>
 
 <?php include("../source_include/footer.php"); ?>

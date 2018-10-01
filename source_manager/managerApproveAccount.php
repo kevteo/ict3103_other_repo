@@ -60,7 +60,7 @@
 												<div class="row">
 													<div class="col-lg-4"></div>
 													<div class="col-lg-4">
-														<button type="" class="btn btn-primary">
+														<button type="" class="btn btn-primary" onlick="">
 															Approve
 														</button>
 														<a href="../source_home/home.php" class="btn btn-danger">

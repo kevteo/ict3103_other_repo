@@ -338,12 +338,11 @@ class Model {
 		}
 	
 	//admin create aacount
-    public function createCustomerAccount($user) {
-        if ($user->role == 'admin') {
-            $sql = "UPDATE User SET status = 2 WHERE userID = '$user->userID'";
+    public function createCustomerAccount($userID) {
+            $sql = "UPDATE User SET status = 2 WHERE userID = '$userID'";
             $result = $this->performQuery($sql);
             if ($result) { return true; } else { return null; }
-        }
+        
         return false;
     }
         
