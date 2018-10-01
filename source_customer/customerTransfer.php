@@ -1,23 +1,20 @@
 <?php
-//Backend
-require_once('../model/Model.php');
-$model = Model::getInstance();
-
-if(isset($_COOKIE['payeeID']) && isset($_COOKIE['amount'])) {
-	echo "send over";
-}
-else{
-	echo "no";
-}
-
 //Frontend
    include("../source_include/header.php");
    
    $title = "My Bank | Customer";
    $output = str_replace('%Title%', $title, $output);
-   echo $output;
    
    include("customerHeader.php");
+   
+   //Backend
+   	if(isset($_POST['transfer']) ){
+	$isSuccess = $model->transfer ($_POST['transfer']);
+	}
+	else{
+	}
+   
+   
 ?>
 <!-- begin:: Page -->
 <div class="m-grid m-grid--hor m-grid--root m-page">
@@ -41,8 +38,29 @@ else{
             <div class="col-lg-12">
                <!--begin::Portlet-->
                <div class="m-portlet">
+			   	<!--begin:: Alertbox-->
+										<?php 
+									  if(isset($_POST['deposit']) && $isSuccess ){	
+
+											?>
+											<div class="alert alert-success alert-dismissible fade show" role="alert">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+													You have successfully transfer. 
+											</div>
+
+											<?php
+											}
+										else if(isset($_POST['transfer']) && !$isSuccess){ ?>
+											<?php
+											echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
+											echo "<button type='button' class='close' data-dismiss='alert' aria-label='Close'></button>";
+											echo "Either your balance is not enough or the account you entered does not exist"; 
+											echo "</div>";
+
+											}
+					?>
                   <!--begin::Form-->
-                  <form class="m-form">
+                  <form class="m-form"  class="" action="" method="post" >
                      <div class="m-portlet__body">
                         <div class="m-form__section m-form__section--first">
                            <div class="form-group m-form__group">
@@ -64,7 +82,7 @@ else{
                               </label>
 							  
 							  <div class="input-group">
-                                 <input type="text" name="payeeID" class="form-control m-input" placeholder="194 - 41343 - 0">
+                                 <input type="text" name="payeeID" class="form-control m-input" value="024-61263-7">
                               </div>
 							  <!--
                                  <select class="form-control m-select2" id="m_select2_1" name="param">
@@ -85,7 +103,7 @@ else{
                                     </option>
                                  </select> -->
                            </div>
-                           <div class="form-group m-form__group">
+                           <div class="form-group m-form__group"  class="" action="" method="post">
                               <label>
                               Transfer Amount:
                               </label>
@@ -95,14 +113,14 @@ else{
                                     $
                                     </span>
                                  </div>
-                                 <input type="text" name="amount" class="form-control m-input" placeholder="99.9">
+                                 <input type="number" name="transfer" class="form-control m-input" placeholder="99.9" min="0" step=".01">
                               </div>
                            </div>
                         </div>
                      </div>
                      <div class="m-portlet__foot m-portlet__foot--fit">
                         <div class="m-form__actions m-form__actions">
-                           <button type="reset" class="btn btn-primary">
+                           <button type="submit" class="btn btn-primary">
                            Confirm
                            </button>
                            <button type="reset" class="btn btn-danger">

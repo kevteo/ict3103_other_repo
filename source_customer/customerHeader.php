@@ -58,12 +58,14 @@
 												<ul class="m-menu__subnav">
 													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
 														<a  href="customerDashboard.php" class="m-menu__link ">
-															<i class="m-menu__link-icon flaticon-support"></i>
+															<i class="m-menu__link-icon flaticon-graphic-2"></i>
 															<span class="m-menu__link-text">
 																Dashboard
 															</span>
 														</a>
 													</li>
+													
+													<!--
 													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
 														<a  href="#" class="m-menu__link ">
 															<i class="m-menu__link-icon flaticon-graphic-2"></i>
@@ -72,6 +74,7 @@
 															</span>
 														</a>
 													</li>
+													-->
 												</ul>
 											</div>
 										</li>

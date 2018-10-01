@@ -72,6 +72,7 @@ class Model {
             return $result;
         }
         echo '<pre>';
+        echo '<pre>';
         echo "There was an error in the function: ";
         var_dump(debug_backtrace()[1]['function']);
         echo '</pre>';
@@ -89,7 +90,7 @@ class Model {
      */
 
     public function login($username, $password) {
-        $sql = "SELECT * FROM User WHERE username = '$username' AND password = '$password'";
+        $sql = "SELECT * FROM User WHERE username = '$username' AND password = '$password' and status='2' and isTerminated='0'";
         $result = $this->performQuery($sql);
         if ($result == null) { return null; }
 
@@ -127,10 +128,24 @@ class Model {
         if ($result == null) { return null; }
         if (mysqli_num_rows($result) == 0) {
             // TO-DO Confirm if need to generate user/pass
-            //$user->username = "?";
-            //$user->password = "?";
+        
+		//$user->username = "?";
+		//$string properName = substr($user->nric,4,4);
+		//$user->username = .$.;
+			
+			
+        //$user->password = "?";
+		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+		$pass = array(); //remember to declare $pass as an array
+		$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+		for ($i = 0; $i < 8; $i++) {
+			$n = rand(0, $alphaLength);
+			$pass[] = $alphabet[$n];
+		}
+		
+		$user->password =implode($pass);
             
-            $sql = "INSERT INTO User VALUES (NULL, '$user->username', '$user->password', '$user->role', '$user->name', '$user->nric', '$user->mobileNumber', '$user->email','$user->address', '$user->balance', '$user->status', $user->isActive, $user->requestToggleActive, NULL, $user->isTerminated)";
+            $sql = "INSERT INTO User VALUES (NULL, '$user->username', '$user->password', '$user->role', '$user->name', '$user->nric', '$user->mobileNumber', '$user->email','$user->address', $user->account,'$user->balance', '$user->status', $user->isActive, $user->requestToggleActive, NULL, $user->isTerminated)";
             $result = $this->performQuery($sql);
             return true;
         }
@@ -188,54 +203,165 @@ class Model {
     
     
     public function getBalance($userID) {
-        $sql = "SELECT balance FROM user WHERE userID = '$payeeID'";
+        $sql = "SELECT balance FROM user WHERE userID = '$userID'";
         $result = $this->performQuery($sql);
         return mysqli_fetch_row($result)[0];
     }
     
+	 /*
+	*Please read withdraw function comment
+	*/
     public function deposit($amount) {
+		$date = new DateTime();
+		$datetime = $date->format('Y-m-d H-i-s');
         $user = unserialize($_SESSION['user']);
-        $user->balance += abs($amount);
-        $_SESSION['user'] = serialize($user);
-        
-        $sql = "UPDATE User SET balance = '$user->balanace' WHERE userID = '$user->userID'";
+        //$user->balance += abs($amount);
+        //$_SESSION['user'] = serialize($user);
+		
+		//Can replace with get balance function
+		$sql = "SELECT balance FROM user WHERE userID = '$user->userID'";
         $result = $this->performQuery($sql);
-        if ($result) { return true; } else { return null; }
+        $newBalance = mysqli_fetch_row($result)[0] + $amount;
+		
+		//Update
+        $sql = "UPDATE User SET balance = '$newBalance' WHERE userID = '$user->userID'";
+        $result = $this->performQuery($sql);
+        if (!$result) { return false; }
+		
+		//Transcation
+		$sql = "INSERT INTO Transaction VALUES (NULL, '$amount', '$user->userID', NULL, '$datetime')";
+		$result = $this->performQuery($sql);
+		if (!$result){ return false; }
+		
+		return true;
     }
     
-    
+    /*
+	*
+	*Please read the comment
+	*
+	*/
+	
     public function withdraw($amount) {
-        $user = unserialize($_SESSION['user']);
-        $user->balance += (abs($amount) * -1);
-        $_SESSION['user'] = serialize($user);
-        
-        $sql = "UPDATE User SET balance = '$user->balanace' WHERE userID = '$user->userID'";
+		$date = new DateTime();
+		$datetime = $date->format('Y-m-d H-i-s');
+		$user = unserialize($_SESSION['user']);
+		//$user->balance += (abs($amount) * -1); //If user didn't logout, their session balance maybe inaccurate. (p.s. in between people may make some transaction)
+		//$_SESSION['user'] = serialize($user);
+		
+		//Can replace with get balance function(p.s. I aly try $this->getBalance() but not working):'
+		//-----------------------------
+		$sql = "SELECT balance FROM user WHERE userID = '$user->userID'";
         $result = $this->performQuery($sql);
-        if ($result) { return true; } else { return null; }
+        $balance = mysqli_fetch_row($result)[0];
+		//-----------------------------
+		
+		//Check the amount
+		if ($balance>=$amount){
+			$newBalance = $balance - $amount;
+			$absAmount = abs($amount)*-1; // Negative Value
+			
+			//Update
+			$sql = "UPDATE User SET balance = '$newBalance' WHERE userID = '$user->userID'";
+			$result = $this->performQuery($sql);
+			if (!$result){ return false; }
+			
+			
+			//Base on the sample data, when user withdraw or deposit, will auto update transaction too.
+			$sql = "INSERT INTO Transaction VALUES (NULL, '$absAmount', '$user->userID', NULL, '$datetime')";
+			$result = $this->performQuery($sql);
+			if (!$result){ return false; }
+			
+			return true;
+		}
+		else{
+			return false;
+		}
+        
     }
     
-    
-    public function transfer($amount, $payeeID) {
+
+	/*
+	*
+	*Please double check this and read the comment 
+	*
+	*/
+    public function transfer($amount, $account) {
         $user = unserialize($_SESSION['user']);
-        $user->balance += abs($amount * -1);
-        $_SESSION['user'] = serialize($user);
+		$date = new DateTime();
+		$datetime = $date->format('Y-m-d H-i-s');
+		
+		//1. Check if account exist
+		 $sql = "SELECT * FROM `user` where account='$account' and status=2 and isTerminated=0";
+		 $result = $this->performQuery($sql);
+		 if ($result == null) { echo "account exist -";return false; }
+		 else{
+			 $row=mysqli_fetch_assoc($result);
+			 $payeeID = $row['userID'];
+			 
+			 
+			 //Check if balance enough
+			 
+			 //----------------------------
+			 //Can replace with get balance function(p.s. I aly try $this->getBalance() but not working):
+			 $sql = "SELECT balance FROM user WHERE userID = '$user->userID'";
+			 $result = $this->performQuery($sql);
+			 $currentBalance= mysqli_fetch_row($result)[0];
+			 //-----------------------------
+			 $newBalance = $currentBalance-$amount;
+			 $absAmount = abs($amount)*-1; // Negative Value
+			
+			if(($newBalance)>=0){
+				 //Update session
+				 $user->balance-$amount; //(I dun think we need to update balance for session , as show balance page is directly retrieve from db)
+				 $_SESSION['user'] = serialize($user);
+				 
+				 //Update Database 
+				 $sql = "UPDATE User SET balance = '$newBalance' WHERE userID = '$user->userID'"; 
+				 $result = $this->performQuery($sql);
+				 if (!$result) { return false; }
+				 
+				         
+				$sql = "INSERT INTO Transaction VALUES (NULL, '$absAmount', '$user->userID', '$payeeID', '$datetime')";
+				$result = $this->performQuery($sql);
+				
+				if (!$result) {return false; }
+				
+				//Update payee
+				
+				//----------------------------------------
+				//Can replace with get balance function(p.s. I aly try $this->getBalance() but not working):
+				$sql = "SELECT balance FROM user WHERE userID = '$user->userID'";
+				$result = $this->performQuery($sql);
+				$payeeBalance= mysqli_fetch_row($result)[0];
+				//-------------------------------------------
+				
+				$payeeBalance += abs($amount);
+				
+				if (!$result) {return false; }
+				
+				$sql = "UPDATE User SET balance = '$payeeBalance' WHERE userID = '$payeeID'";
+				$result = $this->performQuery($sql);
+				if (!$result) { return false; }
+				
+
+				
+				return true;
+
+			 }
+
+			 else{
+				return false;
+			 }
+			}
+		}			
+		
+		
+
         
-        $sql = "UPDATE User SET balance = '$user->balanace' WHERE userID = '$user->userID'";
-        $result = $this->performQuery($sql);
-        
-        $date = new DateTime();
-        $datetime = $date->format('Y-m-d H-i-s');
-        $sql = "INSERT INTO Transaction VALUES (NULL, '$amount', '$user->userID', '$payeeID', '$datetime')";
-        $result = $this->performQuery($sql);
-        
-        $sql = "SELECT balance FROM user WHERE userID = '$payeeID'";
-        $result = $this->performQuery($sql);
-        $payeeBalance = mysqli_fetch_row($result)[0];
-        $payeeBalance += abs($amount);
-        
-        $sql = "UPDATE User SET balance = '$payeeBalance' WHERE userID = '$payeeID'";
-        $result = $this->performQuery($sql);
-    }
+		
+
+    
     
     public function getCustomers() {
         $sql = "SELECT * FROM User";
@@ -316,12 +442,11 @@ class Model {
     }
     
     //manager approve aacount
-    public function approveCustomerAccount($user) {
-        if ($user->role == 'manager') {
-            $sql = "UPDATE User SET status = 1 WHERE userID = '$user->userID'";
+    public function approveCustomerAccount($userID) {
+        $sql = "UPDATE User SET status = 1 WHERE userID = '$userID'";
             $result = $this->performQuery($sql);
             if ($result) { return true; } else { return null; }
-        }
+        
         return false;
     }
     
@@ -347,39 +472,30 @@ class Model {
     }
         
 
-    public function setInactiveCustomers(){
-        $date = new DateTime();
-        $currentDate = $date->format('Y-m-d H-i-s');
-        $sql = "SELECT * FROM User WHERE lastActive <= NOW() - INTERVAL 3 MONTH";
-        $result = $this->performQuery($sql);
-        while($row = $result->fetch_array(MYSQLI_ASSOC)){
-            $a = $row['userID'];
-            $sql2 = "UPDATE User SET isActive = 0 WHERE userID = '$a'";
-            $result2 = $this->performQuery($sql2);
-            
-        }
-        return null;
-    }
-
     /*
      * Run to this method to insert data to database
      * If changes are made to database, modify if necessary
      * Type command in phpmyadmin if Transaction table rows are not appearing, DELETE all the User rows THEN insert this sql ALTER TABLE user AUTO_INCREMENT = 1
      */
 
+	 /*
+	 *
+	 *Please reupload the latest database !
+	 *
+	 */
     public function insertData() {
         $sqlArray = array();
         $date = new DateTime();
         $currentDate = $date->format('Y-m-d H-i-s');
 
         // User accounts
-        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer1', '123', 'customer', 'customer1', 's9999901c', '97832323', 'kevin9001@live.com','Tampines st 91, Blk999 #09-999, Singapore 520999', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
-        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer2', '123', 'customer', 'customer2', 's9999902c', '97832323', 'leexd1994@gmail.com', 'Jurong st 91, Blk929 #09-929, Singapore 500929','50', '2', TRUE, FALSE, '$currentDate', FALSE)");
-        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer3', '123', 'customer', 'customer3', 's9999903c', '97832323', 'jeremy.nogi46@gmail.com', 'Sengkang st 91, Blk829 #09-829, Singapore 510829','50', '2', TRUE, FALSE, '$currentDate', FALSE)");
-        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer4', '123', 'customer', 'customer4', 's9999904c', '97832323', 'MissKYH.sg@gmail.com','Seragoon st 95, Blk995 #09-995, Singapore 550995', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
-        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer5', '123', 'customer', 'customer5', 's9999905c', '97832323', 'KheoYanHsia@gmail.com','Bedok st 85, Blk985 #08-985, Singapore 520985', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
-        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer6', '123', 'customer', 'customer6', 's9999906c', '97832323', 'gohchoongiap@gmail.com','Geylang st 81, Blk981 #09-981, Singapore 520981', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
-        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer7', '123', 'customer', 'customer7', 's9999907c', '97832323', 'kwanlamyujoey@gmail.com', 'Yishun st 91, Blk911 #09-911, Singapore 540911','50', '2', TRUE, FALSE, '$currentDate', FALSE)");
+        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer1', '123', 'customer', 'customer1', 's9999901c', '97832323', 'kevin9001@live.com','Tampines st 91, Blk999 #09-999, Singapore 520999','024-61263-1' ,'50', '2', TRUE, FALSE, '$currentDate', FALSE)");
+        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer2', '123', 'customer', 'customer2', 's9999902c', '97832323', 'leexd1994@gmail.com', 'Jurong st 91, Blk929 #09-929, Singapore 500929','024-61263-2','50', '2', TRUE, FALSE, '$currentDate', FALSE)");
+        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer3', '123', 'customer', 'customer3', 's9999903c', '97832323', 'jeremy.nogi46@gmail.com', 'Sengkang st 91, Blk829 #09-829, Singapore 510829','024-61263-3','50', '2', TRUE, FALSE, '$currentDate', FALSE)");
+        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer4', '123', 'customer', 'customer4', 's9999904c', '97832323', 'MissKYH.sg@gmail.com','Seragoon st 95, Blk995 #09-995, Singapore 550995', '024-61263-4','50', '2', TRUE, FALSE, '$currentDate', FALSE)");
+        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer5', '123', 'customer', 'customer5', 's9999905c', '97832323', 'KheoYanHsia@gmail.com','Bedok st 85, Blk985 #08-985, Singapore 520985', '024-61263-5','50', '2', TRUE, FALSE, '$currentDate', FALSE)");
+        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer6', '123', 'customer', 'customer6', 's9999906c', '97832323', 'gohchoongiap@gmail.com','Geylang st 81, Blk981 #09-981, Singapore 520981','024-61263-6', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
+        array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'customer7', '123', 'customer', 'customer7', 's9999907c', '97832323', 'kwanlamyujoey@gmail.com', 'Yishun st 91, Blk911 #09-911, Singapore 540911','024-61263-7','50', '2', TRUE, FALSE, '$currentDate', FALSE)");
 
         array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'manager1', '123', 'manager', 'manager1', 's9999908c', '97832323', 'kevin9001@live.com', 'Orchard st 32, Blk32 #02-32, Singapore 520132','50', '2', TRUE, FALSE, '$currentDate', FALSE)");
         array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'manager2', '123', 'manager', 'manager2', 's9999909c', '97832323', 'kwanlamyujoey@gmail.com', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");

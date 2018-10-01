@@ -3,10 +3,38 @@
 	
     $title = "My Bank | Customer";
     $output = str_replace('%Title%', $title, $output);
-    echo $output;
 
 	include("customerHeader.php");
+
+	//Backend
+	$user = unserialize($_SESSION['user']);
+	$isSuccess=NULL;
+	
+	if(isset($_POST['deposit']) ){
+	$isSuccess = $model->deposit ($_POST['deposit']);
+	}
+
+	
+	//Problem: when user resubmit is not working.
+	//if(isset($_POST['deposit']) ){
+		//if is new  - To prevent user reload and call deposit function
+		//if(!isset($_SESSION['reload'])){
+			//$_SESSION['reload'] =true; 
+			//$isSuccess = $model->deposit ($_POST['deposit']);
+		//}
+	//}
+	//else{
+	//	if(isset($_SESSION['reload'])){
+		//	 unset($_SESSION['reload']); 
+	//	}
+	//}
+	
 	?>
+	
+
+	
+
+
 	<!-- begin:: Page -->
 		<div class="m-grid m-grid--hor m-grid--root m-page">
 		<!-- begin::Body -->
@@ -30,13 +58,36 @@
 						
 						<!--begin::Portlet-->
 								<div class="m-portlet">
+								
+								<!--begin:: Alertbox-->
+										<?php 
+									  if(isset($_POST['deposit']) && $isSuccess ){	
+
+											?>
+											<div class="alert alert-success alert-dismissible fade show" role="alert">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+													You have successfully deposit. 
+											</div>
+
+											<?php
+											}
+										else if(isset($_POST['deposit']) && !$isSuccess){ ?>
+											<?php
+											echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
+											echo "<button type='button' class='close' data-dismiss='alert' aria-label='Close'></button>";
+											echo "Sorry. Something went wrong"; 
+											echo "</div>";
+
+											}
+									  ?>
+								<!--end:: end alertbox-->
 									<!--begin::Form-->
-									<form class="m-form">
+									<form class="m-form" class="" action="" method="post">
 										<div class="m-portlet__body">
 											<div class="m-form__section m-form__section--first">
 												<div class="form-group m-form__group">
 													<label for="example_input_full_name">
-														Account No. : 198 - 34567 - 2
+														Account No. : <?php echo $user->account?>
 													</label>
 												</div>
 											
@@ -50,7 +101,7 @@
 																$
 															</span>
 														</div>
-														<input type="text" class="form-control m-input" placeholder="99.9">
+														<input type="number" class="form-control m-input" placeholder="99.9" min=0 name="deposit" step=".01">
 													</div>
 												</div>
 												
@@ -58,7 +109,7 @@
 										</div>
 										<div class="m-portlet__foot m-portlet__foot--fit">
 											<div class="m-form__actions m-form__actions">
-												<button type="reset" class="btn btn-primary">
+												<button type="submit" class="btn btn-primary">
 													Confirm
 												</button>
 												<button type="reset" class="btn btn-danger">

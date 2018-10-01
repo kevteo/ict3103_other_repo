@@ -6,6 +6,8 @@
     echo $output;
 
 	include("managerHeader.php");
+	
+	$model->approveCustomerAccount($_GET['user']);
 	?>
 	<!-- begin:: Page -->
 		<div class="m-grid m-grid--hor m-grid--root m-page">
@@ -17,7 +19,7 @@
 						<div class="d-flex align-items-center">
 							<div class="mr-auto">
 								<h3 class="m-subheader__title ">
-									New Account Application
+									Customer Approved
 								</h3>
 							</div>
 						</div>
@@ -60,11 +62,11 @@
 												<div class="row">
 													<div class="col-lg-4"></div>
 													<div class="col-lg-4">
-														<button type="" class="btn btn-primary" onlick="">
+														<!-- <button type="submit" class="btn btn-primary" value="">
 															Approve
-														</button>
-														<a href="../source_home/home.php" class="btn btn-danger">
-															Reject
+														</button> -->
+														<a href="../source_manager/managerApproveAccountList.php" class="btn btn-danger">
+															Back
 														</a>
 													</div>
 													<div class="col-lg-4"></div>

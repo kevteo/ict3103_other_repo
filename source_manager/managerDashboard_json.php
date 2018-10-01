@@ -15,4 +15,4 @@ require_once '../model/Model.php';
 		
     },
 	
-	"data":<?php echo $model->getCustomersApproved(); ?>}
+	"data":<?php echo $model->getCustomersCreated(); ?>}

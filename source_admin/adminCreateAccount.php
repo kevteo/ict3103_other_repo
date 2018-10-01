@@ -7,6 +7,8 @@
 
 	include("adminHeader.php");
 	
+	$model->createCustomerAccount($_GET['user']);
+	
 	?>
 	<!-- begin:: Page -->
 		<div class="m-grid m-grid--hor m-grid--root m-page">
@@ -18,7 +20,7 @@
 						<div class="d-flex align-items-center">
 							<div class="mr-auto">
 								<h3 class="m-subheader__title ">
-									Account Creation Application
+									Customer Created
 								</h3>
 							</div>
 						</div>
@@ -57,11 +59,9 @@
 													<div class="col-lg-4"></div>
 													<div class="col-lg-4">
 													<form action="../source_admin/adminCreateAccount.php" method="GET">
-														<button type="submit" class="btn btn-primary" name="user" value="<?php echo $_GET["user"]; ?>">
+														<!-- <button type="submit" class="btn btn-primary" name="user" value="">
 															Create
-														</button>
-														
-														$model->createCustomerAccount($_GET['user']);
+														</button> -->
 												
 														<a href="../source_admin/adminCreateAccountList.php" class="btn btn-danger">
 															Back

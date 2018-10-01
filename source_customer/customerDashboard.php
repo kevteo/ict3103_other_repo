@@ -6,6 +6,13 @@
     echo $output;
 
 	include("customerHeader.php");
+	
+	//backend
+	$user = unserialize($_SESSION['user']);
+	$totalBalance = $model->getBalance($user->userID);
+	
+	
+	
 	?>
 	<!-- begin:: Page -->
 		<div class="m-grid m-grid--hor m-grid--root m-page">
@@ -17,7 +24,7 @@
 						<div class="d-flex align-items-center">
 							<div class="mr-auto">
 								<h3 class="m-subheader__title ">
-									Customer
+									Dashboard
 								</h3>
 							</div>
 						</div>
@@ -26,6 +33,72 @@
 					<div class="m-content">
 						<!--begin::Section-->
 						<div class="row">
+						
+							<div class="col-lg-12">
+							   <!--begin::Portlet-->
+							   <div class="m-portlet">
+							   <!--begin:: Alertbox-->
+										<?php 
+									  if(isset($_POST['deposit']) && $isSuccess ){	
+
+											?>
+											<div class="alert alert-success alert-dismissible fade show" role="alert">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+													You have successfully deposit. 
+											</div>
+
+											<?
+											}
+										else{ ?>
+											<?php
+											//echo "is not success" . $isSuccess; 
+											//echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
+											//echo "<button type='button' class='close' data-dismiss='alert' aria-label='Close'></button>";
+											//echo "Sorry. Something went wrong"; 
+											//echo "</div>";
+
+											}
+									  ?>
+								<!--end:: end alertbox-->
+							   
+							   <!--begin::Section-->
+								<div class="m-section">
+									<div class="m-section__content">
+										<table class="table table-striped m-table">
+											<thead>
+												<tr>
+											
+													<th>
+														Account
+													</th>
+													<th>
+														Balance
+													</th>
+											
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+												
+													<td>
+														<?php echo $user->account; ?>
+													</td>
+													<td>
+														<?php echo $totalBalance; ?>
+													</td>
+								
+												</tr>
+							
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!--end::Section-->
+							   
+							   </div>
+							   <!--end::Portlet-->
+							</div>
+							   
 						
 						
 						
