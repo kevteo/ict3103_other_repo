@@ -8,8 +8,9 @@
    include("customerHeader.php");
    
    //Backend
-   	if(isset($_POST['transfer']) ){
-	$isSuccess = $model->transfer ($_POST['transfer']);
+   	if(isset($_POST['transfer'])){
+	//echo $_POST['transfer'];
+	$isSuccess = $model->withdraw (121);
 	}
 	else{
 	}
@@ -40,7 +41,7 @@
                <div class="m-portlet">
 			   	<!--begin:: Alertbox-->
 										<?php 
-									  if(isset($_POST['deposit']) && $isSuccess ){	
+									  if(isset($_POST['transfer']) && $isSuccess ){	
 
 											?>
 											<div class="alert alert-success alert-dismissible fade show" role="alert">

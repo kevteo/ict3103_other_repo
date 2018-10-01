@@ -130,10 +130,10 @@ class Model {
             // TO-DO Confirm if need to generate user/pass
         
 		//$user->username = "?";
-		//$string properName = substr($user->nric,4,4);
-		//$user->username = .$.;
-			
-			
+		$randomUsername = substr(str_shuffle(str_repeat($string, 5)), 0, 5);
+		$user->username = $randomUsername.substr($user->nric,2,4);
+
+
         //$user->password = "?";
 		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
 		$pass = array(); //remember to declare $pass as an array

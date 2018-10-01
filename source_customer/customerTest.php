@@ -5,11 +5,26 @@ require_once('../model/Model.php');
 $model = Model::getInstance();
 
 //Backend
-	$transfer = $model->transfer(99.9, "024-61263-7");//True false
+	$transfer = $model->transfer(2000, "024-61263-7");//True false
 	$withdraw = $model->withdraw (420); //True False
 	$deposit =$model->deposit (420);
 	
-	echo $model-> getBalance(1);
+	//echo $model-> getBalance(1);
+	
+	if($transfer){
+		echo "transfer successfully";
+	}
+	else{
+		echo "transfer not success";
+	}
+	
+	
+	function random_username($string) {
+	$pattern = " ";
+	$s = substr(str_shuffle(str_repeat($string, 5)), 0, 5);
+
+	return $s;
+}
 
 	
 

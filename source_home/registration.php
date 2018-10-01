@@ -21,11 +21,6 @@ isset($_POST['postalcode'])
 }
 
 
-else
-{
-	echo "something went wrong";
-}
-
 
 ?>
 
@@ -177,7 +172,7 @@ else
 				
 									<!-- FORM STARTS HERE, Pls work with same id -->
 									
-									<form class="m-form m-form--label-align-left- m-form--state-" id="m_form" class=""  action="registration.php" method="post" name="m_form" >
+									<form class="m-form m-form--label-align-left- m-form--state-" id="m_form" class=""  action="login.php" method="post" name="m_form" >
 										<!--begin: Form Body -->
 										<div class="m-portlet__body">
 											<!--begin: Form Wizard Step 1-->
