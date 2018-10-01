@@ -348,6 +348,20 @@ class Model {
     }
         
 
+    public function setInactiveCustomers(){
+        $date = new DateTime();
+        $currentDate = $date->format('Y-m-d H-i-s');
+        $sql = "SELECT * FROM User WHERE lastActive <= NOW() - INTERVAL 3 MONTH";
+        $result = $this->performQuery($sql);
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+            $a = $row['userID'];
+            $sql2 = "UPDATE User SET isActive = 0 WHERE userID = '$a'";
+            $result2 = $this->performQuery($sql2);
+            
+        }
+        return null;
+    }
+
     /*
      * Run to this method to insert data to database
      * If changes are made to database, modify if necessary
