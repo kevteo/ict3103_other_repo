@@ -470,7 +470,23 @@ class Model {
         
         return false;
     }
-        
+    
+    //admin set inactive customers for > 3months
+    public function setInactiveCustomers(){
+    $date = new DateTime();
+    $currentDate = $date->format('Y-m-d H-i-s');
+    $sql = "SELECT * FROM User WHERE lastActive <= NOW() - INTERVAL 3 MONTH";
+    $result = $this->performQuery($sql);
+    while($row = $result->fetch_array(MYSQLI_ASSOC)){
+        $a = $row['userID'];
+        $sql2 = "UPDATE User SET isActive = 0 WHERE userID = '$a'";
+        $result2 = $this->performQuery($sql2);
+
+    }
+    return null;
+    }
+    
+    //admin download backup data to csv
     public function backupData()
     {
     //table name
