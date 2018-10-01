@@ -127,14 +127,15 @@ class Model {
         $result = $this->performQuery($sql);
         if ($result == null) { return null; }
         if (mysqli_num_rows($result) == 0) {
-            // TO-DO Confirm if need to generate user/pass
+			
+			
         
-		//$user->username = "?";
+		//generate user name 
 		$randomUsername = substr(str_shuffle(str_repeat($string, 5)), 0, 5);
 		$user->username = $randomUsername.substr($user->nric,2,4);
 
 
-        //$user->password = "?";
+        //generate password
 		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
 		$pass = array(); //remember to declare $pass as an array
 		$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
