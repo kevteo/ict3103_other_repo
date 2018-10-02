@@ -2,31 +2,6 @@
 //* Git Commit 1 : Login Backend
 require_once('../model/Model.php');
 $model = Model::getInstance();
-
-if (isset($_POST['name'])){
-	echo isset($_POST['name']);
-	echo "Finally";
-}
-
-if
-(
-isset($_POST['name']) && isset($_POST['nric']) &&
-isset($_POST['mobileNumber']) && isset($_POST['email']) &&
-isset($_POST['address1']) && isset($_POST['address2']) &&
-isset($_POST['postalcode'])
-) 
-{
-	$clickLogin = true;
-	validateLogin($model,$_POST['username'] ,$_POST['password']);
-}
-
-
-else
-{
-	echo "something went wrong";
-}
-
-
 ?>
 
 
@@ -195,7 +170,7 @@ else
 																	* Name:
 																</label>
 																<div class="col-xl-9 col-lg-9">
-																	<input type="text" name="name" class="form-control m-input" placeholder="" value="Nick Stone">
+																	<input type="text" name="name" class="form-control m-input" placeholder="" value="Nick Stone" id="name">
 																	<span class="m-form__help">
 																		Please enter your first and last names
 																	</span>
@@ -206,7 +181,7 @@ else
 																	* NRIC:
 																</label>
 																<div class="col-xl-9 col-lg-9">
-																	<input type="text" name="nric" class="form-control m-input" placeholder="" value="S9638937E">
+																	<input type="text" name="nric" class="form-control m-input" placeholder="" value="S9638937E" id="nric">
 																	<span class="m-form__help">
 																		Please enter your Singapore NRIC
 																	</span>
@@ -217,7 +192,7 @@ else
 																	* Email:
 																</label>
 																<div class="col-xl-9 col-lg-9">
-																	<input type="email" name="email" class="form-control m-input" placeholder="" value="nick.stone@gmail.com">
+																	<input type="email" name="email" class="form-control m-input" placeholder="" value="nick.stone@gmail.com" id="email"> 
 																	<span class="m-form__help">
 																		We'll never share your email with anyone else
 																	</span>
@@ -234,7 +209,7 @@ else
 																				<i class="la la-phone"></i>
 																			</span>
 																		</div>
-																		<input type="number" name="mobileNumber" class="form-control m-input" placeholder="" value="81222222">
+																		<input type="number" name="mobileNumber" class="form-control m-input" placeholder="" value="81222222" id="phone">
 																	</div>
 																	<span class="m-form__help">
 																		Enter your 8 digit contact number
@@ -255,7 +230,7 @@ else
 																	* Address Line 1:
 																</label>
 																<div class="col-xl-9 col-lg-9">
-																	<input type="text" name="address1" class="form-control m-input" placeholder="" value="Ang Mo Kio Avenue 6"
+																	<input type="text" name="address1" class="form-control m-input" placeholder="" value="Ang Mo Kio Avenue 6" id="address1">
 																	<span class="m-form__help">
 																		Street address
 																	</span>
@@ -266,7 +241,7 @@ else
 																	Address line 2:
 																</label>
 																<div class="col-xl-9 col-lg-9">
-																	<input type="text" name="address2" class="form-control m-input" placeholder="" value="Block 123 #12-22"
+																	<input type="text" name="address2" class="form-control m-input" placeholder="" value="Block 123 #12-22" id="address2">
 																	<span class="m-form__help">
 																		Block/ Unit Number
 																	</span>
@@ -277,7 +252,7 @@ else
 																	* Postal Code:
 																</label>
 																<div class="col-xl-9 col-lg-9">
-																	<input type="number" name="postalcode" class="form-control m-input" placeholder="" value="540123">
+																	<input type="number" name="postalcode" class="form-control m-input" placeholder="" value="540123" id="postalcode">
 																	<span class="m-form__help">
 																		6 Digit Postal Code
 																	</span>
@@ -304,7 +279,7 @@ else
 																	<label class="form-control-label">
 																		* Username:
 																	</label>
-																	<input type="text" name="account_username" class="form-control m-input" placeholder="" value="nick.stone">
+																	<input type="text" name="account_username" class="form-control m-input" placeholder="" value="nick.stone" id="username">
 																	<span class="m-form__help">
 																		Your username will be used for login
 																	</span>
@@ -313,50 +288,57 @@ else
 																	<label class="form-control-label">
 																		* Password:
 																	</label>
-																	<input type="password" name="account_password" class="form-control m-input" placeholder="" value="qwerty">
+																	<input type="password" name="account_password" class="form-control m-input" placeholder="" value="qwerty" id="password">
 																	<span class="m-form__help">
 																		Please use letters and at least one number and symbol
 																	</span>
 																</div>
 															</div>
-														</div>
-														
-														
-														<!-- Account type -->
-														<!--
-														<div class="m-separator m-separator--dashed m-separator--lg"></div>
-														<div class="m-form__section">
-															<div class="m-form__heading">
-																<h3 class="m-form__heading-title">
-																	Account Settings
-																</h3>
-															</div>
-												
 															
 															<div class="form-group m-form__group row">
 																<div class="col-lg-6 m-form__group-sub">
 																	<label class="form-control-label">
+																		* Salary Range:
+																	</label>
+																	<select  name="account_type" class="form-control m-input" placeholder="" value="1" id="salary">
+																		<option value="1">
+																		   < $2000
+																		</option>
+																		<option value="2">
+																		  $2000 - $3000
+																		</option>
+																		<option value="3">
+																		   $4000 - $5000
+																		</option>
+																		<option value="4">
+																		  $5000 - $6000
+																		</option>
+																		<option value="6">
+																		  > $6000
+																		</option>
+																	 </select>
+																	<span class="m-form__help">
+																		Please select salary range 
+																	</span>
+																</div>
+																
+																<div class="col-lg-6 m-form__group-sub">
+																	<label class="form-control-label">
 																		* Account Type:
 																	</label>
-																	<div class="m-radio-inline">
-																		<label class="m-radio m-radio--solid m-radio--brand">
-																			<input type="radio" name="account_group" checked="" value="2">
-																			Savings Account
-																			<span></span>
-																		</label>
-																		<label class="m-radio m-radio--solid m-radio--brand">
-																			<input type="radio" name="account_group" value="2">
-																			Investment Account
-																			<span></span>
-																		</label>
-																	</div>
+																	<!-- Account type -->
+																	<select  name="account_type" class="form-control m-input" placeholder="" value="1" id="accounttype">
+																		<option value="1">
+																		   Savings Account
+																		</option>
+																	 </select>
 																	<span class="m-form__help">
 																		Please select account type
 																	</span>
 																</div>
 															</div>
 														</div>
-														-->
+														
 													</div>
 												</div>
 											</div>
@@ -379,8 +361,16 @@ else
 																			Name:
 																		</label>
 																		<div class="col-xl-9 col-lg-9">
-																			<span class="m-form__control-static">
-																				Nick Stone
+																			<span class="m-form__control-static" id="nameCheck">
+																			</span>
+																		</div>
+																	</div>
+																	<div class="form-group m-form__group m-form__group--sm row">
+																		<label class="col-xl-3 col-lg-3 col-form-label">
+																			NRIC:
+																		</label>
+																		<div class="col-xl-9 col-lg-9">
+																			<span class="m-form__control-static" id="nricCheck">
 																			</span>
 																		</div>
 																	</div>
@@ -389,18 +379,16 @@ else
 																			Email:
 																		</label>
 																		<div class="col-xl-9 col-lg-9">
-																			<span class="m-form__control-static">
-																				nick.stone@gmail.com
+																			<span class="m-form__control-static" id="emailCheck">
 																			</span>
 																		</div>
 																	</div>
 																	<div class="form-group m-form__group m-form__group--sm row">
 																		<label class="col-xl-3 col-lg-3 col-form-label">
-																			Phone
+																			Phone:
 																		</label>
 																		<div class="col-xl-9 col-lg-9">
-																			<span class="m-form__control-static">
-																				81222222
+																			<span class="m-form__control-static" id="phoneCheck">
 																			</span>
 																		</div>
 																	</div>
@@ -418,8 +406,7 @@ else
 																			Address Line 1:
 																		</label>
 																		<div class="col-xl-9 col-lg-9">
-																			<span class="m-form__control-static">
-																				Line 1
+																			<span class="m-form__control-static" id="address1Check">
 																			</span>
 																		</div>
 																	</div>
@@ -428,8 +415,7 @@ else
 																			Address Line 2:
 																		</label>
 																		<div class="col-xl-9 col-lg-9">
-																			<span class="m-form__control-static">
-																				Line 2
+																			<span class="m-form__control-static" id="address2Check">
 																			</span>
 																		</div>
 																	</div>
@@ -438,8 +424,7 @@ else
 																			Postal Code:
 																		</label>
 																		<div class="col-xl-9 col-lg-9">
-																			<span class="m-form__control-static">
-																				540123
+																			<span class="m-form__control-static" id="postalcodeCheck">
 																			</span>
 																		</div>
 																	</div>
@@ -457,8 +442,7 @@ else
 																			Username:
 																		</label>
 																		<div class="col-xl-9 col-lg-9">
-																			<span class="m-form__control-static">
-																				everything is hardcoded
+																			<span class="m-form__control-static" id="usernameCheck">
 																			</span>
 																		</div>
 																	</div>
@@ -467,8 +451,7 @@ else
 																			Password:
 																		</label>
 																		<div class="col-xl-9 col-lg-9">
-																			<span class="m-form__control-static">
-																				*********
+																			<span class="m-form__control-static" id="passwordCheck"> 
 																			</span>
 																		</div>
 																	</div>
@@ -482,11 +465,19 @@ else
 																	</div>
 																	<div class="form-group m-form__group m-form__group--sm row">
 																		<label class="col-xl-3 col-lg-3 col-form-label">
+																			Salary Range:
+																		</label>
+																		<div class="col-xl-9 col-lg-9">
+																			<span class="m-form__control-static" id="salaryCheck"> 
+																			</span>
+																		</div>
+																	</div>
+																	<div class="form-group m-form__group m-form__group--sm row">
+																		<label class="col-xl-3 col-lg-3 col-form-label">
 																			Account Type:
 																		</label>
 																		<div class="col-xl-9 col-lg-9">
-																			<span class="m-form__control-static">
-																				Savings Account
+																			<span class="m-form__control-static" id="accounttypeCheck"> 
 																			</span>
 																		</div>
 																	</div>
@@ -495,18 +486,6 @@ else
 														</div>
 														<!--end::Section-->
                                 <!--end::Section-->
-														<div class="m-separator m-separator--dashed m-separator--lg"></div>
-														<div class="form-group m-form__group m-form__group--sm row">
-															<div class="col-xl-12">
-																<div class="m-checkbox-inline">
-																	<label class="m-checkbox m-checkbox--solid m-checkbox--brand">
-																		<input type="checkbox" name="accept" value="1">
-																		Click here to indicate that you have read and agree to the terms presented in the Terms and Conditions agreement
-																		<span></span>
-																	</label>
-																</div>
-															</div>
-														</div>
 													</div>
 												</div>
 											</div>
@@ -541,7 +520,7 @@ else
 															</span>
 														</button>
 														
-														<a href="#" class="btn btn-warning m-btn m-btn--custom m-btn--icon" data-wizard-action="next">
+														<a href="#" class="btn btn-warning m-btn m-btn--custom m-btn--icon" data-wizard-action="next" onclick="validation()">
 															<span>
 																<span>
 																	Save & Continue
@@ -571,12 +550,54 @@ else
 				</div>
 			</div>
 		<!-- end:: Page -->
+		
+		
+		<script>
+		
+		function validation() {
+    var name = document.getElementById("name").value;
+	document.getElementById("nameCheck").innerHTML = name;
+	
+	var nric = document.getElementById("nric").value;
+	document.getElementById("nricCheck").innerHTML = nric;
+	
+	var email = document.getElementById("email").value;
+	document.getElementById("emailCheck").innerHTML = email;
+	
+	var phone = document.getElementById("phone").value;
+	document.getElementById("phoneCheck").innerHTML = phone;
+	
+	var address1 = document.getElementById("address1").value;
+	document.getElementById("address1Check").innerHTML = address1;
+	
+	var address2 = document.getElementById("address2").value;
+	document.getElementById("address2Check").innerHTML = address2;
+	
+	var postalcode = document.getElementById("postalcode").value;
+	document.getElementById("postalcodeCheck").innerHTML = postalcode;
+	
+	var username = document.getElementById("username").value;
+	document.getElementById("usernameCheck").innerHTML = username;
+	
+	var password = document.getElementById("password").value;
+	document.getElementById("passwordCheck").innerHTML = password;
+	
+	var salary = document.getElementById("salary");
+	var salaryCheck = salary.options[salary.selectedIndex].text;
+	document.getElementById("salaryCheck").innerHTML = salaryCheck;
+	
+	var accounttype = document.getElementById("accounttype");
+	var accounttypeCheck = accounttype.options[accounttype.selectedIndex].text;
+	document.getElementById("accounttypeCheck").innerHTML = accounttypeCheck;
+}
+		
+		</script>
+		
     	<!--begin::Base Scripts -->
 		<script src="../vendors/base/vendors.bundle.js" type="text/javascript"></script>
 		<script src="../base/scripts.bundle.js" type="text/javascript"></script>
 		<script src="../js/forms/wizard/wizard.js" type="text/javascript"></script>
-		<script src="../js/forms/validation/form-controls.js" type="text/javascript"></script>
-		<script src="../js/forms/validation/form-widgets.js" type="text/javascript"></script>
+		<script src="../js/forms/widgets/select2.js" type="text/javascript"></script>
 		<!--end::Base Scripts -->   
 	</body>
 	<!-- end::Body -->
