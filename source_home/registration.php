@@ -2,7 +2,24 @@
 //* Git Commit 1 : Login Backend
 require_once('../model/Model.php');
 $model = Model::getInstance();
-?>
+
+if (isset($_POST['name'])){
+	echo isset($_POST['name']);
+	echo "Finally";
+}
+
+if
+(
+isset($_POST['name']) && isset($_POST['nric']) &&
+isset($_POST['mobileNumber']) && isset($_POST['email']) &&
+isset($_POST['address1']) && isset($_POST['address2']) &&
+isset($_POST['postalcode'])
+) 
+{
+	$clickLogin = true;
+	validateLogin($model,$_POST['username'] ,$_POST['password']);
+}
+
 
 
 <!DOCTYPE html>
@@ -152,7 +169,7 @@ $model = Model::getInstance();
 				
 									<!-- FORM STARTS HERE, Pls work with same id -->
 									
-									<form class="m-form m-form--label-align-left- m-form--state-" id="m_form" class=""  action="registration.php" method="post" name="m_form" >
+									<form class="m-form m-form--label-align-left- m-form--state-" id="m_form" class=""  action="login.php" method="post" name="m_form" >
 										<!--begin: Form Body -->
 										<div class="m-portlet__body">
 											<!--begin: Form Wizard Step 1-->

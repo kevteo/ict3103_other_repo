@@ -23,7 +23,7 @@ $model = Model::getInstance(); // Instantiate Object
 //}
 
 // Example 2 - Register
-// $user = new User("manager", "managerName", "s9876543c", "98765432", "email@hotmail.com", $username = "abc", $password = "abc");
+// $user = new User("manager", "managerName", "s9876543c", "98765432", "email@hotmail.com","tampines st91, blk 999 st99, singapore 529999","024-61261-1","Below 2000");
 // if ($model->register($user)) { echo "Registration Successful!"; }
 
 // Example 3 - Get List of customers CHOOSE 1 method
@@ -101,6 +101,7 @@ class Model {
             $sql = "UPDATE User SET lastActive = '$datetime' WHERE userID = '$user->userID'";
             $result = $this->performQuery($sql);
 			
+			
             $_SESSION['user'] = serialize($user);
 			
             return true;
@@ -122,19 +123,14 @@ class Model {
      */
 
 
+	 /*YH: Tested with source_customer/customerTest.php. Code workable. Can uncomment if want to debug */
     public function register($user) {
-        $sql = "SELECT * FROM User WHERE username = '$user->username' OR nric = '$user->nric'";
-        $result = $this->performQuery($sql);
-        if ($result == null) { return null; }
-        if (mysqli_num_rows($result) == 0) {
-            // TO-DO Confirm if need to generate user/pass
-        
-		//$user->username = "?";
-		//$string properName = substr($user->nric,4,4);
-		//$user->username = .$.;
-			
-			
-        //$user->password = "?";
+		
+		//generate user name 
+		$randomUsername = substr(str_shuffle(str_repeat($user->name, 5)), 0, 5);
+		$user->username = $randomUsername."".substr($user->nric,2,4);
+		
+		//generate password
 		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
 		$pass = array(); //remember to declare $pass as an array
 		$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
@@ -144,12 +140,40 @@ class Model {
 		}
 		
 		$user->password =implode($pass);
-            
-            $sql = "INSERT INTO User VALUES (NULL, '$user->username', '$user->password', '$user->role', '$user->name', '$user->nric', '$user->mobileNumber', '$user->email','$user->address', $user->account,'$user->balance', '$user->status', $user->isActive, $user->requestToggleActive, NULL, $user->isTerminated)";
-            $result = $this->performQuery($sql);
-            return true;
-        }
-        return false;
+		
+		
+		//Database check if exist
+		
+        $sql = "SELECT * FROM User WHERE username='$user->username' or  nric = '$user->nric'";
+        $result = $this->performQuery($sql);
+        if (mysqli_num_rows($result)==0) {
+			//echo "new nric or username";
+			
+			//if not exist - database
+			if (mysqli_num_rows($result) == 0) {
+				$sql = "INSERT INTO User VALUES (NULL, '$user->username', '$user->password', '$user->role', '$user->name',
+				'$user->nric', '$user->mobileNumber', '$user->email','$user->address', '$user->account', 
+				'$user->salary','$user->balance', '$user->status', $user->isActive, $user->requestToggleActive, 
+				NULL, $user->isTerminated)";
+				
+				$result = $this->performQuery($sql);
+				
+				if (!$result){
+					//echo "<br><br>insert query fail ";
+					return false; 
+				}else{
+					//echo "<br><br>pass";
+					return true;
+				}
+			}
+		
+		}
+		else{
+			//echo "Existed Account ";
+			return false;
+		}
+		
+	
     }
 
     /*
@@ -265,6 +289,8 @@ class Model {
 			$sql = "UPDATE User SET balance = '$newBalance' WHERE userID = '$user->userID'";
 			$result = $this->performQuery($sql);
 			if (!$result){ return false; }
+			
+			
 			
 			
 			//Base on the sample data, when user withdraw or deposit, will auto update transaction too.
@@ -470,7 +496,61 @@ class Model {
         
         return false;
     }
-        
+    
+    //admin set inactive customers for > 3months
+    public function setInactiveCustomers(){
+    $date = new DateTime();
+    $currentDate = $date->format('Y-m-d H-i-s');
+    $sql = "SELECT * FROM User WHERE lastActive <= NOW() - INTERVAL 3 MONTH";
+    $result = $this->performQuery($sql);
+    while($row = $result->fetch_array(MYSQLI_ASSOC)){
+        $a = $row['userID'];
+        $sql2 = "UPDATE User SET isActive = 0 WHERE userID = '$a'";
+        $result2 = $this->performQuery($sql2);
+
+    }
+    return null;
+    }
+    
+    //admin download backup data to csv
+    public function backupData()
+    {
+    //table name
+    $db_record = 'User';
+    //WHERE query
+    $where = 'WHERE status = "2"';
+    //filename for export
+    $csv_filename = $db_record.'_'.date('Y-m-d').'.csv';
+    //database variables
+    //empty variable to be filled with export data
+    $csv_export = '';
+    // query to get data from database
+    $query = mysqli_query($this->conn, "SELECT * FROM ".$db_record." ".$where);
+
+    //if include where example 
+    //$query = mysqli_query($this->conn, "SELECT * FROM ".$db_record." ".$where);
+
+    $field = mysqli_field_count($this->conn);
+    // create line with field names
+    for($i = 0; $i < $field; $i++) {
+        $csv_export.= mysqli_fetch_field_direct($query, $i)->name.';';
+        }
+    // newline 
+    $csv_export.= '';
+    // loop through database query and fill export variable
+    while($row = mysqli_fetch_array($query)) {
+        // create line with field values
+        for($i = 0; $i < $field; $i++) {
+            $csv_export.= '"'.$row[mysqli_fetch_field_direct($query, $i)->name].'";';
+        }
+        $csv_export.= '
+    ';
+        }
+    // Export the data and prompt a csv file for download
+    header("Content-type: text/x-csv");
+    header("Content-Disposition: attachment; filename=".$csv_filename."");
+    echo($csv_export);
+    }
 
     /*
      * Run to this method to insert data to database
