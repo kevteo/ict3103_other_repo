@@ -4,7 +4,6 @@ require_once('User.php');
 session_start();
 
 
-<<<<<<< HEAD
 // Example 1 - Login and store to session
 //$user = $model->login("customer1", "123");
 //if ($user) {
