@@ -62,6 +62,62 @@ var WizardDemo = function() {
                 e.preventDefault(), i.form() && (mApp.progress(r), n.ajaxSubmit({
                     success: function() {
 						console.log('success');
+						
+						var name = document.getElementById("name").value;
+						document.getElementById("nameCheck").innerHTML = name;
+						
+						var nric = document.getElementById("nric").value;
+						document.getElementById("nricCheck").innerHTML = nric;
+						
+						var email = document.getElementById("email").value;
+						document.getElementById("emailCheck").innerHTML = email;
+						
+						var phone = document.getElementById("phone").value;
+						document.getElementById("phoneCheck").innerHTML = phone;
+						
+						var address1 = document.getElementById("address1").value;
+						document.getElementById("address1Check").innerHTML = address1;
+						
+						var address2 = document.getElementById("address2").value;
+						document.getElementById("address2Check").innerHTML = address2;
+						
+						var postalcode = document.getElementById("postalcode").value;
+						document.getElementById("postalcodeCheck").innerHTML = postalcode;
+						
+						var username = document.getElementById("username").value;
+						document.getElementById("usernameCheck").innerHTML = username;
+						
+						var password1 = document.getElementById("password").value;
+						document.getElementById("passwordCheck").innerHTML = password1;
+						
+						var salary = document.getElementById("salary");
+						var salaryCheck = salary.options[salary.selectedIndex].text;
+						document.getElementById("salaryCheck").innerHTML = salaryCheck;
+						
+						var accounttype = document.getElementById("accounttype");
+						var accounttypeCheck = accounttype.options[accounttype.selectedIndex].text;
+						document.getElementById("accounttypeCheck").innerHTML = accounttypeCheck;
+						
+						
+						
+						console.log(name);
+						
+						var user = JSON.stringify({ name: name, nric: nric, mobileNumber: phone, username: username, password1: password1,role: "customer", email: email , address: address1 +" "+ address2 +" Singapore "+ postalcode, account: "024-61993-1",salary: salaryCheck ,balance: "0", status1: "0", isActive: "1", requestToggleActive: "0", isTerminated: "0"});
+						
+						console.log(user);
+						
+						
+						
+						$.ajax({
+							url:"../model/Registration.php", //the page containing php script
+							type: "post", //request type,
+							dataType: 'json',
+						    data: {user: user}
+						 });
+						
+						
+						
+						
                         mApp.unprogress(r), swal({
                             title: "",
                             text: "The application has been successfully submitted! Directing you to login.",

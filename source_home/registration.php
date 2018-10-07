@@ -21,7 +21,7 @@ isset($_POST['postalcode'])
 }
 
 
-
+?>
 <!DOCTYPE html>
 <html lang="en" >
 <!-- begin::Head -->
@@ -568,7 +568,7 @@ isset($_POST['postalcode'])
 			</div>
 		<!-- end:: Page -->
 		
-		
+
 		<script>
 		
 		function validation() {

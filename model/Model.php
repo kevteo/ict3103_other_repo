@@ -23,8 +23,8 @@ $model = Model::getInstance(); // Instantiate Object
 //}
 
 // Example 2 - Register
-// $user = new User("manager", "managerName", "s9876543c", "98765432", "email@hotmail.com","tampines st91, blk 999 st99, singapore 529999","024-61261-1","Below 2000");
-// if ($model->register($user)) { echo "Registration Successful!"; }
+//$user = new User("manager", "managerName", "s9876543c", "98765432", "email@hotmail.com","tampines st91, blk 999 st99, singapore 529999","024-61261-1","Below 2000");
+//if ($model->register($user)) { echo "Registration Successful!"; }
 
 // Example 3 - Get List of customers CHOOSE 1 method
 
@@ -67,14 +67,14 @@ class Model {
      * For troubleshooting/debugging
      */
 
-    private function performQuery($sql) {
+    public function performQuery($sql) {
         if ($result = mysqli_query($this->conn, $sql)) {
             return $result;
         }
         echo '<pre>';
         echo '<pre>';
         echo "There was an error in the function: ";
-        var_dump(debug_backtrace()[1]['function']);
+ //       var_dump(debug_backtrace()[1]['function']);
         echo '</pre>';
         echo $sql;
         return null;
@@ -129,6 +129,8 @@ class Model {
 		//generate user name 
 		$randomUsername = substr(str_shuffle(str_repeat($user->name, 5)), 0, 5);
 		$user->username = $randomUsername."".substr($user->nric,2,4);
+		
+		//echo "<script type='text/javascript'>alert('User: $user->username\\n Password: $user->password \\n Role: $user->role\\n Name: $user->name');</script>";
 		
 		//generate password
 		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
