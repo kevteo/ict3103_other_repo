@@ -3,14 +3,8 @@ require_once('Transaction.php');
 require_once('User.php');
 session_start();
 
-//TEST CODE START (REMOVE THIS SECTION BEFORE SUBMITTING) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
-//Visit   localhost/ict3104-team07-2018/model/Model.php   to test the commands below (if using netbeans, CTRL / to uncomment)
-//
-$model = Model::getInstance(); // Instantiate Object
-// Example 0 - Only run this function ONCE to insert data to database if necessary
-//$model->insertData();
 
+<<<<<<< HEAD
 // Example 1 - Login and store to session
 //$user = $model->login("customer1", "123");
 //if ($user) {
@@ -33,6 +27,7 @@ $model = Model::getInstance(); // Instantiate Object
 
 
 //TEST CODE END (REMOVE THIS SECTION BEFORE SUBMITTING)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=======
 
 
 class Model {
@@ -100,14 +95,11 @@ class Model {
             
             $sql = "UPDATE User SET lastActive = '$datetime' WHERE userID = '$user->userID'";
             $result = $this->performQuery($sql);
-			
-			
             $_SESSION['user'] = serialize($user);
 			
             return true;
         }
 		
-		//var_dump($user);
         return false;
     }
 
@@ -121,18 +113,14 @@ class Model {
      * 1. nric must be unique
      * 2. username must be unique
      */
-
-
-	 /*YH: Tested with source_customer/customerTest.php. Code workable. Can uncomment if want to debug */
     public function register($user) {
-		
-		//generate user name 
+		// Generate user name 
 		$randomUsername = substr(str_shuffle(str_repeat($user->name, 5)), 0, 5);
 		$user->username = $randomUsername."".substr($user->nric,2,4);
 		
+
 		//echo "<script type='text/javascript'>alert('User: $user->username\\n Password: $user->password \\n Role: $user->role\\n Name: $user->name');</script>";
-		
-		//generate password
+
 		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
 		$pass = array(); //remember to declare $pass as an array
 		$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
@@ -140,42 +128,21 @@ class Model {
 			$n = rand(0, $alphaLength);
 			$pass[] = $alphabet[$n];
 		}
-		
 		$user->password =implode($pass);
 		
-		
-		//Database check if exist
-		
-        $sql = "SELECT * FROM User WHERE username='$user->username' or  nric = '$user->nric'";
+		// Check if username or nric already exist
+        $sql = "SELECT * FROM User WHERE username='$user->username' OR  nric = '$user->nric'";
         $result = $this->performQuery($sql);
-        if (mysqli_num_rows($result)==0) {
-			//echo "new nric or username";
-			
-			//if not exist - database
-			if (mysqli_num_rows($result) == 0) {
-				$sql = "INSERT INTO User VALUES (NULL, '$user->username', '$user->password', '$user->role', '$user->name',
-				'$user->nric', '$user->mobileNumber', '$user->email','$user->address', '$user->account', 
-				'$user->salary','$user->balance', '$user->status', $user->isActive, $user->requestToggleActive, 
-				NULL, $user->isTerminated)";
-				
-				$result = $this->performQuery($sql);
-				
-				if (!$result){
-					//echo "<br><br>insert query fail ";
-					return false; 
-				}else{
-					//echo "<br><br>pass";
-					return true;
-				}
-			}
-		
-		}
-		else{
-			//echo "Existed Account ";
-			return false;
-		}
-		
-	
+        if (mysqli_num_rows($result)!=0) { return false; }
+        
+        // Insert to database
+        $sql = "INSERT INTO User VALUES (NULL, '$user->username', '$user->password', '$user->role', '$user->name',
+            '$user->nric', '$user->mobileNumber', '$user->email','$user->address', '$user->account', 
+            '$user->salary','$user->balance', '$user->status', $user->isActive, $user->requestToggleActive, 
+            NULL, $user->isTerminated)";
+        $result = $this->performQuery($sql);
+        if ($result) { return true; }
+        else { return null; }
     }
 
     /*
@@ -234,158 +201,105 @@ class Model {
         return mysqli_fetch_row($result)[0];
     }
     
-	 /*
-	*Please read withdraw function comment
-	*/
     public function deposit($amount) {
 		$date = new DateTime();
 		$datetime = $date->format('Y-m-d H-i-s');
         $user = unserialize($_SESSION['user']);
-        //$user->balance += abs($amount);
-        //$_SESSION['user'] = serialize($user);
 		
-		//Can replace with get balance function
-		$sql = "SELECT balance FROM user WHERE userID = '$user->userID'";
-        $result = $this->performQuery($sql);
-        $newBalance = mysqli_fetch_row($result)[0] + $amount;
+        $newBalance = $this->getBalance($user->userID) + $amount;
+        $posAmount = abs($amount);
 		
-		//Update
+		// Update Balance
         $sql = "UPDATE User SET balance = '$newBalance' WHERE userID = '$user->userID'";
         $result = $this->performQuery($sql);
-        if (!$result) { return false; }
+        if (!$result) { return null; }
 		
-		//Transcation
-		$sql = "INSERT INTO Transaction VALUES (NULL, '$amount', '$user->userID', NULL, '$datetime')";
+		// Log Transaction
+		$sql = "INSERT INTO Transaction VALUES (NULL, '$posAmount', '$user->userID', NULL, '$datetime')";
 		$result = $this->performQuery($sql);
-		if (!$result){ return false; }
+		if (!$result){ return null; }
 		
 		return true;
     }
-    
-    /*
-	*
-	*Please read the comment
-	*
-	*/
 	
     public function withdraw($amount) {
 		$date = new DateTime();
 		$datetime = $date->format('Y-m-d H-i-s');
-		$user = unserialize($_SESSION['user']);
-		//$user->balance += (abs($amount) * -1); //If user didn't logout, their session balance maybe inaccurate. (p.s. in between people may make some transaction)
-		//$_SESSION['user'] = serialize($user);
+        $user = unserialize($_SESSION['user']);
+        
+        $balance = $this->getBalance($user->userID);
 		
-		//Can replace with get balance function(p.s. I aly try $this->getBalance() but not working):'
-		//-----------------------------
-		$sql = "SELECT balance FROM user WHERE userID = '$user->userID'";
-        $result = $this->performQuery($sql);
-        $balance = mysqli_fetch_row($result)[0];
-		//-----------------------------
-		
-		//Check the amount
-		if ($balance>=$amount){
+		// Check the amount
+		if ($balance>=$amount) {
 			$newBalance = $balance - $amount;
-			$absAmount = abs($amount)*-1; // Negative Value
+			$negAmount = abs($amount)*-1; // Force value to be Negative
 			
-			//Update
+			// Update Balance
 			$sql = "UPDATE User SET balance = '$newBalance' WHERE userID = '$user->userID'";
 			$result = $this->performQuery($sql);
-			if (!$result){ return false; }
+			if (!$result){ return null; }
 			
-			
-			
-			
-			//Base on the sample data, when user withdraw or deposit, will auto update transaction too.
-			$sql = "INSERT INTO Transaction VALUES (NULL, '$absAmount', '$user->userID', NULL, '$datetime')";
+			// Log Transaction
+			$sql = "INSERT INTO Transaction VALUES (NULL, '$negAmount', '$user->userID', NULL, '$datetime')";
 			$result = $this->performQuery($sql);
-			if (!$result){ return false; }
+			if (!$result){ return null; }
 			
 			return true;
 		}
 		else{
 			return false;
 		}
-        
     }
     
-
 	/*
-	*
 	*Please double check this and read the comment 
-	*
 	*/
     public function transfer($amount, $account) {
         $user = unserialize($_SESSION['user']);
 		$date = new DateTime();
 		$datetime = $date->format('Y-m-d H-i-s');
 		
-		//1. Check if account exist
-		 $sql = "SELECT * FROM `user` where account='$account' and status=2 and isTerminated=0";
-		 $result = $this->performQuery($sql);
-		 if ($result == null) { echo "account exist -";return false; }
-		 else{
-			 $row=mysqli_fetch_assoc($result);
-			 $payeeID = $row['userID'];
-			 
-			 
-			 //Check if balance enough
-			 
-			 //----------------------------
-			 //Can replace with get balance function(p.s. I aly try $this->getBalance() but not working):
-			 $sql = "SELECT balance FROM user WHERE userID = '$user->userID'";
-			 $result = $this->performQuery($sql);
-			 $currentBalance= mysqli_fetch_row($result)[0];
-			 //-----------------------------
-			 $newBalance = $currentBalance-$amount;
-			 $absAmount = abs($amount)*-1; // Negative Value
-			
-			if(($newBalance)>=0){
-				 //Update session
-				 $user->balance-$amount; //(I dun think we need to update balance for session , as show balance page is directly retrieve from db)
-				 $_SESSION['user'] = serialize($user);
-				 
-				 //Update Database 
-				 $sql = "UPDATE User SET balance = '$newBalance' WHERE userID = '$user->userID'"; 
-				 $result = $this->performQuery($sql);
-				 if (!$result) { return false; }
-				 
-				         
-				$sql = "INSERT INTO Transaction VALUES (NULL, '$absAmount', '$user->userID', '$payeeID', '$datetime')";
-				$result = $this->performQuery($sql);
-				
-				if (!$result) {return false; }
-				
-				//Update payee
-				
-				//----------------------------------------
-				//Can replace with get balance function(p.s. I aly try $this->getBalance() but not working):
-				$sql = "SELECT balance FROM user WHERE userID = '$user->userID'";
-				$result = $this->performQuery($sql);
-				$payeeBalance= mysqli_fetch_row($result)[0];
-				//-------------------------------------------
-				
-				$payeeBalance += abs($amount);
-				
-				if (!$result) {return false; }
-				
-				$sql = "UPDATE User SET balance = '$payeeBalance' WHERE userID = '$payeeID'";
-				$result = $this->performQuery($sql);
-				if (!$result) { return false; }
-				
-
-				
-				return true;
-
-			 }
-
-			 else{
-				return false;
-			 }
-			}
-		}			
+		// Check if account exist
+		$sql = "SELECT * FROM User where account='$account' AND status = 2 AND isTerminated=0";
+		$result = $this->performQuery($sql);
+        if ($result == null) { return false; }
+         
+        $row = mysqli_fetch_assoc($result);
+        $payeeID = $row['userID'];
+        
+        //Check if balance enough
+        $newBalance = $this->getBalance($user->userID) - abs($amount);
+        
+        if($newBalance >= 0) {
+            // Update Database
+            $posAmount = abs($amount);
+            $sql = "UPDATE User SET balance = '$newBalance' WHERE userID = '$user->userID'"; 
+            $result = $this->performQuery($sql);
+            if (!$result) { return false; }
+            
+            $sql = "INSERT INTO Transaction VALUES (NULL, '$posAmount', '$user->userID', '$payeeID', '$datetime')";
+            $result = $this->performQuery($sql);
+            
+            if (!$result) { return false; }
+            
+            // Update payee
+            $sql = "SELECT balance FROM user WHERE account = '$account'";
+            $result = $this->performQuery($sql);
+            $payeeBalance = mysqli_fetch_row($result)[0] + abs($amount);
+            
+            $sql = "UPDATE User SET balance = '$payeeBalance' WHERE account = '$account'";
+            $result = $this->performQuery($sql);
+            if (!$result) { return false; }
+            
+            return true;
+        }
+        else {
+            return false;
+        }
+	}			
 		
-		
-
+        
+    
         
 		
 
@@ -492,66 +406,64 @@ class Model {
 	
 	//admin create aacount
     public function createCustomerAccount($userID) {
-            $sql = "UPDATE User SET status = 2 WHERE userID = '$userID'";
-            $result = $this->performQuery($sql);
-            if ($result) { return true; } else { return null; }
-        
+        $sql = "UPDATE User SET status = 2 WHERE userID = '$userID'";
+        $result = $this->performQuery($sql);
+        if ($result) { return true; } else { return null; }
+    
         return false;
     }
     
-    //admin set inactive customers for > 3months
+    //admin set customers inactive if lastActive > 3months
     public function setInactiveCustomers(){
-    $date = new DateTime();
-    $currentDate = $date->format('Y-m-d H-i-s');
-    $sql = "SELECT * FROM User WHERE lastActive <= NOW() - INTERVAL 3 MONTH";
-    $result = $this->performQuery($sql);
-    while($row = $result->fetch_array(MYSQLI_ASSOC)){
-        $a = $row['userID'];
-        $sql2 = "UPDATE User SET isActive = 0 WHERE userID = '$a'";
-        $result2 = $this->performQuery($sql2);
+        $date = new DateTime();
+        $currentDate = $date->format('Y-m-d H-i-s');
+        $sql = "SELECT * FROM User WHERE lastActive <= NOW() - INTERVAL 3 MONTH";
+        $result = $this->performQuery($sql);
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+            $a = $row['userID'];
+            $sql2 = "UPDATE User SET isActive = 0 WHERE userID = '$a'";
+            $result2 = $this->performQuery($sql2);
 
-    }
-    return null;
+        }
+        return null;
     }
     
-    //admin download backup data to csv
-    public function backupData()
-    {
-    //table name
-    $db_record = 'User';
-    //WHERE query
-    $where = 'WHERE status = "2"';
-    //filename for export
-    $csv_filename = $db_record.'_'.date('Y-m-d').'.csv';
-    //database variables
-    //empty variable to be filled with export data
-    $csv_export = '';
-    // query to get data from database
-    $query = mysqli_query($this->conn, "SELECT * FROM ".$db_record." ".$where);
+    // admin download backup data to csv
+    public function backupData() {
+        //table name
+        $db_record = 'User';
+        //WHERE query
+        $where = 'WHERE status = "2"';
+        //filename for export
+        $csv_filename = $db_record.'_'.date('Y-m-d').'.csv';
+        //database variables
+        //empty variable to be filled with export data
+        $csv_export = '';
+        // query to get data from database
+        $query = mysqli_query($this->conn, "SELECT * FROM ".$db_record." ".$where);
 
-    //if include where example 
-    //$query = mysqli_query($this->conn, "SELECT * FROM ".$db_record." ".$where);
+        //if include where example 
+        //$query = mysqli_query($this->conn, "SELECT * FROM ".$db_record." ".$where);
 
-    $field = mysqli_field_count($this->conn);
-    // create line with field names
-    for($i = 0; $i < $field; $i++) {
-        $csv_export.= mysqli_fetch_field_direct($query, $i)->name.';';
-        }
-    // newline 
-    $csv_export.= '';
-    // loop through database query and fill export variable
-    while($row = mysqli_fetch_array($query)) {
-        // create line with field values
+        $field = mysqli_field_count($this->conn);
+        // create line with field names
         for($i = 0; $i < $field; $i++) {
-            $csv_export.= '"'.$row[mysqli_fetch_field_direct($query, $i)->name].'";';
+            $csv_export.= mysqli_fetch_field_direct($query, $i)->name.';';
         }
-        $csv_export.= '
-    ';
+        // newline 
+        $csv_export.= '';
+        // loop through database query and fill export variable
+        while($row = mysqli_fetch_array($query)) {
+            // create line with field values
+            for($i = 0; $i < $field; $i++) {
+                $csv_export.= '"'.$row[mysqli_fetch_field_direct($query, $i)->name].'";';
+            }
+            $csv_export.= '';
         }
-    // Export the data and prompt a csv file for download
-    header("Content-type: text/x-csv");
-    header("Content-Disposition: attachment; filename=".$csv_filename."");
-    echo($csv_export);
+        // Export the data and prompt a csv file for download
+        header("Content-type: text/x-csv");
+        header("Content-Disposition: attachment; filename=".$csv_filename."");
+        echo($csv_export);
     }
 
     /*
@@ -559,12 +471,6 @@ class Model {
      * If changes are made to database, modify if necessary
      * Type command in phpmyadmin if Transaction table rows are not appearing, DELETE all the User rows THEN insert this sql ALTER TABLE user AUTO_INCREMENT = 1
      */
-
-	 /*
-	 *
-	 *Please reupload the latest database !
-	 *
-	 */
     public function insertData() {
         $sqlArray = array();
         $date = new DateTime();
