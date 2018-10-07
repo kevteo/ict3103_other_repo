@@ -19,7 +19,7 @@ class User {
     public $lastActive;
     public $isTerminated;
     
-    function __construct($role, $name, $nric, $mobileNumber, $email,$address,$account,$salary, $password = null, $username = null, $userID = null, 
+    function __construct($role, $name, $nric, $mobileNumber, $email, $address ,$account ,$salary , $password = null, $username = null, $userID = null, 
 	$balance = '0', $status = 0, $isActive = 1, $requestToggleActive = 0, $lastActive = null, $isTerminated = 0) {
         if ($lastActive == null) {
             $date = new DateTime();
@@ -34,9 +34,9 @@ class User {
         $this->nric = $nric;
         $this->mobileNumber = $mobileNumber;
         $this->email = $email;
-		$this->address = $address;// new column
-		$this->account = $account;// new column
-		$this->salary = $salary;// new column
+		$this->address = $address;
+		$this->account = $account;
+		$this->salary = $salary;
         $this->balance = $balance;
         $this->status = $status;
         $this->isActive = $isActive;
