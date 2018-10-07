@@ -5,7 +5,7 @@
    $title = "My Bank | Customer";
    $output = str_replace('%Title%', $title, $output);
    
-   include("customerHeader.php");
+   include("customerHeaderFund.php");
    
    //Backend
    	if(isset($_POST['transfer'])){
