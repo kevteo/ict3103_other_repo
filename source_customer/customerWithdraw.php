@@ -112,6 +112,5 @@
 				</div>
 			</div>
 			<!-- end::Body -->
-			</div>
 
 <?php include("../source_include/footer.php"); ?>

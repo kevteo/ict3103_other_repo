@@ -34,9 +34,9 @@
 																</div>
 																<div class="m-card-user__details">
 																	<span class="m-card-user__name m--font-weight-500">
-																		Lee Manager
+																		Customer
 																	</span>
-																	<a href="profile.php" class="">
+																	<a href="customerProfileView.php" class="">
 																		View Profile
 																	</a>
 																</div>
