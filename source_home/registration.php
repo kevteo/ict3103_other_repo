@@ -292,7 +292,9 @@ isset($_POST['postalcode'])
 																</h3>
 															</div>
 															<div class="form-group m-form__group row">
+															<!--
 																<div class="col-lg-6 m-form__group-sub">
+																
 																	<label class="form-control-label">
 																		* Username:
 																	</label>
@@ -300,7 +302,7 @@ isset($_POST['postalcode'])
 																	<span class="m-form__help">
 																		Your username will be used for login
 																	</span>
-																</div>
+																</div> -->
 																<div class="col-lg-6 m-form__group-sub">
 																	<label class="form-control-label">
 																		* Password:
@@ -454,6 +456,7 @@ isset($_POST['postalcode'])
 																			Account Details
 																		</h4>
 																	</div>
+																	<!--
 																	<div class="form-group m-form__group m-form__group--sm row">
 																		<label class="col-xl-3 col-lg-3 col-form-label">
 																			Username:
@@ -462,7 +465,7 @@ isset($_POST['postalcode'])
 																			<span class="m-form__control-static" id="usernameCheck">
 																			</span>
 																		</div>
-																	</div>
+																	</div> -->
 																	<div class="form-group m-form__group m-form__group--sm row">
 																		<label class="col-xl-3 col-lg-3 col-form-label">
 																			Password:
@@ -593,8 +596,8 @@ isset($_POST['postalcode'])
 	var postalcode = document.getElementById("postalcode").value;
 	document.getElementById("postalcodeCheck").innerHTML = postalcode;
 	
-	var username = document.getElementById("username").value;
-	document.getElementById("usernameCheck").innerHTML = username;
+	//var username = document.getElementById("username").value;
+	//document.getElementById("usernameCheck").innerHTML = username;
 	
 	var password = document.getElementById("password").value;
 	document.getElementById("passwordCheck").innerHTML = password;

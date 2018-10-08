@@ -56,7 +56,7 @@
                                     NRIC
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="S1231232F">
+                                       <input class="form-control m-input" type="text" value="S1231232F" style="background: transparent; border: none;" disabled>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -120,7 +120,7 @@
                                     Username
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="nick.stone">
+                                       <input class="form-control m-input" type="text" value="nick.stone" style="background: transparent; border: none;" disabled>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">

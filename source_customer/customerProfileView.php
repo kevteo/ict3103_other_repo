@@ -46,7 +46,6 @@
                               <div class="m-portlet__body">
                                  <div class="form-group m-form__group m--margin-top-10 m--hide">
                                     <div class="alert m-alert m-alert--default" role="alert">
-                                       The example form below demonstrates common HTML form elements that receive updated styles from Bootstrap with additional classes.
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -61,7 +60,7 @@
                                     Full Name
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="Mark Andre">
+                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="Mark Andre" disabled>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -69,7 +68,7 @@
                                     NRIC
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="S1231232F">
+                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="S1231232F" disabled>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -77,7 +76,7 @@
                                     Email
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="nic.stone@gmail.com">
+                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="nic.stone@gmail.com" disabled>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -85,7 +84,7 @@
                                     Phone No.
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="81222222">
+                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="81222222" disabled>
                                     </div>
                                  </div>
                                  <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -101,7 +100,7 @@
                                     Address Line 1
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="Ang Mo Kio Avenue 6">
+                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="Ang Mo Kio Avenue 6" disabled>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -109,7 +108,7 @@
                                     Address Line 2
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="Block 123 #12-22">
+                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="Block 123 #12-22" disabled>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -117,7 +116,7 @@
                                     Postal Code
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="540123">
+                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="540123" disabled>
                                     </div>
                                  </div>
                                  <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -133,7 +132,7 @@
                                     Username
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="nick.stone">
+                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="nick.stone" disabled>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -141,7 +140,7 @@
                                     Salary Range
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="< 2000">
+                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="< 2000" disabled>
                                     </div>
                                  </div>
                               </div>
