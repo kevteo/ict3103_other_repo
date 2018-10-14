@@ -1,14 +1,14 @@
 <?php
-   include("../source_include/header.php");
-   
-   $title = "My Bank | Customer";
-   $output = str_replace('%Title%', $title, $output);
-   echo $output;
-   
-   include("customerHeaderProfile.php");
-   
-   
-   ?>
+include("../source_include/header.php");
+
+$title = "My Bank | Customer";
+$output = str_replace('%Title%', $title, $output);
+echo $output;
+
+include("customerHeaderProfile.php");
+
+$user = $model->getProfile();
+?>
 <!-- begin:: Page -->
 <div class="m-grid m-grid--hor m-grid--root m-page">
    <!-- begin::Body -->
@@ -29,7 +29,7 @@
             <div class="row">
                <div class="col-xl-12 col-lg-12">
                   <div class="m-portlet m-portlet--full-height m-portlet--tabs   m-portlet--rounded">
-                           <form class="m-form m-form--fit m-form--label-align-right">
+                           <form class="m-form m-form--fit m-form--label-align-right" action="customerProfileView.php" method="post" id="editProfileForm">
                               <div class="m-portlet__body">
                                  <div class="form-group m-form__group m--margin-top-10 m--hide">
                                     <div class="alert m-alert m-alert--default" role="alert">
@@ -48,7 +48,7 @@
                                     Full Name
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="Mark Andre">
+                                       <input class="form-control m-input" type="text" value="<?php echo $user->name ;?>" name="fullName">
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -56,7 +56,7 @@
                                     NRIC
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="S1231232F" style="background: transparent; border: none;" disabled>
+                                       <input class="form-control m-input" type="text" value="<?php echo $user->nric ;?>" style="background: transparent; border: none;" disabled>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -64,7 +64,7 @@
                                     Email
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="nic.stone@gmail.com">
+                                       <input class="form-control m-input" type="text" value="<?php echo $user->email ;?>" name="email">
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -72,7 +72,7 @@
                                     Phone No.
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="81222222">
+                                       <input class="form-control m-input" type="text" value="<?php echo $user->mobileNumber; ?>" name="phoneNum">
                                     </div>
                                  </div>
                                  <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -85,26 +85,10 @@
                                  </div>
                                  <div class="form-group m-form__group row">
                                     <label for="example-text-input" class="col-2 col-form-label">
-                                    Address Line 1
+                                    Address
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="Ang Mo Kio Avenue 6">
-                                    </div>
-                                 </div>
-                                 <div class="form-group m-form__group row">
-                                    <label for="example-text-input" class="col-2 col-form-label">
-                                    Address Line 2
-                                    </label>
-                                    <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="Block 123 #12-22">
-                                    </div>
-                                 </div>
-                                 <div class="form-group m-form__group row">
-                                    <label for="example-text-input" class="col-2 col-form-label">
-                                    Postal Code
-                                    </label>
-                                    <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="540123">
+                                       <input class="form-control m-input" type="text" value="Ang Mo Kio Avenue 6" name="address">
                                     </div>
                                  </div>
                                  <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -120,7 +104,7 @@
                                     Username
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="nick.stone" style="background: transparent; border: none;" disabled>
+                                       <input class="form-control m-input" type="text" value="<?php echo $user->username ;?>" style="background: transparent; border: none;" disabled>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -128,7 +112,7 @@
                                     Password
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="password" value="qwerty">
+                                       <input class="form-control m-input" type="password" value="<?php echo $user->password ;?>" name="password">
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -136,21 +120,24 @@
                                     Salary Range
                                     </label>
                                     <div class="col-7">
-                                       <select  name="account_type" class="form-control m-input" placeholder="" value="1" id="salary">
-                                          <option value="1">
-                                             < $2000
+                                       <select  name="account_type" class="form-control m-input" placeholder="" id="salary">
+                                          <option value="Below 2000" <?php if ($user->salary == "Below 2000") echo "selected=selected"  ;?> > 
+                                             Below $2000
                                           </option>
-                                          <option value="2">
+                                          <option value="2000-3000" <?php if ($user->salary == "2000-3000") echo "selected=selected"  ;?> > 
                                              $2000 - $3000
                                           </option>
-                                          <option value="3">
+                                          <option value="3000-4000" <?php if ($user->salary == "3000-4000") echo "selected=selected"  ;?> > 
+                                             $3000 - $4000
+                                          </option>
+                                          <option value="4000-5000" <?php if ($user->salary == "4000-5000") echo "selected=selected"  ;?> > 
                                              $4000 - $5000
                                           </option>
-                                          <option value="4">
+                                          <option value="5000-6000" <?php if ($user->salary == "5000-6000") echo "selected=selected"  ;?> > 
                                              $5000 - $6000
                                           </option>
-                                          <option value="6">
-                                             > $6000
+                                          <option value="Above 6000" <?php if ($user->salary == "Above 6000") echo "selected=selected"  ;?> > 
+                                             Above $6000
                                           </option>
                                        </select>
                                     </div>
@@ -161,7 +148,7 @@
                                     <div class="row">
                                        <div class="col-4"></div>
                                        <div class="col-8">
-                                          <a href="customerProfileView.php" class="btn btn-primary">
+                                          <a href="javascript:$('#editProfileForm').submit()" class="btn btn-primary">
 															Save Changes
 														</a>
                                           &nbsp;&nbsp;
@@ -173,6 +160,7 @@
                               </div>
 							  </div>
 							  </div>
+                           <input type="hidden" name="editProfile">
                            </form> 
                        
                      </div>

@@ -16,7 +16,7 @@ $model = Model::getInstance(); // Instantiate Object
 //    echo $user->name . "<br>";
 //    echo $user->userID . "<br>";
 //    echo $user->email . "<br>";
-//} else {
+// } else {
 //    echo "Invalid account!";
 //}
 
@@ -37,3 +37,15 @@ $model = Model::getInstance(); // Instantiate Object
 // echo "<br>".$model->getBalance(1)."<br>";
 
 
+// Modify & View Profile Example (LOGIN TO AN ACCOUNT FIRST)
+//$model->modifyProfile(53, "name", "address", "email", "password", "salary");
+//var_dump($model->getProfile());
+
+
+// Backup Data Example
+//$model->backupData();
+
+
+// Request & Set Toggle Active (LOGIN TO AN ACCOUNT FIRST)
+//var_dump($model->requestToggleActive());
+//$model->setToggleActive(1);

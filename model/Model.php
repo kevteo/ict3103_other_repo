@@ -66,9 +66,8 @@ class Model {
             return $result;
         }
         echo '<pre>';
-        echo '<pre>';
         echo "There was an error in the function: ";
- //       var_dump(debug_backtrace()[1]['function']);
+        var_dump(debug_backtrace()[1]['function']);
         echo '</pre>';
         echo $sql;
         return null;
@@ -98,7 +97,6 @@ class Model {
 			
             return true;
         }
-		
         return false;
     }
 
@@ -113,23 +111,31 @@ class Model {
      * 2. username must be unique
      */
     public function register($user) {
-		// Generate user name 
-		$randomUsername = substr(str_shuffle(str_repeat($user->name, 5)), 0, 5);
-		$user->username = $randomUsername."".substr($user->nric,2,4);
-		
+        // Generate user name 
+        $randomUsername = substr(str_shuffle(str_repeat($user->name, 5)), 0, 5);
+        $user->username = $randomUsername."".substr($user->nric,2,4);
+      
+        // Generate password
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        $user->password =implode($pass);
+        
+        // Generate account number
+        $numbers = '1234567890';
+        $accountNumber = array(); //remember to declare $pass as an array
+        $numbersLength = strlen($numbers) - 1; //put the length -1 in cache
+        for ($i = 0; $i < 9; $i++) {
+            $n = rand(0, $numbersLength);
+            $accountNumber[] = $numbers[$n];
+        }
+        $user->account = implode($accountNumber);
 
-		//echo "<script type='text/javascript'>alert('User: $user->username\\n Password: $user->password \\n Role: $user->role\\n Name: $user->name');</script>";
-
-		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-		$pass = array(); //remember to declare $pass as an array
-		$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-		for ($i = 0; $i < 8; $i++) {
-			$n = rand(0, $alphaLength);
-			$pass[] = $alphabet[$n];
-		}
-		$user->password =implode($pass);
-		
-		// Check if username or nric already exist
+        // Check if username or nric already exist
         $sql = "SELECT * FROM User WHERE username='$user->username' OR  nric = '$user->nric'";
         $result = $this->performQuery($sql);
         if (mysqli_num_rows($result)!=0) { return false; }
@@ -154,9 +160,11 @@ class Model {
      * 1. Account must be inactive
      */
 
-    public function requestToggleActive($user) {
-        // TO-DO Confirm the flow (this function done before or after login? If before login parameters: $username, $password. if after login $parameters: $user object
-        // Currently function done assuming it is after login
+    public function requestToggleActive() {
+        $userID = unserialize($_SESSION['user'])->userID;
+        $sql = "SELECT * FROM User WHERE userID = '$userID'";
+        $result = $this->performQuery($sql);
+        $user = mysqli_fetch_object($result);
 
         if ($user->isActive == true) {
             return false;
@@ -169,28 +177,34 @@ class Model {
     /*
      * Returns
      * 1. true if succesfully toggled active
-     * 2. false if does not fit criteria
      * 3. null if error inserting
-     * 
-     * Criteria
-     * 1. User must be a manager
      */
 
-    public function setToggleActive($user) {
-        if ($user->role == 'manager') {
-            $sql = "UPDATE User SET requestToggleActive = 0, isActive = 1 WHERE userID = '$user->userID'";
-            $result = $this->performQuery($sql);
-            if ($result) { return true; } else { return null; }
-        }
-        return false;
+    public function setToggleActive($userID) {
+        $sql = "UPDATE User SET requestToggleActive = 0, isActive = 1 WHERE userID = '$userID'";
+        $result = $this->performQuery($sql);
+        if ($result) { return true; } else { return null; }
     }
     
     
-    public function modifyProfile($user) {
-        // TO-DO find out what can be changed and any criteria?
-        $sql = "UPDATE User SET email = '$user->email' WHERE userID = '$user->userID'";
+    public function modifyProfile($userID, $name, $address, $email, $password, $salary) {
+        $sql = "UPDATE User SET name = '$name',
+        address = '$address',
+        email = '$email',
+        password = '$password',
+        salary = '$salary'
+        WHERE userID = '$userID'";
+
         $result = $this->performQuery($sql);
         if ($result) { return true; } else { return null; }
+    }
+
+    public function getProfile() {
+        $userID = unserialize($_SESSION['user'])->userID;
+        $sql = "SELECT * FROM User WHERE userID = '$userID'";
+        
+        $result = $this->performQuery($sql);
+        return mysqli_fetch_object($result);
     }
     
     
@@ -399,9 +413,7 @@ class Model {
             $result = $this->performQuery($sql);
             if ($result) { return true; } else { return null; }
         }
-
-
-		}
+	}
 	
 	//admin create aacount
     public function createCustomerAccount($userID) {
@@ -422,7 +434,6 @@ class Model {
             $a = $row['userID'];
             $sql2 = "UPDATE User SET isActive = 0 WHERE userID = '$a'";
             $result2 = $this->performQuery($sql2);
-
         }
         return null;
     }

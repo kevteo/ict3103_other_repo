@@ -1,12 +1,26 @@
 <?php
-   include("../source_include/header.php");
-   
-   $title = "My Bank | Customer";
-   $output = str_replace('%Title%', $title, $output);
-   echo $output;
-   
-   include("customerHeaderProfile.php");
-   
+include("../source_include/header.php");
+
+$title = "My Bank | Customer";
+$output = str_replace('%Title%', $title, $output);
+echo $output;
+
+include("customerHeaderProfile.php");
+
+
+// If Submit Modify Profile Form
+if (isset($_POST['editProfile'])) {
+      $user = unserialize($_SESSION['user']);
+      $name = $_POST['fullName'];
+      $address = $_POST['address'];
+      $email = $_POST['email'];
+      $password = $_POST['password'];
+      $salary = $_POST['account_type'];
+
+      $model->modifyProfile($user->userID, $name, $address, $email, $password, $salary);
+}
+
+$user = $model->getProfile();
    
    ?>
 <!-- begin:: Page -->
@@ -60,7 +74,7 @@
                                     Full Name
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="Mark Andre" disabled>
+                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="<?php echo $user->name; ?>" disabled>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -68,7 +82,7 @@
                                     NRIC
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="S1231232F" disabled>
+                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="<?php echo $user->nric; ?>" disabled>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -76,7 +90,7 @@
                                     Email
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="nic.stone@gmail.com" disabled>
+                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="<?php echo $user->email; ?>" disabled>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -84,7 +98,7 @@
                                     Phone No.
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="81222222" disabled>
+                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="<?php echo $user->mobileNumber; ?>" disabled>
                                     </div>
                                  </div>
                                  <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -97,26 +111,10 @@
                                  </div>
                                  <div class="form-group m-form__group row">
                                     <label for="example-text-input" class="col-2 col-form-label">
-                                    Address Line 1
+                                    Address
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="Ang Mo Kio Avenue 6" disabled>
-                                    </div>
-                                 </div>
-                                 <div class="form-group m-form__group row">
-                                    <label for="example-text-input" class="col-2 col-form-label">
-                                    Address Line 2
-                                    </label>
-                                    <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="Block 123 #12-22" disabled>
-                                    </div>
-                                 </div>
-                                 <div class="form-group m-form__group row">
-                                    <label for="example-text-input" class="col-2 col-form-label">
-                                    Postal Code
-                                    </label>
-                                    <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="540123" disabled>
+                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="<?php echo $user->address; ?>" disabled>
                                     </div>
                                  </div>
                                  <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -132,7 +130,7 @@
                                     Username
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="nick.stone" disabled>
+                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="<?php echo $user->username; ?>" disabled>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -140,7 +138,7 @@
                                     Salary Range
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="< 2000" disabled>
+                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="<?php echo $user->salary; ?>" disabled>
                                     </div>
                                  </div>
                               </div>

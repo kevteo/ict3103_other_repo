@@ -1,4 +1,16 @@
+<?php
+include('../model/Model.php');
+$model = Model::getInstance();
+if (isset($_POST['reactivate'])) {
+	if ($model->requestToggleActive()) {
+		echo "<script>alert('Request for reactivation sent!')</script>";
+	} else {
+		echo "<script>alert('Account already active!')</script>";
+	}
+	echo "<script>window.location.replace('login.php');</script>";
+}
 
+?>
 <!DOCTYPE html>
 <html lang="en" >
 <!-- begin::Head -->
@@ -28,6 +40,7 @@
 	<link href="../vendors/base/vendors.bundle.css" rel="stylesheet" type="text/css" />
 	<link href="../base/style.bundle.css" rel="stylesheet" type="text/css" />
 	<link href="../base/custom.css" rel="stylesheet" type="text/css" />
+
 </head>
 <!-- end::Head -->
 
@@ -50,10 +63,12 @@
 						<br>
 						Would you like to send a request to reactivate your account? 
 					</p>
-					<button type="reset" class="btn btn-outline-success m-btn m-btn--outline-2x ">
+					<form action="" method="post" id='reactivateForm'>
+						<button onclick="javascript:$('#reactivateForm').submit()" type="reset" class="btn btn-outline-success m-btn m-btn--outline-2x " id='reactivate'>
 															Reactivate
+						<input type='hidden' name="reactivate">
+					</form>
 				</div>
-				
 			</div>
 		</div>
 		<!-- end:: Page -->

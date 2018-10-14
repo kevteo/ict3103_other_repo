@@ -6,6 +6,15 @@
     echo $output;
 
 	include("adminHeader.php");
+
+	if (isset($_POST['backup'])) {
+		$model->backupData();
+	}
+
+	if (isset($_POST['update'])) {
+		$model->setInactiveCustomers();
+	}
+
 	?>
 	<!-- begin:: Page -->
 		<div class="m-grid m-grid--hor m-grid--root m-page">
@@ -27,24 +36,30 @@
 						<!--begin::Section-->
 						<div class="row">
 						<div class="col-xl-12">
-															<a href="#" class="btn btn-success m-btn m-btn--icon m-btn--pill">
-																<span>
-																	<i class="fa fa-fw fa-refresh"></i>
+															<form method="post" action="" style="display:inline" id="updateForm">
+																<a href="javascript:$('#updateForm').submit()" class="btn btn-success m-btn m-btn--icon m-btn--pill">
 																	<span>
-																		Update
+																		<i class="fa fa-fw fa-refresh"></i>
+																		<span>
+																			Update
+																		</span>
 																	</span>
-																</span>
-															</a>
-															
-															<a href="#" class="btn btn-success m-btn m-btn--icon m-btn--pill">
-																<span>
-																	<i class="fa fa-fw fa-floppy-o"></i>
+																</a>
+																<input type="hidden" name="update">
+															</form>
+
+															<form method="post" action="" style="display:inline" id="backupForm">
+																<a href="javascript:$('#backupForm').submit()" class="btn btn-success m-btn m-btn--icon m-btn--pill">
 																	<span>
-																		Back Up
+																		<i class="fa fa-fw fa-floppy-o"></i>
+																		<span>
+																			Back Up
+																		</span>
 																	</span>
-																</span>
-															</a>
-															<br><br>
+																</a>
+																<br><br>
+																<input type="hidden" name="backup">
+															</form>
 					
 					<!--begin: Datatable -->
                             <div class="admin_dashboard" id="admin_dashboard"></div>
