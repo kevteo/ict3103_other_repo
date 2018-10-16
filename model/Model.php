@@ -439,41 +439,44 @@ class Model {
     }
     
     // admin download backup data to csv
-    public function backupData() {
-        //table name
-        $db_record = 'User';
-        //WHERE query
-        $where = 'WHERE status = "2"';
-        //filename for export
-        $csv_filename = $db_record.'_'.date('Y-m-d').'.csv';
-        //database variables
-        //empty variable to be filled with export data
-        $csv_export = '';
-        // query to get data from database
-        $query = mysqli_query($this->conn, "SELECT * FROM ".$db_record." ".$where);
+    public function downloadBackup()
+    {
+    //table name
+    $db_record = 'User';
+    //WHERE query
+    $where = 'WHERE status = "2"';
+    //filename for export
+    $csv_filename = $db_record.'_'.date('Y-m-d').'.csv';
+    //database variables
+    //empty variable to be filled with export data
+    $csv_export = '';
+    // query to get data from database
+    $query = mysqli_query($this->conn, "SELECT * FROM ".$db_record." ".$where);
 
-        //if include where example 
-        //$query = mysqli_query($this->conn, "SELECT * FROM ".$db_record." ".$where);
+    //if include where example 
+    //$query = mysqli_query($this->conn, "SELECT * FROM ".$db_record." ".$where);
 
-        $field = mysqli_field_count($this->conn);
-        // create line with field names
+    $field = mysqli_field_count($this->conn);
+    // create line with field names
+    for($i = 0; $i < $field; $i++) {
+        $csv_export.= mysqli_fetch_field_direct($query, $i)->name.',';
+        }
+    // newline 
+        $csv_export.= '
+    ';
+    // loop through database query and fill export variable
+    while($row = mysqli_fetch_array($query)) {
+        // create line with field values
         for($i = 0; $i < $field; $i++) {
-            $csv_export.= mysqli_fetch_field_direct($query, $i)->name.';';
+            $csv_export.= ''.$row[mysqli_fetch_field_direct($query, $i)->name].',';
         }
-        // newline 
-        $csv_export.= '';
-        // loop through database query and fill export variable
-        while($row = mysqli_fetch_array($query)) {
-            // create line with field values
-            for($i = 0; $i < $field; $i++) {
-                $csv_export.= '"'.$row[mysqli_fetch_field_direct($query, $i)->name].'";';
-            }
-            $csv_export.= '';
+        $csv_export.= '
+    ';
         }
-        // Export the data and prompt a csv file for download
-        header("Content-type: text/x-csv");
-        header("Content-Disposition: attachment; filename=".$csv_filename."");
-        echo($csv_export);
+    // Export the data and prompt a csv file for download
+    header("Content-type: text/x-csv");
+    header("Content-Disposition: attachment; filename=".$csv_filename."");
+    echo($csv_export);
     }
 
     /*
