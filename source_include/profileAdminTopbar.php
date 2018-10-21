@@ -34,11 +34,11 @@
 																</div>
 																<div class="m-card-user__details">
 																	<span class="m-card-user__name m--font-weight-500">
-																		Lee Manager
+																		Admin
 																	</span>
-																	<a href="profile.php" class="">
+																	<!-- <a href="profile.php" class="">
 																		View Profile
-																	</a>
+																	</a> -->
 																</div>
 															</div>
 														</div>

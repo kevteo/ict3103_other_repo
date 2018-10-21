@@ -1,6 +1,7 @@
 <?php 
 
 require_once '../model/Model.php';
+$model = Model::getInstance();
 
 
 ?>

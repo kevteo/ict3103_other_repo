@@ -1,7 +1,7 @@
 <?php 
 
 require_once '../model/Model.php';
-
+$model = Model::getInstance();
 
 ?>
 
@@ -16,3 +16,4 @@ require_once '../model/Model.php';
     },
 	
 	"data":<?php echo $model->getCustomersPending(); ?>}
+	

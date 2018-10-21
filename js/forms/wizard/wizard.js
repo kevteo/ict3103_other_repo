@@ -84,9 +84,6 @@ var WizardDemo = function() {
 						var postalcode = document.getElementById("postalcode").value;
 						document.getElementById("postalcodeCheck").innerHTML = postalcode;
 						
-						var username = document.getElementById("username").value;
-						document.getElementById("usernameCheck").innerHTML = username;
-						
 						var password1 = document.getElementById("password").value;
 						document.getElementById("passwordCheck").innerHTML = password1;
 						
@@ -102,7 +99,7 @@ var WizardDemo = function() {
 						
 						console.log(name);
 						
-						var user = JSON.stringify({ name: name, nric: nric, mobileNumber: phone, username: username, password1: password1,role: "customer", email: email , address: address1 +" "+ address2 +" Singapore "+ postalcode, account: "024-61993-1",salary: salaryCheck ,balance: "0", status1: "0", isActive: "1", requestToggleActive: "0", isTerminated: "0"});
+						var user = JSON.stringify({ name: name, nric: nric, mobileNumber: phone, password1: password1,role: "customer", email: email , address: address1 +" "+ address2 +" Singapore "+ postalcode, account: "024-61993-1",salary: salaryCheck ,balance: "0", status1: "0", isActive: "1", requestToggleActive: "0", isTerminated: "0"});
 						
 						console.log(user);
 						
