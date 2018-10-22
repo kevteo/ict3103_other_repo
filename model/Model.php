@@ -83,7 +83,7 @@ class Model {
      */
 
     public function login($username, $password) {
-        $sql = "SELECT * FROM User WHERE username = '$username' AND password = '$password' and status='2' and isTerminated='0'";
+        $sql = "SELECT * FROM User WHERE username = '$username' AND password = '$password' and isTerminated='0'";
         $result = $this->performQuery($sql);
         if ($result == null) { return null; }
 

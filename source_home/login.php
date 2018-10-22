@@ -19,8 +19,6 @@ if(isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
 	else{
 		validateLogin($model,$_COOKIE['username'] ,$_COOKIE['password']);
 	}
-
-	
 }
 
 //If user click Login

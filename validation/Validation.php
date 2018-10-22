@@ -18,6 +18,8 @@
 			$user = unserialize($_SESSION['user']);
 			$url = "";
 			
+			
+
 			//Role URL
 			if(strcasecmp($user->role, "customer") == 0){
 				$url ="Location: ../source_customer/customerdashboard.php";
@@ -29,8 +31,11 @@
 			}
 			
 			else if (strcasecmp($user->role, "manager")==0){
-				$url ="Location: ../source_manager/managerdashboard.php";
-				
+				$url ="Location: ../source_manager/managerdashboard.php";	
+			}
+			
+			else if ($user->isActive == 0) {
+				$url = "Location: ../source_home/inactiveAccount.php";
 			}
 			
 			else{
