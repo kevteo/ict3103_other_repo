@@ -30,6 +30,7 @@
 						<div class="row">
 						<div class="col-xl-12">
 
+					<!--begin::Notification-->
 					<?php
 						if (isset($_GET['success']) && isset($_GET['msg']) ) {
 							$success = $_GET['success'];
@@ -57,6 +58,8 @@
 						}
 					
 					?>
+
+					<!--end::Notification-->
 
 					
 					<!--begin: Datatable -->

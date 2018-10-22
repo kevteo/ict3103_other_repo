@@ -113,6 +113,7 @@ var DefaultDatatableManagerDash = function() {
         }
     }
 }();
+
 jQuery(document).ready(function() {
     DefaultDatatableManagerDash.init()
 });
