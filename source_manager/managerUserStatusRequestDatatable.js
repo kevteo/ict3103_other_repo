@@ -1,6 +1,6 @@
-var DefaultDatatableManagerDash = function() {
+var DefaultDatatableUserRequest = function() {
     var e = function(t) {
-        var a = $("#m_datatable_console_managerDash").append(t + "\t\n");
+        var a = $("#m_datatable_console_userRequest").append(t + "\t\n");
         $(a).scrollTop(a[0].scrollHeight - $(a).height())
     };
     return {
@@ -115,5 +115,5 @@ var DefaultDatatableManagerDash = function() {
     }
 }();
 jQuery(document).ready(function() {
-    DefaultDatatableManagerDash.init()
+    DefaultDatatableUserRequest.init()
 });

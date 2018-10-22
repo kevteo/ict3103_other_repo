@@ -23,7 +23,7 @@
 						<div class="d-flex align-items-center">
 							<div class="mr-auto">
 								<h3 class="m-subheader__title ">
-									User Request update status
+									User Requests To Update Status
 								</h3>
 							</div>
 						</div>
