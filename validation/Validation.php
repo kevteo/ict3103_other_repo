@@ -34,7 +34,7 @@
 				$url ="Location: ../source_manager/managerdashboard.php";	
 			}
 			
-			else if ($user->isActive == 0) {
+			if ($user->isActive == 0) {
 				$url = "Location: ../source_home/inactiveAccount.php";
 			}
 			
