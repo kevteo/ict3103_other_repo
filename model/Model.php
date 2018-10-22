@@ -485,6 +485,11 @@ class Model {
         return null;
     }
     
+    /*
+    - Only retrieve existed customer
+
+
+    */
     // admin download backup data to csv
     public function downloadBackup()
     {
@@ -504,14 +509,14 @@ class Model {
     //$query = mysqli_query($this->conn, "SELECT * FROM ".$db_record." ".$where);
 
     $field = mysqli_field_count($this->conn);
-    // create line with field names
+    // create line with field names -HEADER
     for($i = 0; $i < $field; $i++) {
         $csv_export.= mysqli_fetch_field_direct($query, $i)->name.',';
         }
     // newline 
         $csv_export.= '
     ';
-    // loop through database query and fill export variable
+    // loop through database query and fill export variable - DATA
     while($row = mysqli_fetch_array($query)) {
         // create line with field values
         for($i = 0; $i < $field; $i++) {

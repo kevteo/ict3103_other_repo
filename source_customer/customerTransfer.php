@@ -9,11 +9,9 @@
    
    //Backend
    	if(isset($_POST['transfer'])){
-	//echo $_POST['transfer'];
-	$isSuccess = $model->withdraw ($_POST['transfer']);
-	}
-	else{
-	}
+	  $isSuccess = $model->withdraw ($_POST['transfer']);
+  }
+  $user = unserialize($_SESSION['user']);
    
    
 ?>
@@ -70,7 +68,7 @@
                               </label>
 							  <div>
                                  <label>
-                                 198 - 34567 - 2
+                                 <?php echo $user->account?>
                                  </label>
 								 </div>
                               </div>
