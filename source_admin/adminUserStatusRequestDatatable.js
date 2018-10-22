@@ -1,4 +1,4 @@
-var DefaultDatatableAdminDash = function() {
+var DefaultDatatableAdminRequest = function() {
     var e = function(t) {
         var a = $("#admin_userstatusrequest").append(t + "\t\n");
         $(a).scrollTop(a[0].scrollHeight - $(a).height())
@@ -116,5 +116,5 @@ var DefaultDatatableAdminDash = function() {
     }
 }();
 jQuery(document).ready(function() {
-    DefaultDatatableAdminDash.init()
+    DefaultDatatableAdminRequest.init()
 });
