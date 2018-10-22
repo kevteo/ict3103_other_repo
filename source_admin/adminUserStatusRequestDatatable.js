@@ -1,17 +1,17 @@
-var DefaultDatatableManagerDash = function() {
+var DefaultDatatableAdminRequest = function() {
     var e = function(t) {
-        var a = $("#m_datatable_console_managerDash").append(t + "\t\n");
+        var a = $("#admin_userstatusrequest").append(t + "\t\n");
         $(a).scrollTop(a[0].scrollHeight - $(a).height())
     };
     return {
         init: function() {
             var t;
-            t = $(".manager_dashboard").mDatatable({
+            t = $(".admin_userstatusrequest").mDatatable({
                 data: {
                     type: "remote",
                     source: {
                         read: {
-                            url: "managerDashboard_json.php" 
+                            url: "adminUserStatusRequest_json.php" 
                         }
                     },
                     pageSize: 5,
@@ -40,37 +40,37 @@ var DefaultDatatableManagerDash = function() {
                 },
                 columns: [
 				{
-                    field: "userID",
-                    title: "User ID",
-                    sortable: "asc"
-                },
-				{
                     field: "username",
                     title: "Username",
                     sortable: "asc"
-                },
-				{
+                },{
                     field: "nric",
                     title: "NRIC",
                     sortable: "asc"
-                },{
-                    field: "name",
-                    title: "Name",
-                    sortable: "asc"
-                }, {
-                    field: "mobileNumber",
-                    title: "Mobile Number",
-                    sortable: "asc"
-                },{
-                    field: "email",
-                    title: "Email",
-                    sortable: "asc"
-                },{
-                    field: "balance",
-                    title: "Balance",
+                },
+				{
+                    field: "lastActive",
+                    title: "Last Active",
                     sortable: "asc"
                 },
 				{
+                    field: "isActive",
+                    title: "Status",
+                    template: function(t) {
+                        var a = {
+                            1: {
+                                title: "Active",
+                                class: " m-badge--accent"
+                            },
+                            0: {
+                                title: "Inactive",
+                                class: " m-badge--danger"
+                            }
+                        };
+                        return '<span class="m-badge ' + a[t.isActive].class + ' m-badge--wide">' + a[t.isActive].title + "</span>"
+                    }
+                },
+                {
                     field: "Actions",
                     width: 110,
                     title: "Actions",
@@ -78,13 +78,15 @@ var DefaultDatatableManagerDash = function() {
 					filterable: !1,
                     overflow: "visible",
                     template: function(t, a, e) {
-                        var stringUser = "'" + t.userID + "'";
-                        var url = "managerViewCustomerDetails.php?user_id="+t.userID;
-                        return '<a href="'+url+'">View</a>' ;
-                        //return '\t\t\t\t\t\t<div class="dropdown ' + (e.getPageSize() - a <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t\<a href="managerApproveAccount.php" onclick="viewAccountDetails(' + stringUsername + ');" data-toggle="modal" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View">\t\t\t\t\t\t\t<i class="la la-edit"></i>\t\t\t\t\t\t</a>'
+                        var urlApprove = "adminUpdateRequest.php?request=approve&user_id="+t.userID;
+                        var urlFailure = "adminUpdateRequest.php?request=fail&user_id="+t.userID;
+                        return '<a href="'+urlApprove+'"><i class="fa fa-check"></i></a> &nbsp;&nbsp; <a href="'+urlFailure+'"><i class="fa fa-remove"></i></a> ' ;
+                        //return '<div class="dropdown ' + (e.getPageSize() - a <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t\ <a href="'+urlApprove+'" data-toggle="modal" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Approve"><i class="fa fa-check"></i></a>   &nbsp;&nbsp;<a href="'+urlFailure+'" data-toggle="modal" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Approve"><i class="fa fa-remove"></i></a> ' ;
+                        //return '\t\t\t\t\t\t<div class="dropdown ' + (e.getPageSize() - a <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t\<a href="managerApproveAccount.php" onclick="approveUser(' + stringUser + ',' + stringUsername + ',' + stringIc + ');" data-toggle="modal" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Create">\t\t\t\t\t\t\t<i class="la la-edit"></i>\t\t\t\t\t\t</a>'
                         
                     }
-                }]
+                }
+            ]
             }), $("#m_datatable_clear").on("click", function() {
                 $("#m_datatable_console").html("")
             }), $("#m_datatable_reload").on("click", function() {
@@ -113,7 +115,6 @@ var DefaultDatatableManagerDash = function() {
         }
     }
 }();
-
 jQuery(document).ready(function() {
-    DefaultDatatableManagerDash.init()
+    DefaultDatatableAdminRequest.init()
 });

@@ -150,6 +150,8 @@ class Model {
         else { return null; }
     }
 
+   
+
     /*
      * Returns
      * 1. true if succesful requested
@@ -180,11 +182,56 @@ class Model {
      * 3. null if error inserting
      */
 
-    public function setToggleActive($userID) {
+     /*
+     requestToggleActive =1 mean customer request
+     requestToggleActive =2 mean customer request & manager approve
+     When admin approve, requestToggleActive =0 and isActive = 1
+     */
+
+    public function getRequestToggleActiveForManager() {
+        $sql = "SELECT * FROM User WHERE requestToggleActive=1 and isActive=0  ";
+        $result = $this->performQuery($sql);
+        $userArray = array();
+        while ($user = mysqli_fetch_object($result)) {
+            array_push($userArray, $user);
+        }
+        return json_encode($userArray);
+    }
+
+    public function getRequestToggleActiveForAdmin() {
+        $sql = "SELECT * FROM User WHERE requestToggleActive=2 and isActive=0  ";
+        $result = $this->performQuery($sql);
+        $userArray = array();
+        while ($user = mysqli_fetch_object($result)) {
+            array_push($userArray, $user);
+        }
+        return json_encode($userArray);
+    }
+
+    public function setToggleActiveForManager($userID) {
+        $sql = "UPDATE User SET requestToggleActive = 2, isActive = 0 WHERE userID = '$userID'";
+        $result = $this->performQuery($sql);
+        if ($result) { return true; } else { return null; }
+    }
+
+
+    public function setToggleActiveForAdmin($userID) {
         $sql = "UPDATE User SET requestToggleActive = 0, isActive = 1 WHERE userID = '$userID'";
         $result = $this->performQuery($sql);
         if ($result) { return true; } else { return null; }
     }
+
+    public function setToggleFail($userID) {
+        $sql = "UPDATE User SET requestToggleActive = 0, isActive = 0 WHERE userID = '$userID'";
+        $result = $this->performQuery($sql);
+        if ($result) { return true; } else { return null; }
+    }
+
+
+
+
+
+    
     
     
     public function modifyProfile($userID, $name, $address, $email, $password, $salary) {
@@ -382,7 +429,7 @@ class Model {
         $sql = "SELECT * FROM User WHERE userID = '$userID'";
         $result = $this->performQuery($sql);
         if ($result == null) { return null; }
-        return mysqli_fetch_object($result);
+        return mysqli_fetch_assoc($result);
     }
     
     //manager view pending approve account

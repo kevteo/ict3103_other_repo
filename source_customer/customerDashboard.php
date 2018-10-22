@@ -9,7 +9,7 @@
 	
 	//backend
 	$user = unserialize($_SESSION['user']);
-	$totalBalance = $model->getBalance($user->userID);
+	$totalBalance = $model->getCustomerDetails($user->userID);
 	
 	
 	
@@ -84,7 +84,7 @@
 														<?php echo $user->account; ?>
 													</td>
 													<td>
-														<?php echo $totalBalance; ?>
+														<?php echo $user->balance; ?>
 													</td>
 								
 												</tr>
