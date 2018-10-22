@@ -43,7 +43,7 @@ $model = Model::getInstance(); // Instantiate Object
 
 
 // Backup Data Example
-//$model->backupData();
+//$model->downloadBackup();
 
 
 // Request & Set Toggle Active (LOGIN TO AN ACCOUNT FIRST)

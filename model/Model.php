@@ -425,7 +425,7 @@ class Model {
     }
     
     //admin set customers inactive if lastActive > 3months
-    public function setInactiveCustomers(){
+    public function setInactiveCustomers() {
         $date = new DateTime();
         $currentDate = $date->format('Y-m-d H-i-s');
         $sql = "SELECT * FROM User WHERE lastActive <= NOW() - INTERVAL 3 MONTH";

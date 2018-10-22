@@ -1,15 +1,16 @@
 <?php
     include("../source_include/header.php");
-	
+
     $title = "My Bank | Admin";
     $output = str_replace('%Title%', $title, $output);
-    echo $output;
 
 	include("adminHeader.php");
-
+	/*
 	if (isset($_POST['backup'])) {
-		$model->backupData();
+		$model->downloadBackup();
+
 	}
+	*/
 
 	if (isset($_POST['update'])) {
 		$model->setInactiveCustomers();
@@ -48,7 +49,7 @@
 																<input type="hidden" name="update">
 															</form>
 
-															<form method="post" action="" style="display:inline" id="backupForm">
+															<form method="post" action="../Model/exportCSV.php" style="display:inline" id="backupForm">
 																<a href="javascript:$('#backupForm').submit()" class="btn btn-success m-btn m-btn--icon m-btn--pill">
 																	<span>
 																		<i class="fa fa-fw fa-floppy-o"></i>
