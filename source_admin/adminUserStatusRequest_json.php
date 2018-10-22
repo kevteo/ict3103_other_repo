@@ -15,4 +15,4 @@ $model = Model::getInstance();
 		
     },
 	
-	"data":<?php echo $model->getRequestToggleActive(); ?>}
+	"data":<?php echo $model->getRequestToggleActiveForAdmin(); ?>}

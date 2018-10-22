@@ -8,7 +8,7 @@ if (isset($_GET['request']) && isset($_GET['user_id']) ) {
     $request= $_GET['request'];
 
     if($request=="approve"){
-        $result = $model->setToggleActive($user_id);
+        $result = $model->setToggleActiveForAdmin($user_id);
 
         if($result){
             header('Location: adminUserStatusRequest.php?success=1&msg=Successfully update the status');

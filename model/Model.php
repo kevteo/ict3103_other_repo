@@ -182,29 +182,11 @@ class Model {
      * 3. null if error inserting
      */
 
-    public function setToggleActiveForManager($userID) {
-        $sql = "UPDATE User SET requestToggleActive = 2, isActive = 0 WHERE userID = '$userID'";
-        $result = $this->performQuery($sql);
-        if ($result) { return true; } else { return null; }
-    }
-
-    public function setToggleFailForManager($userID) {
-        $sql = "UPDATE User SET requestToggleActive = 0, isActive = 0 WHERE userID = '$userID'";
-        $result = $this->performQuery($sql);
-        if ($result) { return true; } else { return null; }
-    }
-
-    public function setToggleActiveForAdmin($userID) {
-        $sql = "UPDATE User SET requestToggleActive = 2, isActive = 0 WHERE userID = '$userID'";
-        $result = $this->performQuery($sql);
-        if ($result) { return true; } else { return null; }
-    }
-
-    public function setToggleFailForAdmin($userID) {
-        $sql = "UPDATE User SET requestToggleActive = 0, isActive = 0 WHERE userID = '$userID'";
-        $result = $this->performQuery($sql);
-        if ($result) { return true; } else { return null; }
-    }
+     /*
+     requestToggleActive =1 mean customer request
+     requestToggleActive =2 mean customer request & manager approve
+     When admin approve, requestToggleActive =0 and isActive = 1
+     */
 
     public function getRequestToggleActiveForManager() {
         $sql = "SELECT * FROM User WHERE requestToggleActive=1 and isActive=0  ";
@@ -217,7 +199,7 @@ class Model {
     }
 
     public function getRequestToggleActiveForAdmin() {
-        $sql = "SELECT * FROM User WHERE requestToggleActive=1 and isActive=0  ";
+        $sql = "SELECT * FROM User WHERE requestToggleActive=2 and isActive=0  ";
         $result = $this->performQuery($sql);
         $userArray = array();
         while ($user = mysqli_fetch_object($result)) {
@@ -225,6 +207,29 @@ class Model {
         }
         return json_encode($userArray);
     }
+
+    public function setToggleActiveForManager($userID) {
+        $sql = "UPDATE User SET requestToggleActive = 2, isActive = 0 WHERE userID = '$userID'";
+        $result = $this->performQuery($sql);
+        if ($result) { return true; } else { return null; }
+    }
+
+
+    public function setToggleActiveForAdmin($userID) {
+        $sql = "UPDATE User SET requestToggleActive = 0, isActive = 1 WHERE userID = '$userID'";
+        $result = $this->performQuery($sql);
+        if ($result) { return true; } else { return null; }
+    }
+
+    public function setToggleFail($userID) {
+        $sql = "UPDATE User SET requestToggleActive = 0, isActive = 0 WHERE userID = '$userID'";
+        $result = $this->performQuery($sql);
+        if ($result) { return true; } else { return null; }
+    }
+
+
+
+
 
     
     

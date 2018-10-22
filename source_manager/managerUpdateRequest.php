@@ -8,7 +8,7 @@ if (isset($_GET['request']) && isset($_GET['user_id']) ) {
     $request= $_GET['request'];
 
     if($request=="approve"){
-        $result = $model->setToggleActive($user_id);
+        $result = $model->setToggleActiveForManager($user_id);
 
         if($result){
             header('Location: managerUserStatusRequest.php?success=1&msg=Successfully sent the request to admin to review');
@@ -19,7 +19,7 @@ if (isset($_GET['request']) && isset($_GET['user_id']) ) {
 
     }
     else if($request=="fail"){
-        $result = $model->setToggleActive($user_id);
+        $result = $model->setToggleFail($user_id);
         if($result){
             header('Location: managerUserStatusRequest.php?success=1&msg=Successfully rejected');
         }else{
