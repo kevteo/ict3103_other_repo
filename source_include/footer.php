@@ -38,8 +38,12 @@
 		<!--begin::Datatables -->
 		<script src="../source_admin/adminCreateAccountDatatable.js" type="text/javascript"></script>
 		<script src="../source_admin/adminDashboardDatatable.js" type="text/javascript"></script>
-		<script src="../source_manager/managerApproveAccountDatatable.js" type="text/javascript"></script>
+		<script src="../source_admin/adminUserStatusRequestDatatable.js" type="text/javascript"></script>
+		<script src="../source_manager/managerApproveAccountDatatable.js" type="text/javascript"></script>	
+		
 		<script src="../source_manager/managerDashboardDatatable.js" type="text/javascript"></script>
+		<script src="../source_manager/managerUserStatusRequestDatatable.js" type="text/javascript"></script>	
+	
 		
 		<!--end::Datatables -->
         <!-- begin::Page Loader -->

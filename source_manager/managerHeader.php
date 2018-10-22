@@ -56,7 +56,7 @@
 												<ul class="m-menu__subnav">
 													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
 														<a  href="managerDashboard.php" class="m-menu__link ">
-															<i class="m-menu__link-icon flaticon-support"></i>
+															<i class="m-menu__link-icon flaticon-avatar"></i>
 															<span class="m-menu__link-text">
 																Existing Clients
 															</span>
@@ -64,9 +64,18 @@
 													</li>
 													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
 														<a  href="managerApproveAccountList.php" class="m-menu__link ">
-															<i class="m-menu__link-icon flaticon-graphic-2"></i>
+															<i class="m-menu__link-icon flaticon-users"></i>
 															<span class="m-menu__link-text">
 																Approve New Accounts
+															</span>
+														</a>
+													</li>
+
+													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
+														<a  href="managerUserStatusRequest.php" class="m-menu__link ">
+															<i class="m-menu__link-icon flaticon-edit "></i>
+															<span class="m-menu__link-text">
+																User Status Request
 															</span>
 														</a>
 													</li>

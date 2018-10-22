@@ -150,6 +150,16 @@ class Model {
         else { return null; }
     }
 
+    public function getRequestToggleActive() {
+        $sql = "SELECT * FROM User WHERE requestToggleActive=1 and isActive=0  ";
+        $result = $this->performQuery($sql);
+        $userArray = array();
+        while ($user = mysqli_fetch_object($result)) {
+            array_push($userArray, $user);
+        }
+        return json_encode($userArray);
+    }
+
     /*
      * Returns
      * 1. true if succesful requested
@@ -185,6 +195,14 @@ class Model {
         $result = $this->performQuery($sql);
         if ($result) { return true; } else { return null; }
     }
+
+    public function setToggleFail($userID) {
+        $sql = "UPDATE User SET requestToggleActive = 0, isActive = 0 WHERE userID = '$userID'";
+        $result = $this->performQuery($sql);
+        if ($result) { return true; } else { return null; }
+    }
+
+    
     
     
     public function modifyProfile($userID, $name, $address, $email, $password, $salary) {
@@ -382,7 +400,7 @@ class Model {
         $sql = "SELECT * FROM User WHERE userID = '$userID'";
         $result = $this->performQuery($sql);
         if ($result == null) { return null; }
-        return mysqli_fetch_object($result);
+        return mysqli_fetch_assoc($result);
     }
     
     //manager view pending approve account
