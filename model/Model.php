@@ -150,15 +150,7 @@ class Model {
         else { return null; }
     }
 
-    public function getRequestToggleActive() {
-        $sql = "SELECT * FROM User WHERE requestToggleActive=1 and isActive=0  ";
-        $result = $this->performQuery($sql);
-        $userArray = array();
-        while ($user = mysqli_fetch_object($result)) {
-            array_push($userArray, $user);
-        }
-        return json_encode($userArray);
-    }
+   
 
     /*
      * Returns
@@ -190,16 +182,48 @@ class Model {
      * 3. null if error inserting
      */
 
-    public function setToggleActive($userID) {
-        $sql = "UPDATE User SET requestToggleActive = 0, isActive = 1 WHERE userID = '$userID'";
+    public function setToggleActiveForManager($userID) {
+        $sql = "UPDATE User SET requestToggleActive = 2, isActive = 0 WHERE userID = '$userID'";
         $result = $this->performQuery($sql);
         if ($result) { return true; } else { return null; }
     }
 
-    public function setToggleFail($userID) {
+    public function setToggleFailForManager($userID) {
         $sql = "UPDATE User SET requestToggleActive = 0, isActive = 0 WHERE userID = '$userID'";
         $result = $this->performQuery($sql);
         if ($result) { return true; } else { return null; }
+    }
+
+    public function setToggleActiveForAdmin($userID) {
+        $sql = "UPDATE User SET requestToggleActive = 2, isActive = 0 WHERE userID = '$userID'";
+        $result = $this->performQuery($sql);
+        if ($result) { return true; } else { return null; }
+    }
+
+    public function setToggleFailForAdmin($userID) {
+        $sql = "UPDATE User SET requestToggleActive = 0, isActive = 0 WHERE userID = '$userID'";
+        $result = $this->performQuery($sql);
+        if ($result) { return true; } else { return null; }
+    }
+
+    public function getRequestToggleActiveForManager() {
+        $sql = "SELECT * FROM User WHERE requestToggleActive=1 and isActive=0  ";
+        $result = $this->performQuery($sql);
+        $userArray = array();
+        while ($user = mysqli_fetch_object($result)) {
+            array_push($userArray, $user);
+        }
+        return json_encode($userArray);
+    }
+
+    public function getRequestToggleActiveForAdmin() {
+        $sql = "SELECT * FROM User WHERE requestToggleActive=1 and isActive=0  ";
+        $result = $this->performQuery($sql);
+        $userArray = array();
+        while ($user = mysqli_fetch_object($result)) {
+            array_push($userArray, $user);
+        }
+        return json_encode($userArray);
     }
 
     
