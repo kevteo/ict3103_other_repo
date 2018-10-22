@@ -84,7 +84,7 @@
 														<?php echo $user->account; ?>
 													</td>
 													<td>
-														<?php echo $totalBalance; ?>
+														<?php echo $user->balance; ?>
 													</td>
 								
 												</tr>
