@@ -49,3 +49,6 @@ $model = Model::getInstance(); // Instantiate Object
 // Request & Set Toggle Active (LOGIN TO AN ACCOUNT FIRST)
 //var_dump($model->requestToggleActive());
 //$model->setToggleActive(1);
+
+$model->sendRegistrationEmail("2");
+echo "ssssss";

@@ -507,6 +507,7 @@ class Model {
     public function createCustomerAccount($userID) {
         $sql = "UPDATE User SET status = 2 WHERE userID = '$userID'";
         $result = $this->performQuery($sql);
+
         if ($result) { return true; } else { return null; }
     
         return false;
@@ -571,6 +572,83 @@ class Model {
     header("Content-Disposition: attachment; filename=".$csv_filename."");
     echo($csv_export);
     }
+    
+    //for testing    
+    public function sendEmail($email, $name, $bankno)
+    {
+    $to = "leexd1994@gmail.com"; // receiver Email address
+    $name = "test name";
+    $from = "ict3104mybank@gmail.com"; // sender's Email address
+    $subject = "Form submission";
+    $message = " Dear " . $name . ",
+        
+    "."this is new line";
+    $headers = "From:" . $from;
+    mail($to,$subject,$message,$headers);
+
+    
+    //need change php.ini and sendmail.ini in xampp to send mail
+    //sender email: ict3104mybank@gmail.com
+    //pw: ict3104/
+    }
+    
+    
+    public function sendRegistrationEmail($userID)
+    {
+    //get email
+    $sql = "SELECT email FROM User WHERE userID = '$userID'";
+    $result = $this->performQuery($sql);
+    $email = mysqli_fetch_row($result)[0];  
+    //get name
+    $sqlName = "SELECT name FROM User WHERE userID = '$userID'";
+    $result2 = $this->performQuery($sqlName);
+    $name = mysqli_fetch_row($result2)[0];
+    //get bank numer
+    $sqlbankno = "SELECT account FROM User WHERE userID = '$userID'";
+    $result3 = $this->performQuery($sqlbankno);
+    $bankno = mysqli_fetch_row($result3)[0];
+
+    $from = "ict3104mybank@gmail.com"; // sender's Email address
+    $subject = "Thank you for registering with MyBank";
+    $message = "Dear " . $name . ",
+        
+Thank you for registering with us on MyBank. For your reference, your given user ID is ". $userID." and your bank account number is ". $bankno.".
+                
+Thank you once again for choosing MyBank as your preferred banking option. We look forward to serving you for the upcoming years.
+    
+Yours Sincerely,
+Mybank";
+    
+    $headers = "From:" . $from;
+    mail($email,$subject,$message,$headers);
+    return true;
+    }
+    
+    public function sendRejectionEmail($userID)
+    {
+    //get email    
+    $sql = "SELECT email FROM User WHERE userID = '$userID'";
+    $result = $this->performQuery($sql);
+    $email = mysqli_fetch_row($result)[0];  
+    //get name
+    $sqlName = "SELECT name FROM User WHERE userID = '$userID'";
+    $result2 = $this->performQuery($sqlName);
+    $name = mysqli_fetch_row($result2)[0];     
+        
+    $from = "ict3104mybank@gmail.com"; // sender's Email address
+    $subject = "MyBank account is not approved";
+    $message = "Dear " . $name . ",
+        
+We regret to inform you that the creation of your MyBank account has not been approved. Please contact our customer service hotline should you require further assistance.
+    
+Yours Sincerely,
+Mybank";
+    
+    $headers = "From:" . $from;
+    mail($email,$subject,$message,$headers);
+    }
+    
+    
 
     /*
      * Run to this method to insert data to database
