@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2018 at 09:40 AM
+-- Generation Time: Nov 02, 2018 at 07:05 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -39,10 +39,10 @@ CREATE TABLE `bank` (
 
 INSERT INTO `bank` (`bankID`, `bankName`) VALUES
 (1, 'mBank'),
-(2, 'ocbc'),
-(3, 'Uob'),
-(4, 'Maybank'),
-(5, 'Posb');
+(2, 'aBank'),
+(3, 'bBank'),
+(4, 'cBank'),
+(5, 'dBank');
 
 -- --------------------------------------------------------
 
@@ -428,7 +428,13 @@ INSERT INTO `transaction` (`transactionID`, `amount`, `userID`, `payeeID`, `date
 (472, '420.00', 1, NULL, '2018-10-01 15-23-44'),
 (473, '-97.00', 1, NULL, '2018-10-22 09-30-46'),
 (474, '100.00', 1, NULL, '2018-10-22 09-31-08'),
-(475, '-200.00', 1, NULL, '2018-10-22 09-31-19');
+(475, '-200.00', 1, NULL, '2018-10-22 09-31-19'),
+(476, '0.00', 1, 2, '2018-11-02 06-53-36'),
+(477, '100.00', 1, 2, '2018-11-02 06-53-47'),
+(478, '100.00', 1, 0, '2018-11-02 06-54-40'),
+(479, '123.00', 1, 0, '2018-11-02 06-54-50'),
+(480, '123.00', 1, 2, '2018-11-02 07-04-45'),
+(481, '0.00', 1, 0, '2018-11-02 07-04-54');
 
 -- --------------------------------------------------------
 
@@ -463,15 +469,15 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userID`, `username`, `password`, `role`, `name`, `nric`, `mobileNumber`, `email`, `address`, `account`, `salary`, `balance`, `status`, `isActive`, `requestToggleActive`, `lastActive`, `isTerminated`, `f2a`, `bankID`) VALUES
-(1, 'customer1', '123', 'customer', 'customer1', 's9999901c', '97832323', 'kevin9001@live.com', 'Tampines st 91, Blk999 #09-999, Singapore 520999', '024-61263-1', 'below 2000', '1500.00', 2, 0, 1, '2018-10-22 09-28-05', 0, 0, 1),
-(2, 'customer2', '123', 'customer', 'customer2', 's9999902c', '97832323', 'leexd1994@gmail.com', 'Jurong st 91, Blk929 #09-929, Singapore 500929', '024-65463-2', '2000-3000', '50.00', 2, 0, 1, '2018-04-30 08-03-56', 0, 0, 2),
+(1, 'customer1', '123', 'customer', 'customer1', 's9999901c', '97832323', 'kevin9001@live.com', 'Tampines st 91, Blk999 #09-999, Singapore 520999', '024-61263-1', 'below 2000', '1054.00', 2, 1, 0, '2018-11-02 06-12-01', 0, 313510, 1),
+(2, 'customer2', '123', 'customer', 'customer2', 's9999902c', '97832323', 'leexd1994@gmail.com', 'Jurong st 91, Blk929 #09-929, Singapore 500929', '024-65463-2', '2000-3000', '496.00', 2, 1, 0, '2018-11-02 01-20-36', 0, 0, 2),
 (3, 'customer3', '123', 'customer', 'customer3', 's9999903c', '97832323', 'jeremy.nogi46@gmail.com', 'Sengkang st 91, Blk829 #09-829, Singapore 510829', '024-61223-3', '5000-10000', '50.00', 2, 0, 1, '2018-09-30 08-03-56', 0, 0, 3),
 (4, 'customer4', '123', 'customer', 'customer4', 's9999904c', '97832323', 'MissKYH.sg@gmail.com', 'Seragoon st 95, Blk995 #09-995, Singapore 550995', '024-61263-4', '1000-2000', '50.00', 2, 0, 1, '2018-09-30 08-03-56', 0, 0, 2),
 (5, 'customer5', '123', 'customer', 'customer5', 's9999905c', '97832323', 'KheoYanHsia@gmail.com', 'Bedok st 85, Blk985 #08-985, Singapore 520985', '024-61263-5', '1000.00', '50.00', 2, 1, 0, '2018-09-30 08-03-56', 0, 0, 1),
 (6, 'customer6', '123', 'customer', 'customer6', 's9999906c', '97832323', 'gohchoongiap@gmail.com', 'Geylang st 81, Blk981 #09-981, Singapore 520981', '024-61263-6', '900.00', '50.00', 2, 1, 0, '2018-09-30 08-03-56', 0, 0, 2),
 (7, 'customer7', '123', 'customer', 'customer7', 's9999907c', '97832323', 'kwanlamyujoey@gmail.com', 'Yishun st 91, Blk911 #09-911, Singapore 540911', '024-61263-7', '1500.00', '3697.00', 2, 1, 0, '2018-09-30 08-03-56', 0, 0, 3),
-(8, 'manager1', '123', 'manager', 'manager1', 's9999908c', '97832323', 'kevin9001@live.com', 'Orchard st 32, Blk32 #02-32, Singapore 520132', NULL, NULL, '50.00', 2, 1, 0, '2018-10-22 09-52-53', 0, 0, 2),
-(9, 'admin1', '123', 'admin', 'admin1', 's9999910c', '97832323', 'kevin9001@live.com', 'Orchard st 32, Blk32 #02-32, Singapore 520132', NULL, NULL, '50.00', 2, 1, 0, '2018-10-22 08-37-29', 0, 0, 1),
+(8, 'manager1', '123', 'manager', 'manager1', 's9999908c', '97832323', 'kevin9001@live.com', 'Orchard st 32, Blk32 #02-32, Singapore 520132', NULL, NULL, '50.00', 2, 1, 0, '2018-11-02 01-32-02', 0, 992216, 2),
+(9, 'admin1', '123', 'admin', 'admin1', 's9999910c', '97832323', 'kevin9001@live.com', 'Orchard st 32, Blk32 #02-32, Singapore 520132', NULL, NULL, '50.00', 2, 1, 0, '2018-11-02 05-21-14', 0, 361821, 1),
 (10, 'admin2', '123', 'admin', 'admin2', 's9999911c', '97832323', 'leexd1994@gmail.com', 'Novena st 11, Blk11 #09-11, Singapore 520111', NULL, NULL, '50.00', 2, 1, 0, '2018-09-30 08-03-56', 0, 0, 1),
 (46, '8765', 'SE5SZ0jP', 'manager', 'managerName', 's9876543c', '98765432', 'email@hotmail.com', 'tampines st91, blk 999 st99, singapore 529999', '024-61261-1', 'Below 2000', '0.00', 1, 1, 0, NULL, 0, 0, 1),
 (47, 'iriio2765', 'mhS4BmB4', 'manager', 'Airin Song', 's9276541c', '98765432', 'email@hotmail.com', 'tampines st91, blk 999 st99, singapore 529999', '024-61261-1', 'Below 2000', '0.00', 1, 1, 0, NULL, 0, 0, 1),
@@ -517,7 +523,7 @@ ALTER TABLE `bank`
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `transactionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=476;
+  MODIFY `transactionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=482;
 
 --
 -- AUTO_INCREMENT for table `user`

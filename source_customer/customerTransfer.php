@@ -6,10 +6,19 @@
    $output = str_replace('%Title%', $title, $output);
    
    include("customerHeaderFund.php");
-   
+   //var_dump($model->getBanks());
+   $banks = $model->getBanks();
+
+   //var_dump($banks);
+
+
+
    //Backend
    	if(isset($_POST['transfer'])){
-	  $isSuccess = $model->withdraw ($_POST['transfer']);
+       $amount = $_POST['transfer'];
+       $account=$_POST['payeeID'];
+       $bank = $_POST['bank'];
+       $isSuccess = $model->transfer ($amount,$account,$bank);
   }
   $user = unserialize($_SESSION['user']);
    
@@ -68,42 +77,43 @@
                               </label>
 							  <div>
                                  <label>
-                                  024-61993-1
+                                  <?php echo $user->account; ?>
 
-                                 <?php echo $user->account?>
+                        
                                  </label>
 								 </div>
                               </div>
-                           <div class="form-group m-form__group"  action="" method="post">
+                              <!-- Bank-->
+                              <div class="form-group m-form__group"  action="" method="post">
+                              <label for="">
+                                Bank : 
+                                </label>
+
+                                <select class="form-control m-select2" id="m_select2_1" name="bank">
+                                    <?php 
+                                      foreach ($banks as $b){
+                                    ?>
+                                    <option value="<?php  echo $b['bankID']; ?>">
+                                       <?php  echo $b['bankName']; ?>
+                                    </option>
+                                    <?php } ?>
+                                 </select>
+
+							
+                              </div>
+                              <!-- Bacnk-->
+
+                              <!-- Account number-->
+                              <div class="form-group m-form__group"  action="" method="post">
                              <label for="">
                               To Account No. : 
-							  <?php 
-							  
-							  ?>
                               </label>
 							  
-							  <div class="input-group">
-                                 <input type="text" name="payeeID" class="form-control m-input" value="024-61263-7">
+							                <div class="input-group">
+                                 <input type="text" name="payeeID" class="form-control m-input" value="024-65463-2">
                               </div>
-							  <!--
-                                 <select class="form-control m-select2" id="m_select2_1" name="param">
-                                    <option value="1">
-                                       198 - 34567 - 2
-                                    </option>
-                                    <option value="2">
-                                       411 - 34343 - 9
-                                    </option>
-                                    <option value="3">
-                                       169 - 64734 - 3
-                                    </option>
-                                    <option value="4">
-                                       190 - 14326 - 3
-                                    </option>
-                                    <option value="5">
-                                       455 - 73627 - 7
-                                    </option>
-                                 </select> -->
                            </div>
+                           <!-- Account number-->
                            <div class="form-group m-form__group"  class="" action="" method="post">
                               <label>
                               Transfer Amount:

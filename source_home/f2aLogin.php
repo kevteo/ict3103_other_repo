@@ -108,7 +108,7 @@ else if (isset($_POST['f2a'])){
 													<i class="la la-gear"></i>
 												</span>
 												<h3 class="m-portlet__head-text">
-													F2A Login
+													2FA Login
 												</h3>
 											</div>
 										</div>
@@ -137,7 +137,7 @@ else if (isset($_POST['f2a'])){
 		
 												<div class="form-group m-form__group">
 													<label for="example_input_full_name">
-														F2A:
+														2FA:
 													</label>
 													<input type="number" class="form-control m-input" placeholder="6-Digit PIN" name="f2a">
 													<span class="m-form__help">

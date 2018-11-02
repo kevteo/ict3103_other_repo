@@ -334,18 +334,36 @@ class Model {
 		}
     }
     
+    /*
+    *getBank
+    */ 
+
+    public function getBanks(){
+        $sql = "SELECT * FROM `bank`";
+        $result = $this->performQuery($sql);
+        if ($result == null) { return false; }
+        
+        $bankArray = array();
+        while ($bank = mysqli_fetch_assoc($result)) {
+            array_push($bankArray, $bank);
+        }
+        return $bankArray;
+
+    }
 	/*
 	*Please double check this and read the comment 
 	*/
-    public function transfer($amount, $account) {
+    public function transfer($amount, $account,$bank) {
         $user = unserialize($_SESSION['user']);
 		$date = new DateTime();
 		$datetime = $date->format('Y-m-d H-i-s');
 		
 		// Check if account exist
-		$sql = "SELECT * FROM User where account='$account' AND status = 2 AND isTerminated=0";
+		$sql = "SELECT * FROM User where account='$account' AND status = 2 AND isTerminated=0 AND bankID = '$bank'";
 		$result = $this->performQuery($sql);
         if ($result == null) { return false; }
+        $u = mysqli_fetch_object($result);
+        if ($u == null) { return false; }
          
         $row = mysqli_fetch_assoc($result);
         $payeeID = $row['userID'];
