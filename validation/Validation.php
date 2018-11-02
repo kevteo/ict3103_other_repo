@@ -18,8 +18,33 @@
 			$user = unserialize($_SESSION['user']);
 			$url = "";
 			
+
+			//isActive
+			if ($user->isActive == 0) {
+				$url = "Location: ../source_home/inactiveAccount.php";
+			}
+			else{
+				$url = "Location: ../source_home/f2aLogin.php";
+			}
+
+
+			
+			//setCookie
+			if(isset($_POST['remember'])){
+				echo "user click remember <br>";
+				setcookie("username", $username, time() +(60*60*24 *365), "/"); //30 DAY
+				setcookie("password", $password, time() +(60*60*24 *365), "/"); //30 DAY
+			}
+			
+			header($url);
 			
 
+			
+		}
+	}
+
+	function redirect($user){
+		
 			//Role URL
 			if(strcasecmp($user->role, "customer") == 0){
 				$url ="Location: ../source_customer/customerdashboard.php";
@@ -34,26 +59,17 @@
 				$url ="Location: ../source_manager/managerdashboard.php";	
 			}
 			
-			if ($user->isActive == 0) {
-				$url = "Location: ../source_home/inactiveAccount.php";
-			}
+
 			
 			else{
 				echo "Something went wrong";
 			}
-			
-			//setCookie
-			if(isset($_POST['remember'])){
-				echo "user click remember <br>";
-				setcookie("username", $username, time() +(60*60*24 *365), "/"); //30 DAY
-				setcookie("password", $password, time() +(60*60*24 *365), "/"); //30 DAY
-			}
-			
+
 			//echo $url;
 			header($url);
-			
-		}
+
 	}
+
 	
 	
 

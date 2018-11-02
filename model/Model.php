@@ -94,11 +94,34 @@ class Model {
             $sql = "UPDATE User SET lastActive = '$datetime' WHERE userID = '$user->userID'";
             $result = $this->performQuery($sql);
             $_SESSION['user'] = serialize($user);
+
+            //updateF2a
+            $this->updateF2a($user->userID);
 			
             return true;
         }
         return false;
     }
+
+    public function updateF2a($userID){
+        $six_digit_random_number = mt_rand(100000, 999999);
+        $sql = "UPDATE `user` SET `f2a` = '$six_digit_random_number' WHERE `user`.`userID` = '$userID'";
+        $result = $this->performQuery($sql);
+
+        //Send SMS Function
+    }
+
+    public function isF2AValid($userID,$f2a){
+        $sql = "SELECT * FROM User WHERE userID = '$userID' and f2a='$f2a' ";
+        $result = $this->performQuery($sql);
+        $user = mysqli_fetch_object($result);
+        if ($user == null) { return false; }
+
+        return true;
+    }
+
+
+
 
     /*
      * Returns
@@ -144,7 +167,7 @@ class Model {
         $sql = "INSERT INTO User VALUES (NULL, '$user->username', '$user->password', '$user->role', '$user->name',
             '$user->nric', '$user->mobileNumber', '$user->email','$user->address', '$user->account', 
             '$user->salary','$user->balance', '$user->status', $user->isActive, $user->requestToggleActive, 
-            NULL, $user->isTerminated)";
+            NULL, $user->isTerminated,0,1)";
         $result = $this->performQuery($sql);
         if ($result) { return true; }
         else { return null; }
