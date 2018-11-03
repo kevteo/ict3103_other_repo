@@ -18,6 +18,8 @@ class User {
     public $requestToggleActive;
     public $lastActive;
     public $isTerminated;
+    public $monthStartBalance;
+    public $monthMinBalance;
     
     function __construct($role, $name, $nric, $mobileNumber, $email, $address ,$account ,$salary , $password = null, $username = null, $userID = null, 
 	$balance = '0', $status = 0, $isActive = 1, $requestToggleActive = 0, $lastActive = null, $isTerminated = 0) {

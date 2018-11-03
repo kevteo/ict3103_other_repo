@@ -101,7 +101,7 @@
 																$
 															</span>
 														</div>
-														<input type="number" class="form-control m-input" placeholder="99.9" min=0 name="deposit" step=".01">
+														<input type="number" class="form-control m-input" placeholder="Enter amount here" min=0 name="deposit" step=".01">
 													</div>
 												</div>
 												

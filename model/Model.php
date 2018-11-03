@@ -4,31 +4,6 @@ require_once('User.php');
 session_start();
 
 
-// Example 1 - Login and store to session
-//$user = $model->login("customer1", "123");
-//if ($user) {
-//    $user = unserialize($_SESSION['user']);
-//    echo $user->name . "<br>";
-//    echo $user->userID . "<br>";
-//    echo $user->email . "<br>";
-//} else {
-//    echo "Invalid account!";
-//}
-
-// Example 2 - Register
-//$user = new User("manager", "managerName", "s9876543c", "98765432", "email@hotmail.com","tampines st91, blk 999 st99, singapore 529999","024-61261-1","Below 2000");
-//if ($model->register($user)) { echo "Registration Successful!"; }
-
-// Example 3 - Get List of customers CHOOSE 1 method
-
-//foreach($model->getCustomers() as $customer) {
-//    echo $customer->name . "<br>";
-
-
-//TEST CODE END (REMOVE THIS SECTION BEFORE SUBMITTING)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
 class Model {
     private static $instance = null;
     private $conn;
@@ -90,26 +65,19 @@ class Model {
         if ($user = mysqli_fetch_object($result)) {
             $date = new DateTime();
             $datetime = $date->format('Y-m-d H-i-s');
+            $six_digit_random_number = mt_rand(100000, 999999);
             
-            $sql = "UPDATE User SET lastActive = '$datetime' WHERE userID = '$user->userID'";
+            $sql = "UPDATE User SET lastActive = '$datetime', f2a = '$six_digit_random_number' WHERE userID = '$user->userID'";
             $result = $this->performQuery($sql);
             $_SESSION['user'] = serialize($user);
 
-            //updateF2a
-            $this->updateF2a($user->userID);
+            //Send SMS Function
 			
             return true;
         }
         return false;
     }
 
-    public function updateF2a($userID){
-        $six_digit_random_number = mt_rand(100000, 999999);
-        $sql = "UPDATE `user` SET `f2a` = '$six_digit_random_number' WHERE `user`.`userID` = '$userID'";
-        $result = $this->performQuery($sql);
-
-        //Send SMS Function
-    }
 
     public function isF2AValid($userID,$f2a){
         $sql = "SELECT * FROM User WHERE userID = '$userID' and f2a='$f2a' ";
@@ -167,7 +135,7 @@ class Model {
         $sql = "INSERT INTO User VALUES (NULL, '$user->username', '$user->password', '$user->role', '$user->name',
             '$user->nric', '$user->mobileNumber', '$user->email','$user->address', '$user->account', 
             '$user->salary','$user->balance', '$user->status', $user->isActive, $user->requestToggleActive, 
-            NULL, $user->isTerminated,0,1)";
+            NULL, $user->isTerminated,0,1, '$user->balance', '$user->balance')";
         $result = $this->performQuery($sql);
         if ($result) { return true; }
         else { return null; }
@@ -298,7 +266,7 @@ class Model {
         if (!$result) { return null; }
 		
 		// Log Transaction
-		$sql = "INSERT INTO Transaction VALUES (NULL, '$posAmount', '$user->userID', NULL, '$datetime')";
+		$sql = "INSERT INTO Transaction VALUES (NULL, '$posAmount', '$user->userID', NULL, '$datetime', 'deposit')";
 		$result = $this->performQuery($sql);
 		if (!$result){ return null; }
 		
@@ -323,9 +291,13 @@ class Model {
 			if (!$result){ return null; }
 			
 			// Log Transaction
-			$sql = "INSERT INTO Transaction VALUES (NULL, '$negAmount', '$user->userID', NULL, '$datetime')";
+			$sql = "INSERT INTO Transaction VALUES (NULL, '$negAmount', '$user->userID', NULL, '$datetime', 'withdraw')";
 			$result = $this->performQuery($sql);
-			if (!$result){ return null; }
+            if (!$result){ return null; }
+            
+            // Update min balance if hit a new low
+            $sql = "UPDATE user SET monthMinBalance = balance WHERE balance < monthMinBalance AND userID = '$user->userID'";
+            $this->performQuery($sql);
 			
 			return true;
 		}
@@ -348,7 +320,6 @@ class Model {
             array_push($bankArray, $bank);
         }
         return $bankArray;
-
     }
 	/*
 	*Please double check this and read the comment 
@@ -359,7 +330,8 @@ class Model {
 		$datetime = $date->format('Y-m-d H-i-s');
 		
 		// Check if account exist
-		$sql = "SELECT * FROM User where account='$account' AND status = 2 AND isTerminated=0 AND bankID = '$bank'";
+        $sql = "SELECT * FROM User WHERE account='$account' AND status = 2 AND isTerminated=0 AND bankID = '$bank'";
+        //if ($amount < 5) { $sql = "SELECT * FROM User WHERE account='$account' AND status = 2 AND isTerminated=0 AND bankID = '$bank' AND balance < 0.5"; }
 		$result = $this->performQuery($sql);
         if ($result == null) { return false; }
         $u = mysqli_fetch_object($result);
@@ -378,10 +350,13 @@ class Model {
             $result = $this->performQuery($sql);
             if (!$result) { return false; }
             
-            $sql = "INSERT INTO Transaction VALUES (NULL, '$posAmount', '$user->userID', '$payeeID', '$datetime')";
+            $sql = "INSERT INTO Transaction VALUES (NULL, '$posAmount', '$user->userID', '$payeeID', '$datetime', 'transfer')";
             $result = $this->performQuery($sql);
-            
             if (!$result) { return false; }
+
+            // Update min balance if hit a new low
+            $sql = "UPDATE user SET monthMinBalance = balance WHERE balance < monthMinBalance AND userID = '$user->userID'";
+            $this->performQuery($sql);
             
             // Update payee
             $sql = "SELECT balance FROM user WHERE account = '$account'";
@@ -400,7 +375,10 @@ class Model {
 	}			
 		
         
-    
+    private function updateMinbalance($userID) {
+        $sql = "UPDATE user SET monthMinBalance = balance WHERE balance < monthMinBalance AND userID = '$userID'";
+        $this->performQuery($sql);
+    }
         
 		
 
@@ -595,57 +573,57 @@ class Model {
     
     public function sendRegistrationEmail($userID)
     {
-    //get email
-    $sql = "SELECT email FROM User WHERE userID = '$userID'";
-    $result = $this->performQuery($sql);
-    $email = mysqli_fetch_row($result)[0];  
-    //get name
-    $sqlName = "SELECT name FROM User WHERE userID = '$userID'";
-    $result2 = $this->performQuery($sqlName);
-    $name = mysqli_fetch_row($result2)[0];
-    //get bank numer
-    $sqlbankno = "SELECT account FROM User WHERE userID = '$userID'";
-    $result3 = $this->performQuery($sqlbankno);
-    $bankno = mysqli_fetch_row($result3)[0];
+        //get email
+        $sql = "SELECT email FROM User WHERE userID = '$userID'";
+        $result = $this->performQuery($sql);
+        $email = mysqli_fetch_row($result)[0];  
+        //get name
+        $sqlName = "SELECT name FROM User WHERE userID = '$userID'";
+        $result2 = $this->performQuery($sqlName);
+        $name = mysqli_fetch_row($result2)[0];
+        //get bank numer
+        $sqlbankno = "SELECT account FROM User WHERE userID = '$userID'";
+        $result3 = $this->performQuery($sqlbankno);
+        $bankno = mysqli_fetch_row($result3)[0];
 
-    $from = "ict3104mybank@gmail.com"; // sender's Email address
-    $subject = "Thank you for registering with MyBank";
-    $message = "Dear " . $name . ",
+        $from = "ict3104mybank@gmail.com"; // sender's Email address
+        $subject = "Thank you for registering with MyBank";
+        $message = "Dear " . $name . ",
+            
+        Thank you for registering with us on MyBank. For your reference, your given user ID is ". $userID." and your bank account number is ". $bankno.".
+                        
+        Thank you once again for choosing MyBank as your preferred banking option. We look forward to serving you for the upcoming years.
+            
+        Yours Sincerely,
+        Mybank";
         
-Thank you for registering with us on MyBank. For your reference, your given user ID is ". $userID." and your bank account number is ". $bankno.".
-                
-Thank you once again for choosing MyBank as your preferred banking option. We look forward to serving you for the upcoming years.
-    
-Yours Sincerely,
-Mybank";
-    
-    $headers = "From:" . $from;
-    mail($email,$subject,$message,$headers);
-    return true;
-    }
-    
+        $headers = "From:" . $from;
+        mail($email,$subject,$message,$headers);
+        return true;
+        }
+        
     public function sendRejectionEmail($userID)
     {
-    //get email    
-    $sql = "SELECT email FROM User WHERE userID = '$userID'";
-    $result = $this->performQuery($sql);
-    $email = mysqli_fetch_row($result)[0];  
-    //get name
-    $sqlName = "SELECT name FROM User WHERE userID = '$userID'";
-    $result2 = $this->performQuery($sqlName);
-    $name = mysqli_fetch_row($result2)[0];     
+        //get email    
+        $sql = "SELECT email FROM User WHERE userID = '$userID'";
+        $result = $this->performQuery($sql);
+        $email = mysqli_fetch_row($result)[0];  
+        //get name
+        $sqlName = "SELECT name FROM User WHERE userID = '$userID'";
+        $result2 = $this->performQuery($sqlName);
+        $name = mysqli_fetch_row($result2)[0];     
+            
+        $from = "ict3104mybank@gmail.com"; // sender's Email address
+        $subject = "MyBank account is not approved";
+        $message = "Dear " . $name . ",
+            
+    We regret to inform you that the creation of your MyBank account has not been approved. Please contact our customer service hotline should you require further assistance.
         
-    $from = "ict3104mybank@gmail.com"; // sender's Email address
-    $subject = "MyBank account is not approved";
-    $message = "Dear " . $name . ",
+    Yours Sincerely,
+    Mybank";
         
-We regret to inform you that the creation of your MyBank account has not been approved. Please contact our customer service hotline should you require further assistance.
-    
-Yours Sincerely,
-Mybank";
-    
-    $headers = "From:" . $from;
-    mail($email,$subject,$message,$headers);
+        $headers = "From:" . $from;
+        mail($email,$subject,$message,$headers);
     }
     
     
@@ -676,36 +654,35 @@ Mybank";
         array_push($sqlArray, "INSERT INTO User VALUES (NULL, 'admin2', '123', 'admin', 'admin2', 's9999911c', '97832323', 'leexd1994@gmail.com','Novena st 11, Blk11 #09-11, Singapore 520111', '50', '2', TRUE, FALSE, '$currentDate', FALSE)");
 
         // Deposit
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 30, 1, NULL, '$currentDate')");
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 30, 2, NULL, '$currentDate')");
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 30, 3, NULL, '$currentDate')");
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 30, 4, NULL, '$currentDate')");
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 30, 5, NULL, '$currentDate')");
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 30, 6, NULL, '$currentDate')");
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 30, 7, NULL, '$currentDate')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 30, 1, NULL, '$currentDate', 'deposit')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 30, 2, NULL, '$currentDate', 'deposit')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 30, 3, NULL, '$currentDate', 'deposit')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 30, 4, NULL, '$currentDate', 'deposit')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 30, 5, NULL, '$currentDate', 'deposit')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 30, 6, NULL, '$currentDate', 'deposit')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 30, 7, NULL, '$currentDate', 'deposit')");
 
         // Withdraw
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, -25, 1, NULL, '$currentDate')");
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, -25, 2, NULL, '$currentDate')");
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, -25, 3, NULL, '$currentDate')");
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, -25, 4, NULL, '$currentDate')");
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, -25, 5, NULL, '$currentDate')");
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, -25, 6, NULL, '$currentDate')");
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, -25, 7, NULL, '$currentDate')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, -25, 1, NULL, '$currentDate', 'withdraw')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, -25, 2, NULL, '$currentDate', 'withdraw')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, -25, 3, NULL, '$currentDate', 'withdraw')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, -25, 4, NULL, '$currentDate', 'withdraw')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, -25, 5, NULL, '$currentDate', 'withdraw')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, -25, 6, NULL, '$currentDate', 'withdraw')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, -25, 7, NULL, '$currentDate', 'withdraw')");
 
         // Transfer
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 5, 1, 7, '$currentDate')");
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 5, 2, 7, '$currentDate')");
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 5, 3, 5, '$currentDate')");
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 5, 4, 4, '$currentDate')");
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 5, 5, 3, '$currentDate')");
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 5, 6, 2, '$currentDate')");
-        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 5, 7, 1, '$currentDate')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 5, 1, 7, '$currentDate', 'transfer')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 5, 2, 7, '$currentDate', 'transfer')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 5, 3, 5, '$currentDate', 'transfer')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 5, 4, 4, '$currentDate', 'transfer')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 5, 5, 3, '$currentDate', 'transfer')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 5, 6, 2, '$currentDate', 'transfer')");
+        array_push($sqlArray, "INSERT INTO Transaction VALUES (NULL, 5, 7, 1, '$currentDate', 'transfer')");
 
         foreach ($sqlArray as $sql) {
             $this->conn->query($sql);
         }
     }
-
 }
 
