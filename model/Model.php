@@ -331,7 +331,9 @@ class Model {
 		
 		// Check if account exist
         $sql = "SELECT * FROM User WHERE account='$account' AND status = 2 AND isTerminated=0 AND bankID = '$bank'";
-        //if ($amount < 5) { $sql = "SELECT * FROM User WHERE account='$account' AND status = 2 AND isTerminated=0 AND bankID = '$bank' AND balance < 0.5"; }
+        if ($amount < 5) { 
+            $sql = "SELECT * FROM User WHERE account='$account' AND status = 2 AND isTerminated=0 AND bankID = '$bank' AND balance > 0.5"; 
+        }
 		$result = $this->performQuery($sql);
         if ($result == null) { return false; }
         $u = mysqli_fetch_object($result);
@@ -353,7 +355,13 @@ class Model {
             $sql = "INSERT INTO Transaction VALUES (NULL, '$posAmount', '$user->userID', '$payeeID', '$datetime', 'transfer')";
             $result = $this->performQuery($sql);
             if (!$result) { return false; }
-
+            
+            if ($amount < 5) {
+                $sql = "INSERT INTO Transaction VALUES (NULL, '0.5', '$user->userID', NULL, '$datetime', 'charge')";
+                $result = $this->performQuery($sql);
+                if (!$result) { return false; }
+            }
+            
             // Update min balance if hit a new low
             $sql = "UPDATE user SET monthMinBalance = balance WHERE balance < monthMinBalance AND userID = '$user->userID'";
             $this->performQuery($sql);
