@@ -8,8 +8,8 @@
 	include("adminHeader.php");
 	
 	$model->createCustomerAccount($_GET['user']);
-        $model->sendRegistrationEmail($_GET['user']);
-       
+           //$model->sendRegistrationEmail($_GET['user']);
+           //$model->smsPassword($_GET['user']);
 	
 	?>
 	<!-- begin:: Page -->

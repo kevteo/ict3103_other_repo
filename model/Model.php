@@ -632,6 +632,23 @@ class Model {
         mail($email,$subject,$message,$headers);
     }
     
+    public function smsPassword ($userID)
+    {
+        require_once '../vendor/autoload.php';
+        
+        //get password
+        $sql = "SELECT password FROM User WHERE userID = '$userID'";
+        $result = $this->performQuery($sql);
+        $password = mysqli_fetch_row($result)[0];
+        
+        $basic  = new \Nexmo\Client\Credentials\Basic('d94931d2', '9NFiZ178D0KaaflX');
+        $client = new \Nexmo\Client($basic);
+        $message = $client->message()->send([
+        'to' => '6591343314',
+        'from' => '6591343314',
+        'text' => 'Hello, this is your login password' .$password
+        ]);
+    }
     
 
     /*
