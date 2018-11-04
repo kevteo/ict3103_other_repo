@@ -61,6 +61,7 @@ class Model {
         $sql = "SELECT * FROM User WHERE username = '$username' AND password = '$password' and isTerminated='0'";
         $result = $this->performQuery($sql);
         if ($result == null) { return null; }
+	
 
         if ($user = mysqli_fetch_object($result)) {
             $date = new DateTime();
@@ -68,10 +69,40 @@ class Model {
             $six_digit_random_number = mt_rand(100000, 999999);
             
             $sql = "UPDATE User SET lastActive = '$datetime', f2a = '$six_digit_random_number' WHERE userID = '$user->userID'";
+			
             $result = $this->performQuery($sql);
             $_SESSION['user'] = serialize($user);
+			
+			
+			$sql2 = "SELECT * FROM User WHERE username = '$username'";
+			$result2 = $this->performQuery($sql2);
+			$user2 = mysqli_fetch_object($result2);
+			if ($user2 == null) { return false; }
 
             //Send SMS Function
+			require_once '../vendor/autoload.php';
+			
+			//$basic  = new \Nexmo\Client\Credentials\Basic('d94931d2', '9NFiZ178D0KaaflX');
+			$basic = new Nexmo\Client\Credentials\Basic('7504a8a5', 'vTyl2fPB972JLlX3');
+			$client = new Nexmo\Client($basic);
+			
+			try {
+				$message = $client->message()->send([
+					'to' => '6591816322',
+					'from' => '6591816322',
+					'text' => 'Hello, this is your one time password '.$six_digit_random_number
+				]);
+
+			} catch (Nexmo\Client\Exception\Request $e) {
+				//can still get the API response
+				$text     = $e->getEntity();
+				$request  = $text->getRequest(); //PSR-7 Request Object
+				$response = $text->getResponse(); //PSR-7 Response Object
+				$data     = $text->getResponseData(); //parsed response object
+				$code     = $e->getCode(); //nexmo error code
+				echo "error";
+				error_log($e->getMessage()); //nexmo error message
+			}
 			
             return true;
         }
@@ -489,10 +520,39 @@ class Model {
 	
 	//admin create aacount
     public function createCustomerAccount($userID) {
-        $sql = "UPDATE User SET status = 2 WHERE userID = '$userID'";
-        $result = $this->performQuery($sql);
+		$sql1 = "UPDATE User SET status = 2 WHERE userID = '$userID'";
+        $result1 = $this->performQuery($sql1);
+        
+		require_once '../vendor/autoload.php';
+		
+        //get password
+        $sql2 = "SELECT password FROM User WHERE userID = '$userID'";
+        $result2 = $this->performQuery($sql2);
+        $password = mysqli_fetch_row($result2)[0];
+        
+        //$basic  = new \Nexmo\Client\Credentials\Basic('d94931d2', '9NFiZ178D0KaaflX');
+        $basic = new Nexmo\Client\Credentials\Basic('7504a8a5', 'vTyl2fPB972JLlX3');
+		$client = new Nexmo\Client($basic);
+		
+		try {
+			$message = $client->message()->send([
+				'to' => '6591816322',
+				'from' => '6591816322',
+				'text' => 'Hello, this is your login password ' .$password
+			]);
 
-        if ($result) { return true; } else { return null; }
+		} catch (Nexmo\Client\Exception\Request $e) {
+			//can still get the API response
+			$text     = $e->getEntity();
+			$request  = $text->getRequest(); //PSR-7 Request Object
+			$response = $text->getResponse(); //PSR-7 Response Object
+			$data     = $text->getResponseData(); //parsed response object
+			$code     = $e->getCode(); //nexmo error code
+			echo "error";
+			error_log($e->getMessage()); //nexmo error message
+		}
+
+        if ($result1) { return true; } else { return null; }
     
         return false;
     }
@@ -632,23 +692,7 @@ class Model {
         mail($email,$subject,$message,$headers);
     }
     
-    public function smsPassword ($userID)
-    {
-        require_once '../vendor/autoload.php';
-        
-        //get password
-        $sql = "SELECT password FROM User WHERE userID = '$userID'";
-        $result = $this->performQuery($sql);
-        $password = mysqli_fetch_row($result)[0];
-        
-        $basic  = new \Nexmo\Client\Credentials\Basic('d94931d2', '9NFiZ178D0KaaflX');
-        $client = new \Nexmo\Client($basic);
-        $message = $client->message()->send([
-        'to' => '6591343314',
-        'from' => '6591343314',
-        'text' => 'Hello, this is your login password' .$password
-        ]);
-    }
+    
     
 
     /*
