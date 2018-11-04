@@ -332,7 +332,7 @@ class Model {
 		// Check if account exist
         $sql = "SELECT * FROM User WHERE account='$account' AND status = 2 AND isTerminated=0 AND bankID = '$bank'";
         if ($amount < 5) { 
-            $sql = "SELECT * FROM User WHERE account='$account' AND status = 2 AND isTerminated=0 AND bankID = '$bank' AND balance > 0.5"; 
+            $sql = "SELECT * FROM User WHERE account='$account' AND status = 2 AND isTerminated=0 AND bankID = '$bank' AND balance > ($amount+0.5)"; 
         }
 		$result = $this->performQuery($sql);
         if ($result == null) { return false; }
@@ -344,6 +344,9 @@ class Model {
         
         //Check if balance enough
         $newBalance = $this->getBalance($user->userID) - abs($amount);
+        if ($amount < 5) {
+            $newBalance -= 0.5; 
+        }
         
         if($newBalance >= 0) {
             // Update Database
@@ -382,11 +385,6 @@ class Model {
         }
 	}			
 		
-        
-    private function updateMinbalance($userID) {
-        $sql = "UPDATE user SET monthMinBalance = balance WHERE balance < monthMinBalance AND userID = '$userID'";
-        $this->performQuery($sql);
-    }
         
 		
 
