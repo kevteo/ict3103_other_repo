@@ -7,7 +7,7 @@
 
 	include("adminHeader.php");
 	
-	$model->rejectCustomerAccount($_GET['user']);
+	$model->adminRejectCustomerAccount($_GET['user']);
 	$model->sendRejectionEmail($_GET['user']);
 	
 	?>

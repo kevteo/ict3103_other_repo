@@ -517,6 +517,13 @@ class Model {
             if ($result) { return true; } else { return null; }
         }
 	}
+        
+            //admin reject account
+    public function adminRejectCustomerAccount($user) {
+            $sql = "UPDATE User SET status = -1 WHERE userID = '$user'";
+            $result = $this->performQuery($sql);
+            if ($result) { return true; } else { return null; }
+	}
 	
 	//admin create aacount
     public function createCustomerAccount($userID) {
