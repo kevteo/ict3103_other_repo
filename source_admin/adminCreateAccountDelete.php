@@ -7,9 +7,8 @@
 
 	include("adminHeader.php");
 	
-	$model->createCustomerAccount($_GET['user']);
-           $model->sendRegistrationEmail($_GET['user']);
-           //$model->smsPassword($_GET['user']);
+	$model->rejectCustomerAccount($_GET['user']);
+	$model->sendRejectionEmail($_GET['user']);
 	
 	?>
 	<!-- begin:: Page -->
@@ -22,7 +21,7 @@
 						<div class="d-flex align-items-center">
 							<div class="mr-auto">
 								<h3 class="m-subheader__title ">
-									Customer Created
+									Customer Rejected
 								</h3>
 							</div>
 						</div>
