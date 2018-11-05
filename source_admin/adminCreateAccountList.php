@@ -56,6 +56,13 @@
 			var url = 'adminCreateAccount.php?user=' + user + '&nric=' + nric;
 			$(location).attr('href', url);
         }
+		
+		function rejectUser(user, nric) {
+			console.log(user);
+			console.log(nric);
+			var url = 'adminCreateAccountDelete.php?user=' + user + '&nric=' + nric;
+			$(location).attr('href', url);
+        }
 		</script>
 
 <?php include("../source_include/footer.php"); ?>
