@@ -70,7 +70,7 @@ if (isset($_GET['user_id'])) {
                                     Full Name
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="<?php echo $name; ?>" disabled>
+                                       <input class="form-control m-input" type="text" value="<?php echo $name; ?>" required>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -86,7 +86,7 @@ if (isset($_GET['user_id'])) {
                                     Email
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="<?php echo $email; ?>" name="email">
+                                       <input class="form-control m-input" type="email" value="<?php echo $email; ?>" name="email" required> 
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -110,7 +110,7 @@ if (isset($_GET['user_id'])) {
                                     Address
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="<?php echo $address; ?>" name="address">
+                                       <input class="form-control m-input" type="text" value="<?php echo $address; ?>" name="address" required>
                                     </div>
                                  </div>
                                  <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>

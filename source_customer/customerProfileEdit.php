@@ -48,7 +48,7 @@ $user = $model->getProfile();
                                     Full Name
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="<?php echo $user->name ;?>" name="fullName">
+                                       <input class="form-control m-input" type="text" value="<?php echo $user->name ;?>" name="fullName" required>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -64,7 +64,7 @@ $user = $model->getProfile();
                                     Email
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="<?php echo $user->email ;?>" name="email">
+                                       <input class="form-control m-input" type="email" value="<?php echo $user->email ;?>" name="email" required>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -72,7 +72,7 @@ $user = $model->getProfile();
                                     Phone No.
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="<?php echo $user->mobileNumber; ?>" name="phoneNum">
+                                       <input class="form-control m-input" type="text" value="<?php echo $user->mobileNumber; ?>" name="phoneNum" pattern="(8|9)[0-9]{0,7}" required>
                                     </div>
                                  </div>
                                  <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -88,7 +88,7 @@ $user = $model->getProfile();
                                     Address
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="Ang Mo Kio Avenue 6" name="address">
+                                       <input class="form-control m-input" type="text" value="Ang Mo Kio Avenue 6" name="address" required>
                                     </div>
                                  </div>
                                  <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -112,7 +112,7 @@ $user = $model->getProfile();
                                     Password
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="password" value="<?php echo $user->password ;?>" name="password">
+                                       <input class="form-control m-input" type="password" value="<?php echo $user->password ;?>" name="password" required>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
