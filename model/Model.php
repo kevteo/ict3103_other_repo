@@ -516,18 +516,18 @@ class Model {
             $result = $this->performQuery($sql);
             if ($result) { return true; } else { return null; }
         }
-	}
+    }
         
             //admin reject account
     public function adminRejectCustomerAccount($user) {
-            $sql = "UPDATE User SET status = -1 WHERE userID = '$user'";
-            $result = $this->performQuery($sql);
-            if ($result) { return true; } else { return null; }
-	}
+        $sql = "UPDATE User SET status = -1 WHERE userID = '$user'";
+        $result = $this->performQuery($sql);
+        if ($result) { return true; } else { return null; }
+    }
 	
-	//admin create aacount
+	//admin create account
     public function createCustomerAccount($userID) {
-		$sql1 = "UPDATE User SET status = 2 WHERE userID = '$userID'";
+	$sql1 = "UPDATE User SET status = 2 WHERE userID = '$userID'";
         $result1 = $this->performQuery($sql1);
         
 		require_once '../vendor/autoload.php';
@@ -576,6 +576,13 @@ class Model {
             $result2 = $this->performQuery($sql2);
         }
         return null;
+    }
+    
+    //admin create manager account
+    public function createManagerAccount($fullName, $nric, $email, $phoneNum, $address, $username, $passowrd) {
+        $sql = "INSERT INTO User VALUES (NULL, $username, $passowrd, 'manager', $fullName, $nric, $phoneNum, $email, $address, NULL, NULL, NULL, 0, 1, 0, NULL, 0, 0, 1, 0, 0)";
+        $result = $this->performQuery($sql);
+        if (!$result) { return false; }
     }
     
     /*
