@@ -32,7 +32,7 @@
 						
 					
 					<!--begin: Datatable -->
-                            <div class="admin_create_table" id="admin_create_table"></div>
+                            <div class="admin_delete_table" id="admin_delete_table"></div>
                             <!--end: Datatable -->
 						
 						
@@ -47,17 +47,13 @@
 			<!-- end::Body -->
 			
 			<script>
-
-	
-
-        function createUser(user, nric) {
+		
+		function rejectUser(user, nric) {
 			console.log(user);
 			console.log(nric);
-			var url = 'adminCreateAccount.php?user=' + user + '&nric=' + nric;
+			var url = 'adminCreateAccountDelete.php?user=' + user + '&nric=' + nric;
 			$(location).attr('href', url);
         }
-		
-		
 		</script>
 
 <?php include("../source_include/footer.php"); ?>

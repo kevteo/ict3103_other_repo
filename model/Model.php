@@ -450,6 +450,16 @@ class Model {
         }
         return json_encode($userArray);
     }
+	
+	public function getCustomersRejected() {
+        $sql = "SELECT * FROM User WHERE status = '3'";
+        $result = $this->performQuery($sql);
+        $userArray = array();
+        while ($user = mysqli_fetch_object($result)) {
+            array_push($userArray, $user);
+        }
+        return json_encode($userArray);
+    }
 
     public function getCustomersCreated() {
         $sql = "SELECT * FROM User WHERE status = '2'";
@@ -507,8 +517,18 @@ class Model {
         
         return false;
     }
+	
+	//manager reject aacount (to admin's delete list)
+    public function rejectCustomerAccount($userID) {
+        $sql = "UPDATE User SET status = 3 WHERE userID = '$userID'";
+            $result = $this->performQuery($sql);
+            if ($result) { return true; } else { return null; }
+        
+        return false;
+    }
     
-    //manager reject account
+    //manager reject account old
+	/*
     public function rejectCustomerAccount($user) {
         //TO-DO send email to the user
         if ($user->role == 'manager') {
@@ -516,7 +536,7 @@ class Model {
             $result = $this->performQuery($sql);
             if ($result) { return true; } else { return null; }
         }
-    }
+    }*/
         
             //admin reject account
     public function adminRejectCustomerAccount($user) {

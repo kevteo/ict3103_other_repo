@@ -71,7 +71,7 @@
 														</a>
 													</li>
 													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
-														<a  href="adminCreateAccountList.php" class="m-menu__link ">
+														<a  href="adminDeleteAccountList.php" class="m-menu__link ">
 															<i class="m-menu__link-icon flaticon-cancel"></i>
 															<span class="m-menu__link-text">
 																Reject New Accounts

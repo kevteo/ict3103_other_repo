@@ -53,6 +53,11 @@
 			var url = 'managerApproveAccount.php?user=' + user + '&nric=' + nric + '&username=' + username;
 			$(location).attr('href', url);
         }
+		
+		function rejectUser(user, username, nric) {
+			var url = 'managerRejectAccount.php?user=' + user + '&nric=' + nric + '&username=' + username;
+			$(location).attr('href', url);
+        }
 		</script>
 
 <?php include("../source_include/footer.php"); ?>

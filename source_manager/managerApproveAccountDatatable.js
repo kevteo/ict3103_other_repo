@@ -62,7 +62,7 @@ var DefaultDatatableManager = function() {
                         var stringUser = "'" + t.userID + "'";
 						var stringIc = "'" + t.nric + "'";
 						var stringUsername = "'" + t.username + "'";
-                        return '\t\t\t\t\t\t<div class="dropdown ' + (e.getPageSize() - a <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t\<a href="managerApproveAccount.php" onclick="approveUser(' + stringUser + ',' + stringUsername + ',' + stringIc + ');" data-toggle="modal" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Create">\t\t\t\t\t\t\t<i class="la la-edit"></i>\t\t\t\t\t\t</a>'
+                        return '\t\t\t\t\t\t<div class="dropdown ' + (e.getPageSize() - a <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t\<a href="managerApproveAccount.php" onclick="approveUser(' + stringUser + ',' + stringUsername + ',' + stringIc + ');" data-toggle="modal" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Approve">\t\t\t\t\t\t\t<i class="la la-check"></i>\t\t\t\t\t\t</a>&nbsp<a href="managerRejectAccount.php" onclick="rejectUser(' + stringUser + ',' + stringUsername + ',' + stringIc + ');" data-toggle="modal" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Reject">\t\t\t\t\t\t\t<i class="la la-close"></i>\t\t\t\t\t\t</a>'
                         
                     }
                 }]

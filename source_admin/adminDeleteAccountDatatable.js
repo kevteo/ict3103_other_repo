@@ -1,17 +1,17 @@
-var DefaultDatatableAdmin = function() {
+var DefaultDatatableAdminDelete = function() {
     var e = function(t) {
-        var a = $("#m_datatable_console_client").append(t + "\t\n");
+        var a = $("#m_datatable_console_client_del").append(t + "\t\n");
         $(a).scrollTop(a[0].scrollHeight - $(a).height())
     };
     return {
         init: function() {
             var t;
-            t = $(".admin_create_table").mDatatable({
+            t = $(".admin_delete_table").mDatatable({
                 data: {
                     type: "remote",
                     source: {
                         read: {
-                            url: "adminCreateAccount_json.php" 
+                            url: "adminDeleteAccount_json.php" 
                         }
                     },
                     pageSize: 5,
@@ -56,7 +56,7 @@ var DefaultDatatableAdmin = function() {
                     template: function(t, a, e) {
                         var stringUser = "'" + t.userID + "'";
 						var stringIc = "'" + t.nric + "'";
-                        return '\t\t\t\t\t\t<div class="dropdown ' + (e.getPageSize() - a <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t\<a href="adminCreateAccount.php" onclick="createUser(' + stringUser + ',' + stringIc + ');" data-toggle="modal" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Create">\t\t\t\t\t\t\t<i class="la la-check"></i>\t\t\t\t\t\t</a>'
+                        return '\t\t\t\t\t\t<div class="dropdown ' + (e.getPageSize() - a <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t\<a href="adminCreateAccountDelete.php" onclick="rejectUser(' + stringUser + ',' + stringIc + ');" data-toggle="modal" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Reject">\t\t\t\t\t\t\t<i class="la la-close"></i>\t\t\t\t\t\t</a>'
                         
                     }}
                 ]
@@ -89,5 +89,5 @@ var DefaultDatatableAdmin = function() {
     }
 }();
 jQuery(document).ready(function() {
-    DefaultDatatableAdmin.init()
+    DefaultDatatableAdminDelete.init()
 });
