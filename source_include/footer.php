@@ -34,6 +34,7 @@
         <!--begin::Page Snippets -->
 		<script src="../js/general/dashboard.js" type="text/javascript"></script>
 		<script src="../js/forms/widgets/select2.js" type="text/javascript"></script>
+		<script src="../js/forms/validation/form-controls.js" type="text/javascript"></script>
 		<!--end::Page Snippets -->   
 		<!--begin::Datatables -->
 		<script src="../source_admin/adminCreateAccountDatatable.js" type="text/javascript"></script>

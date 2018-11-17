@@ -40,7 +40,7 @@ include("../source_include/header.php");
                                     Full Name
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="" name="fullName">
+                                       <input class="form-control m-input" type="text" value="" name="fullName" required> 
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -48,7 +48,7 @@ include("../source_include/header.php");
                                     NRIC
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="" name="nric">
+                                       <input class="form-control m-input" type="text" value="" name="nric" pattern="[STFG]\d{7}[A-Z]" required>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -56,7 +56,7 @@ include("../source_include/header.php");
                                     Email
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="" name="email">
+                                       <input class="form-control m-input" type="email" value="" name="email" required>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -64,7 +64,7 @@ include("../source_include/header.php");
                                     Phone No.
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="" name="phoneNum">
+                                       <input class="form-control m-input" type="text" value="" name="phoneNum" pattern="(8|9)[0-9]{0,7}" required>
                                     </div>
                                  </div>
                                  <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -80,7 +80,7 @@ include("../source_include/header.php");
                                     Address
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="Ang Mo Kio Avenue 6 Block 456 #12-34 Singapore 123456" name="address">
+                                       <input class="form-control m-input" type="text" value="Ang Mo Kio Avenue 6 Block 456 #12-34 Singapore 123456" name="address" required>
                                     </div>
                                  </div>
                                  <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -96,7 +96,7 @@ include("../source_include/header.php");
                                     Username
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="" name="username">
+                                       <input class="form-control m-input" type="text" value="" name="username" required>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -104,7 +104,7 @@ include("../source_include/header.php");
                                     Password
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="password" value="" name="password">
+                                       <input class="form-control m-input" type="password" value="" name="password" required>
                                     </div>
                                  </div>
                               </div>
@@ -124,7 +124,7 @@ include("../source_include/header.php");
                                     </div>
 				</div>
                               </div>
-                           <input type="hidden" name="adminCreateManagerAccount">
+							  <input type="hidden" name="adminCreateManagerAccount">
                            </form> 
                        
                      </div>
