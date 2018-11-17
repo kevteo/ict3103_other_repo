@@ -5,7 +5,6 @@ include("../source_include/header.php");
     $output = str_replace('%Title%', $title, $output);
 
 	include("adminHeader.php");
-
 ?>
 <!-- begin:: Page -->
 <div class="m-grid m-grid--hor m-grid--root m-page">
