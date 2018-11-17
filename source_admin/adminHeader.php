@@ -56,7 +56,7 @@
 												<ul class="m-menu__subnav">
 													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
 														<a  href="adminDashboard.php" class="m-menu__link ">
-															<i class="m-menu__link-icon flaticon-avatar"></i>
+															<i class="m-menu__link-icon flaticon-users"></i>
 															<span class="m-menu__link-text">
 																All Accounts
 															</span>
@@ -64,16 +64,23 @@
 													</li>
 													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
 														<a  href="adminCreateAccountList.php" class="m-menu__link ">
-															<i class="m-menu__link-icon flaticon-users"></i>
+															<i class="m-menu__link-icon flaticon-add-circular-button"></i>
 															<span class="m-menu__link-text">
-																Approve New Accounts
+																Create New Accounts
 															</span>
 														</a>
 													</li>
-
+													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
+														<a  href="adminCreateAccountList.php" class="m-menu__link ">
+															<i class="m-menu__link-icon flaticon-cancel"></i>
+															<span class="m-menu__link-text">
+																Reject New Accounts
+															</span>
+														</a>
+													</li>
 													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
 														<a  href="adminUserStatusRequest.php" class="m-menu__link ">
-															<i class="m-menu__link-icon flaticon-edit"></i>
+															<i class="m-menu__link-icon flaticon-user-settings"></i>
 															<span class="m-menu__link-text">
 																User Status Request
 															</span>
@@ -82,7 +89,7 @@
 													
 													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
 														<a  href="adminCreateManager.php" class="m-menu__link ">
-															<i class="m-menu__link-icon flaticon-edit"></i>
+															<i class="m-menu__link-icon flaticon-user-add"></i>
 															<span class="m-menu__link-text">
 																Create Manager Account
 															</span>

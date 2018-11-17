@@ -1,3 +1,4 @@
+<?php $user = $model->getProfile(); ?>
 <!-- begin::Topbar -->
 							<div class="m-stack__item m-stack__item--right m-header-head" id="m_header_nav">
 								<div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
@@ -21,7 +22,7 @@
 														</span>
 													</span>
 													<span class="m-topbar__username m--hide">
-														Nick
+														<?php echo $user->name; ?>
 													</span>
 												</a>
 												<div class="m-dropdown__wrapper">
@@ -34,7 +35,7 @@
 																</div>
 																<div class="m-card-user__details">
 																	<span class="m-card-user__name m--font-weight-500">
-																		Customer
+																		<?php echo $user->name; ?>
 																	</span>
 																	<a href="customerProfileView.php" class="">
 																		View Profile
