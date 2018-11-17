@@ -70,7 +70,7 @@ if (isset($_GET['user_id'])) {
                                     Full Name
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="<?php echo $name; ?>" required>
+                                       <input class="form-control m-input" type="text" value="<?php echo $name; ?>" name="name" required>
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">

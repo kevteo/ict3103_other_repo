@@ -710,8 +710,8 @@ class Model {
     
     
     
-	public function managerModifyProfile($userID, $address, $email) {
-        $sql = "UPDATE User SET address = '$address', email = '$email' WHERE userID = '$userID'";
+	public function managerModifyProfile($userID, $name, $address, $email) {
+        $sql = "UPDATE User SET name = '$name', address = '$address', email = '$email' WHERE userID = '$userID'";
 
         $result = $this->performQuery($sql);
         if ($result) { return true; } else { return null; }

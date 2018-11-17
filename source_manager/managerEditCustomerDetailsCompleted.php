@@ -13,7 +13,7 @@ if (isset($_POST['editCustProfile'])) {
     $user = $model->getCustomerDetails($user_id);
     //var_dump($user);
     $username = $user['username'];
-    $name = $user['name'];
+    $name = $_POST['name'];
     $nric = $user['nric'];
     $mobileNumber = $user['mobileNumber'];
     $email = $_POST['email'];
@@ -23,7 +23,7 @@ if (isset($_POST['editCustProfile'])) {
     $balance = $user['balance'];
     $lastActive=$user['lastActive'];
 	
-	$model->managerModifyProfile($user_id, $address, $email);
+	$model->managerModifyProfile($user_id, $name,$address, $email);
     
 }
    
