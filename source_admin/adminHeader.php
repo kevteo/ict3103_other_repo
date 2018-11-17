@@ -79,6 +79,15 @@
 															</span>
 														</a>
 													</li>
+													
+													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
+														<a  href="adminCreateManager.php" class="m-menu__link ">
+															<i class="m-menu__link-icon flaticon-edit"></i>
+															<span class="m-menu__link-text">
+																Create Manager Account
+															</span>
+														</a>
+													</li>
 												</ul>
 											</div>
 										</li>
