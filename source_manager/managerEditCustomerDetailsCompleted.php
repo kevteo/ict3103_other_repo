@@ -8,7 +8,7 @@ echo $output;
 include("managerHeader.php");
 
 
-if (isset($_GET['user_id'])) {
+if (isset($_POST['editCustProfile'])) {
     $user_id = $_GET['user_id'];
     $user = $model->getCustomerDetails($user_id);
     //var_dump($user);
@@ -16,12 +16,14 @@ if (isset($_GET['user_id'])) {
     $name = $user['name'];
     $nric = $user['nric'];
     $mobileNumber = $user['mobileNumber'];
-    $email = $user['email'];
-    $address = $user['address'];
+    $email = $_POST['email'];
+    $address = $_POST['address'];
     $account = $user['account'];
     $salary = $user['salary'];
     $balance = $user['balance'];
     $lastActive=$user['lastActive'];
+	
+	$model->managerModifyProfile($user_id, $address, $email);
     
 }
    
@@ -36,7 +38,7 @@ if (isset($_GET['user_id'])) {
             <div class="d-flex align-items-center">
                <div class="mr-auto">
                   <h3 class="m-subheader__title ">
-                     User Profile
+                     User Profile Updated
                   </h3>
                </div>
             </div>
@@ -52,7 +54,7 @@ if (isset($_GET['user_id'])) {
                         </div>
                      </div>
 
-                           <form class="m-form m-form--fit m-form--label-align-right">
+                           <form class="m-form m-form--fit m-form--label-align-right" action="managerDashboard.php" method="post" id="editCustProfileForm">
                               <div class="m-portlet__body">
                                  <div class="form-group m-form__group m--margin-top-10 m--hide">
                                     <div class="alert m-alert m-alert--default" role="alert">
@@ -157,8 +159,7 @@ if (isset($_GET['user_id'])) {
                                        <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="<?php echo $salary; ?>" disabled>
                                     </div>
                                  </div>
-                              </div>
-							  <div class="m-portlet__foot m-portlet__foot--fit">
+								  <div class="m-portlet__foot m-portlet__foot--fit">
                                  <div class="m-form__actions">
                                     <div class="row">
                                        <div class="col-5"></div>
@@ -171,6 +172,8 @@ if (isset($_GET['user_id'])) {
                               </div>
 							  </div>
 							  </div>
+                              </div>
+							  <input type="hidden" name="editCustProfile">
                            </form> 
                        
                      </div>

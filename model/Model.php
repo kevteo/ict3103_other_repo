@@ -708,6 +708,12 @@ class Model {
     
     
     
+	public function managerModifyProfile($userID, $address, $email) {
+        $sql = "UPDATE User SET address = '$address', email = '$email' WHERE userID = '$userID'";
+
+        $result = $this->performQuery($sql);
+        if ($result) { return true; } else { return null; }
+    }
 
     /*
      * Run to this method to insert data to database
