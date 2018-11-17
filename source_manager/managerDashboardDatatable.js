@@ -79,9 +79,10 @@ var DefaultDatatableManagerDash = function() {
                     overflow: "visible",
                     template: function(t, a, e) {
                         var stringUser = "'" + t.userID + "'";
-                        var url2 = "managerEditCustomerDetails.php?user_id="+t.userID;
 						var url = "managerViewCustomerDetails.php?user_id="+t.userID;
-                        return '<a href="'+url2+'" hint="edit"><i class="la la-edit"></i></a>&nbsp&nbsp&nbsp<a href="'+url+'"><i class="la la-eye"></a>' ;
+						var url2 = "managerEditCustomerDetails.php?user_id="+t.userID;
+					
+						return '\t\t\t\t\t\t\t\<a href="'+url+'" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View">\t\t\t\t\t\t\t<i class="la la-eye"></i>\t\t\t\t\t\t</a>&nbsp<a href="'+url2+'" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit">\t\t\t\t\t\t\t<i class="la la-edit"></i>\t\t\t\t\t\t</a>';
                     }
                 }]
             }), $("#m_datatable_clear").on("click", function() {

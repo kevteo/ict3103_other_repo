@@ -80,9 +80,8 @@ var DefaultDatatableUserRequest = function() {
                     template: function(t, a, e) {
                         var urlApprove = "managerUpdateRequest.php?request=approve&user_id="+t.userID;
                         var urlFailure = "managerUpdateRequest.php?request=fail&user_id="+t.userID;
-                        return '<a href="'+urlApprove+'"><i class="fa fa-check"></i></a> &nbsp;&nbsp; <a href="'+urlFailure+'"><i class="fa fa-remove"></i></a> ' ;
-                        //return '<div class="dropdown ' + (e.getPageSize() - a <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t\ <a href="'+urlApprove+'" data-toggle="modal" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Approve"><i class="fa fa-check"></i></a>   &nbsp;&nbsp;<a href="'+urlFailure+'" data-toggle="modal" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Approve"><i class="fa fa-remove"></i></a> ' ;
-                        //return '\t\t\t\t\t\t<div class="dropdown ' + (e.getPageSize() - a <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t\<a href="managerApproveAccount.php" onclick="approveUser(' + stringUser + ',' + stringUsername + ',' + stringIc + ');" data-toggle="modal" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Create">\t\t\t\t\t\t\t<i class="la la-edit"></i>\t\t\t\t\t\t</a>'
+						
+						return '\t\t\t\t\t\t\t\<a href="'+urlApprove+'" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Approve">\t\t\t\t\t\t\t<i class="la la-check"></i>\t\t\t\t\t\t</a>&nbsp<a href="'+urlFailure+'" class="btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Reject">\t\t\t\t\t\t\t<i class="la la-close"></i>\t\t\t\t\t\t</a>';
                         
                     }
                 }]
