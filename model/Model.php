@@ -579,8 +579,9 @@ class Model {
     }
     
     //admin create manager account
-    public function createManagerAccount($fullName, $nric, $email, $phoneNum, $address, $username, $passowrd) {
-        $sql = "INSERT INTO User VALUES (NULL, $username, $passowrd, 'manager', $fullName, $nric, $phoneNum, $email, $address, NULL, NULL, NULL, 0, 1, 0, NULL, 0, 0, 1, 0, 0)";
+    public function createManagerAccount($fullName, $nric, $email, $phoneNum, $address, $username, $password) {
+	   $sql = "INSERT INTO User VALUES (NULL,'$username', '$password', 'manager', '$fullName', '$nric', '$phoneNum', '$email', '$address', NULL, NULL, 0, 2, 1, 0, NULL, 0, 0, 1, 0, 0)";
+			
         $result = $this->performQuery($sql);
         if (!$result) { return false; }
     }

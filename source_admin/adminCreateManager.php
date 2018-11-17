@@ -5,16 +5,6 @@ include("../source_include/header.php");
     $output = str_replace('%Title%', $title, $output);
 
 	include("adminHeader.php");
-        if(isset($_POST['createManagerAccount'])){
-            $fullName = $_POST['fullName'];
-            $nric = $_POST['nric'];
-            $email = $_POST['email'];
-            $phoneNum = $_POST['phoneNum'];
-            $address = $_POST['address'];
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            $isSuccess = $model->createManagerAccount($fullName, $nric, $email, $phoneNum, $address, $username, $passowrd);
-        }
 
 ?>
 <!-- begin:: Page -->
@@ -37,7 +27,7 @@ include("../source_include/header.php");
             <div class="row">
                <div class="col-xl-12 col-lg-12">
                   <div class="m-portlet m-portlet--full-height m-portlet--tabs   m-portlet--rounded">
-                           <form class="m-form m-form--fit m-form--label-align-right" action="adminManagerAccountCreated.php" method="post" id="formName">
+                           <form class="m-form m-form--fit m-form--label-align-right" action="adminManagerAccountCreated.php" method="post" id="adminCreateManager">
                               <div class="m-portlet__body">
                                  <div class="form-group m-form__group row">
                                     <div class="col-10 ml-auto">
@@ -51,7 +41,7 @@ include("../source_include/header.php");
                                     Full Name
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="testing" name="fullName">
+                                       <input class="form-control m-input" type="text" value="" name="fullName">
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -59,7 +49,7 @@ include("../source_include/header.php");
                                     NRIC
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="s1122345a" name="nric">
+                                       <input class="form-control m-input" type="text" value="" name="nric">
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -67,7 +57,7 @@ include("../source_include/header.php");
                                     Email
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="abc@gmail.com" name="email">
+                                       <input class="form-control m-input" type="text" value="" name="email">
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -75,7 +65,7 @@ include("../source_include/header.php");
                                     Phone No.
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="12345678" name="phoneNum">
+                                       <input class="form-control m-input" type="text" value="" name="phoneNum">
                                     </div>
                                  </div>
                                  <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -91,7 +81,7 @@ include("../source_include/header.php");
                                     Address
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="Ang Mo Kio Avenue 6" name="address">
+                                       <input class="form-control m-input" type="text" value="Ang Mo Kio Avenue 6 Block 456 #12-34 Singapore 123456" name="address">
                                     </div>
                                  </div>
                                  <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -107,7 +97,7 @@ include("../source_include/header.php");
                                     Username
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="text" value="man1" name="username">
+                                       <input class="form-control m-input" type="text" value="" name="username">
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -115,7 +105,7 @@ include("../source_include/header.php");
                                     Password
                                     </label>
                                     <div class="col-7">
-                                       <input class="form-control m-input" type="password" value="123" name="password">
+                                       <input class="form-control m-input" type="password" value="" name="password">
                                     </div>
                                  </div>
                               </div>
@@ -124,7 +114,7 @@ include("../source_include/header.php");
                                     <div class="row">
                                        <div class="col-4"></div>
                                        <div class="col-8">
-                                          <a href="javascript:$('#formName').submit()" class="btn btn-primary">
+                                          <a href="javascript:$('#adminCreateManager').submit()" class="btn btn-primary">
                                             Create
                                           </a>
                                           &nbsp;&nbsp;
@@ -135,7 +125,7 @@ include("../source_include/header.php");
                                     </div>
 				</div>
                               </div>
-                           <input type="hidden" name="editProfile">
+                           <input type="hidden" name="adminCreateManagerAccount">
                            </form> 
                        
                      </div>
