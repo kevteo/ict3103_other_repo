@@ -52,7 +52,7 @@ if (isset($_GET['user_id'])) {
                         </div>
                      </div>
 
-                           <form class="m-form m-form--fit m-form--label-align-right">
+                           <form class="m-form m-form--fit m-form--label-align-right" action="managerEditCustomerDetailsCompleted.php?user_id=<?php echo $_GET['user_id'] ?>" method="post" id="editCustProfileForm">
                               <div class="m-portlet__body">
                                  <div class="form-group m-form__group m--margin-top-10 m--hide">
                                     <div class="alert m-alert m-alert--default" role="alert">
@@ -86,7 +86,7 @@ if (isset($_GET['user_id'])) {
                                     Email
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="<?php echo $email; ?>" disabled>
+                                       <input class="form-control m-input" type="text" value="<?php echo $email; ?>" name="email">
                                     </div>
                                  </div>
                                  <div class="form-group m-form__group row">
@@ -110,7 +110,7 @@ if (isset($_GET['user_id'])) {
                                     Address
                                     </label>
                                     <div class="col-7">
-                                       <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="<?php echo $address; ?>" disabled>
+                                       <input class="form-control m-input" type="text" value="<?php echo $address; ?>" name="address">
                                     </div>
                                  </div>
                                  <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -157,12 +157,15 @@ if (isset($_GET['user_id'])) {
                                        <input style="background: transparent; border: none;" class="form-control m-input" type="text" value="<?php echo $salary; ?>" disabled>
                                     </div>
                                  </div>
-                              </div>
-							  <div class="m-portlet__foot m-portlet__foot--fit">
+								  <div class="m-portlet__foot m-portlet__foot--fit">
                                  <div class="m-form__actions">
                                     <div class="row">
-                                       <div class="col-5"></div>
-                                       <div class="col-7">
+                                       <div class="col-4"></div>
+                                       <div class="col-8">
+									   <a href="javascript:$('#editCustProfileForm').submit()" class="btn btn-primary">
+															Save Changes
+														</a>
+                                          &nbsp;&nbsp;
                                           <a href="managerDashboard.php" class="btn btn-danger">
                                           Back
                                           </a>
@@ -171,6 +174,8 @@ if (isset($_GET['user_id'])) {
                               </div>
 							  </div>
 							  </div>
+                              </div>
+							  <input type="hidden" name="editCustProfile">
                            </form> 
                        
                      </div>

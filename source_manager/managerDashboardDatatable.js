@@ -79,10 +79,9 @@ var DefaultDatatableManagerDash = function() {
                     overflow: "visible",
                     template: function(t, a, e) {
                         var stringUser = "'" + t.userID + "'";
-                        var url = "managerViewCustomerDetails.php?user_id="+t.userID;
-                        return '<a href="'+url+'">View</a>' ;
-                        //return '\t\t\t\t\t\t<div class="dropdown ' + (e.getPageSize() - a <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t\<a href="managerApproveAccount.php" onclick="viewAccountDetails(' + stringUsername + ');" data-toggle="modal" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View">\t\t\t\t\t\t\t<i class="la la-edit"></i>\t\t\t\t\t\t</a>'
-                        
+                        var url2 = "managerEditCustomerDetails.php?user_id="+t.userID;
+						var url = "managerViewCustomerDetails.php?user_id="+t.userID;
+                        return '<a href="'+url2+'" hint="edit"><i class="la la-edit"></i></a>&nbsp&nbsp&nbsp<a href="'+url+'"><i class="la la-eye"></a>' ;
                     }
                 }]
             }), $("#m_datatable_clear").on("click", function() {
