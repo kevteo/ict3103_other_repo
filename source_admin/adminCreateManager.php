@@ -5,7 +5,7 @@ include("../source_include/header.php");
     $output = str_replace('%Title%', $title, $output);
 
 	include("adminHeader.php");
-        if(isset($_POST['createManagerAccount'])){
+        if(isset($_POST['editProfile'])){
             $fullName = $_POST['fullName'];
             $nric = $_POST['nric'];
             $email = $_POST['email'];
