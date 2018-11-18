@@ -15,7 +15,7 @@ include("../source_include/header.php");
             $username = $_POST['username'];
             $password = $_POST['password'];
 			
-            $model->createManagerAccount($fullName, $nric, $email, $phoneNum, $address, $username, $password);
+            $isSuccess = $model->createManagerAccount($fullName, $nric, $email, $phoneNum, $address, $username, $password);
         }
 
 ?>
@@ -28,9 +28,27 @@ include("../source_include/header.php");
          <div class="m-subheader ">
             <div class="d-flex align-items-center">
                <div class="mr-auto">
-                  <h3 class="m-subheader__title ">
+                  <!--<h3 class="m-subheader__title ">
                      Manager Created
-                  </h3>
+                  </h3>-->
+                 <?php 							  
+                if(!$isSuccess ){ ?>
+                  <?php
+                echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
+                echo   " <button type='button' class='close' data-dismiss='alert' aria-label='Close'></button>";
+                echo    "Please ensure your username and nric do not exist in the database"; 
+                echo   "</div>";
+                          ?>
+		<?php
+		}
+		else { ?>
+		<?php
+                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
+                    echo "<button type='button' class='close' data-dismiss='alert' aria-label='Close'></button>";
+                    echo "Manager Created."; 
+                    echo "</div>";
+		}
+                ?>
                </div>
             </div>
          </div>
