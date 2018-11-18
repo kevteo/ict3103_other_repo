@@ -13,7 +13,7 @@ while ($user = mysqli_fetch_object($result)) {
     if ($user->monthStartBalance >= 1000) {
         $interest = $user->monthMinBalance * 0.001;
 
-        $sql = "UPDATE user SET balance = balance + $interest WHERE userID = '$user->userID'";
+        $sql = "UPDATE user SET balance = balance + $interest WHERE userID = '$user->userID' AND user.role = 'customer'";
         $model->performQuery($sql);
 
         $sql = "INSERT INTO transaction VALUES (NULL, $interest, $user->userID, NULL, NOW(), , 'interest')";
@@ -23,5 +23,5 @@ while ($user = mysqli_fetch_object($result)) {
 
 
 // Update month starting balance
-$sql = "UPDATE user SET monthStartBalance = balance";
+$sql = "UPDATE user SET monthStartBalance = balance AND user.role = 'customer'";
 $model->performQuery($sql);

@@ -605,8 +605,11 @@ class Model {
         $sql = "SELECT * FROM User WHERE username='$username' OR nric = '$nric'";
         $result = $this->performQuery($sql);
         if (mysqli_num_rows($result)!=0) { return false; }
+
+        $date = new DateTime();
+        $lastActive = $date->format('Y-m-d H-i-s');
         
-	$sql = "INSERT INTO User VALUES (NULL,'$username', '$password', 'manager', '$fullName', '$nric', '$phoneNum', '$email', '$address', NULL, NULL, 0, 2, 1, 0, NULL, 0, 0, 1, 0, 0)";
+	    $sql = "INSERT INTO User VALUES (NULL,'$username', '$password', 'manager', '$fullName', '$nric', '$phoneNum', '$email', '$address', NULL, NULL, 0, 2, 1, 0, '$lastActive', 0, 0, 1, 0, 0)";
 
         $result = $this->performQuery($sql);
         if (!$result) { return false; }
