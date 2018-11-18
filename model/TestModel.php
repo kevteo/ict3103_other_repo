@@ -50,5 +50,5 @@ $model = Model::getInstance(); // Instantiate Object
 //var_dump($model->requestToggleActive());
 //$model->setToggleActive(1);
 
-$model->sendRegistrationEmail("2");
+$model->sendRegistrationEmail("3");
 echo "ssssss";
