@@ -44,6 +44,7 @@
 		<script src="../source_manager/managerApproveAccountDatatable.js" type="text/javascript"></script>	
 		<script src="../source_manager/managerDashboardDatatable.js" type="text/javascript"></script>
 		<script src="../source_manager/managerUserStatusRequestDatatable.js" type="text/javascript"></script>	
+		<script src="../source_customer/customerTransactionDatatable.js" type="text/javascript"></script>
 	
 		
 		<!--end::Datatables -->
