@@ -79,6 +79,18 @@
 															</span>
 														</a>
 													</li>
+
+													
+													<li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true">
+														<a  href="customerTransactions.php" class="m-menu__link ">
+															<i class="m-menu__link-icon flaticon-user-settings"></i>
+															<span class="m-menu__link-text">
+																Customer Transcation
+															</span>
+														</a>
+													</li>
+
+													
 												</ul>
 											</div>
 										</li>

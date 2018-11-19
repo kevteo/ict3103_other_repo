@@ -756,7 +756,7 @@ class Model {
     }
 
     public function getCustomerTransactionsDetails($transactionID) {
-        $sql = "SELECT * FROM `transaction` where `transactionID` = '$transactionID'";
+        $sql = "SELECT username,datetime,type,amount,transactionID FROM `transaction` t, user u where `transactionID` = '$transactionID' and u.userID=t.userID";
         $result = $this->performQuery($sql);
         $transactionArray = array();
        
@@ -764,7 +764,7 @@ class Model {
     }
 
     public function getCustomerTransactionsDetailsTransfer($transactionID) {
-        $sql = "SELECT username as userFrom, amount,datetime,type,account as userFromAccount FROM `user` u, transaction t where transactionID = '$transactionID' and (u.userID= t.userID);";
+        $sql = "SELECT username, username as userFrom, amount,datetime,type,account as userFromAccount FROM `user` u, transaction t where transactionID = '$transactionID' and (u.userID= t.userID);";
         $result = $this->performQuery($sql);
         $transactionFrom=mysqli_fetch_assoc($result);
 
@@ -781,10 +781,18 @@ class Model {
         //Insert to array
         $transaction = array_merge($transactionFrom,$transactionTo);
 
-
-
-       
         return $transaction;
+    }
+
+    //For manager
+    public function getTranscationsM() {
+        $sql = "SELECT username,datetime,type,amount,transactionID FROM `transaction` t , user u where u.userID=t.userID ";
+        $result = $this->performQuery($sql);
+        $transactionArray = array();
+        while ($user = mysqli_fetch_object($result)) {
+            array_push($transactionArray, $user);
+        }
+        return json_encode($transactionArray);
     }
     
 
