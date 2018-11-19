@@ -46,19 +46,7 @@ if(isset($_GET['type']) && isset($_GET['transactionID'])){
             <div class="row">
                <div class="col-xl-12 col-lg-12">
                   <div class="m-portlet m-portlet--full-height m-portlet--tabs   m-portlet--rounded">
-                     <div class="m-portlet__head">
-                        <div class="m-portlet__head-tools">
-                           <ul class="m-portlet__nav">
-                              <li class="m-portlet__nav-item m-portlet__nav-item--last">
-                                 <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
-                                    <a href="customerProfileEdit.php" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
-                                    <i class="la la-gear"></i>
-                                    </a>
-                                 </div>
-                              </li>
-                           </ul>
-                        </div>
-                     </div>
+                    
                            <form class="m-form m-form--fit m-form--label-align-right">
                               <div class="m-portlet__body">
                                  <div class="form-group m-form__group m--margin-top-10 m--hide">
