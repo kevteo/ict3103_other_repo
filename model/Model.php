@@ -285,7 +285,7 @@ class Model {
     
     public function deposit($amount) {
 		$date = new DateTime();
-		$datetime = $date->format('Y-m-d H-i-s');
+		$datetime = $date->format('Y-m-d');
         $user = unserialize($_SESSION['user']);
 		
         $newBalance = $this->getBalance($user->userID) + $amount;
@@ -306,7 +306,7 @@ class Model {
 	
     public function withdraw($amount) {
 		$date = new DateTime();
-		$datetime = $date->format('Y-m-d H-i-s');
+		$datetime = $date->format('Y-m-d');
         $user = unserialize($_SESSION['user']);
         
         $balance = $this->getBalance($user->userID);
@@ -358,7 +358,7 @@ class Model {
     public function transfer($amount, $account,$bank) {
         $user = unserialize($_SESSION['user']);
 		$date = new DateTime();
-		$datetime = $date->format('Y-m-d H-i-s');
+		$datetime = $date->format('Y-m-d');
 		
 		// Check if account exist
         $sql = "SELECT * FROM User WHERE account='$account' AND status = 2 AND isTerminated=0 AND bankID = '$bank'";
@@ -367,10 +367,10 @@ class Model {
         }
 		$result = $this->performQuery($sql);
         if ($result == null) { return false; }
-        $u = mysqli_fetch_object($result);
-        if ($u == null) { return false; }
-         
+        
+        
         $row = mysqli_fetch_assoc($result);
+        if ($row == null) { return false; }
         $payeeID = $row['userID'];
         
         //Check if balance enough
@@ -419,8 +419,7 @@ class Model {
         
 		
 
-    
-    
+
     public function getCustomers() {
         $sql = "SELECT * FROM User";
         $result = $this->performQuery($sql);
@@ -748,6 +747,50 @@ class Model {
         $result = $this->performQuery($sql);
         if ($result) { return true; } else { return null; }
     }
+
+    //customer transaction
+    public function getTranscations($userID) {
+        $sql = "SELECT * FROM `transaction` where userID='$userID' or payeeID='$userID' ORDER BY `datetime  `  DESC";
+        $result = $this->performQuery($sql);
+        $transactionArray = array();
+        while ($user = mysqli_fetch_object($result)) {
+            array_push($transactionArray, $user);
+        }
+        return json_encode($transactionArray);
+    }
+
+    public function getCustomerTransactionsDetails($transactionID) {
+        $sql = "SELECT * FROM `transaction` where `transactionID` = '$transactionID'";
+        $result = $this->performQuery($sql);
+        $transactionArray = array();
+       
+        return mysqli_fetch_assoc($result);
+    }
+
+    public function getCustomerTransactionsDetailsTransfer($transactionID) {
+        $sql = "SELECT username as userFrom, amount,datetime,type,account as userFromAccount FROM `user` u, transaction t where transactionID = '$transactionID' and (u.userID= t.userID);";
+        $result = $this->performQuery($sql);
+        $transactionFrom=mysqli_fetch_assoc($result);
+
+
+
+
+        //get payee username and account
+        $sql = "SELECT username as userTo, account as userToAccount FROM `user` u, transaction t where transactionID = '$transactionID' and (u.userID= t.payeeID);";
+        $result2 = $this->performQuery($sql);
+        $transactionTo=mysqli_fetch_assoc($result2);
+
+
+
+        //Insert to array
+        $transaction = array_merge($transactionFrom,$transactionTo);
+
+
+
+       
+        return $transaction;
+    }
+    
 
     /*
      * Run to this method to insert data to database
