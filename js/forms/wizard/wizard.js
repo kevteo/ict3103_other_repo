@@ -99,7 +99,7 @@ var WizardDemo = function() {
 						
 						console.log(name);
 						
-						var user = JSON.stringify({ name: name, nric: nric, mobileNumber: phone, password1: password1,role: "customer", email: email , address: address1 +" "+ address2 +" Singapore "+ postalcode, account: "024-61993-1",salary: salaryCheck ,balance: "0", status1: "0", isActive: "1", requestToggleActive: "0", isTerminated: "0"});
+						var user = JSON.stringify({userId:null, password1: password1,role: "customer",name: name, nric: nric, mobileNumber: phone, email: email , address: address1 +" "+ address2 +" Singapore "+ postalcode, account: null,salary: salaryCheck ,balance: "0", status1: "0", isActive: "1", requestToggleActive: "0", isTerminated: "0", f2a: "0", bankID: "1", balance: "0", balance: "0"});
 						
 						console.log(user);
 						
@@ -117,7 +117,7 @@ var WizardDemo = function() {
 						
                         mApp.unprogress(r), swal({
                             title: "",
-                            text: "The application has been successfully submitted! Directing you to login.",
+                            text: "The application has been submitted! Directing you to login.",
                             type: "success",
                             confirmButtonClass: "btn btn-secondary m-btn m-btn--wide invisible"
                         })
