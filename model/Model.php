@@ -23,7 +23,7 @@ class Model {
         return self::$instance;
     }
 
-    /*
+    /*s
      * Connect to mBank Database 
      */
 
@@ -605,13 +605,17 @@ class Model {
         $result = $this->performQuery($sql);
         if (mysqli_num_rows($result)!=0) { return false; }
 
-        $date = new DateTime();
-        $lastActive = $date->format('Y-m-d H-i-s');
-        
-	    $sql = "INSERT INTO User VALUES (NULL,'$username', '$password', 'manager', '$fullName', '$nric', '$phoneNum', '$email', '$address', NULL, NULL, 0, 2, 1, 0, '$lastActive', 0, 0, 1, 0, 0)";
+        else {
+            $date = new DateTime();
+            $lastActive = $date->format('Y-m-d H-i-s');
 
-        $result = $this->performQuery($sql);
-        if (!$result) { return false; }
+                $sql = "INSERT INTO User VALUES (NULL,'$username', '$password', 'manager', '$fullName', '$nric', '$phoneNum', '$email', '$address', NULL, NULL, 0, 2, 1, 0, '$lastActive', 0, 0, 1, 0, 0)";
+
+            $result = $this->performQuery($sql);
+            if (!$result) { return false; }
+            
+            else {return true;}
+        }
     }
     
     /*

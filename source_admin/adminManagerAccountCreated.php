@@ -31,24 +31,6 @@ include("../source_include/header.php");
                   <!--<h3 class="m-subheader__title ">
                      Manager Created
                   </h3>-->
-                 <?php 							  
-                if(!$isSuccess ){ ?>
-                  <?php
-                echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
-                echo   " <button type='button' class='close' data-dismiss='alert' aria-label='Close'></button>";
-                echo    "Please ensure your username and nric do not exist in the database"; 
-                echo   "</div>";
-                          ?>
-		<?php
-		}
-		else { ?>
-		<?php
-                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-                    echo "<button type='button' class='close' data-dismiss='alert' aria-label='Close'></button>";
-                    echo "Manager Created."; 
-                    echo "</div>";
-		}
-                ?>
                </div>
             </div>
          </div>
@@ -57,6 +39,23 @@ include("../source_include/header.php");
             <div class="row">
                <div class="col-xl-12 col-lg-12">
                  <div class="m-portlet m-portlet--full-height m-portlet--tabs   m-portlet--rounded">
+                      <?php
+             
+		if (isset($_POST['adminCreateManagerAccount']) && $isSuccess){ 
+              
+                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
+                    echo "<button type='button' class='close' data-dismiss='alert' aria-label='Close'></button>";
+                    echo "Manager Created."; 
+                    echo "</div>";
+		}
+                else {
+                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
+                    echo "<button type='button' class='close' data-dismiss='alert' aria-label='Close'></button>";
+                    echo "Manager not created. Please ensure your username and nric do not exist in the database."; 
+                    echo "</div>";
+                }
+                ?>
+                     
                            <form class="m-form m-form--fit m-form--label-align-right" action="adminManagerAccountCreated.php" method="post" id="adminCreateManager">
                               <div class="m-portlet__body">
                                  <div class="form-group m-form__group row">

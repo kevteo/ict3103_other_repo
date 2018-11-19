@@ -8,6 +8,7 @@ $model = Model::getInstance();
 // Compound Interest
 $sql = "SELECT * FROM user";
 $result = $model->performQuery($sql);
+$interest = 0;
 
 while ($user = mysqli_fetch_object($result)) {
     if ($user->monthStartBalance >= 1000) {
@@ -16,12 +17,21 @@ while ($user = mysqli_fetch_object($result)) {
         $sql = "UPDATE user SET balance = balance + $interest WHERE userID = '$user->userID' AND user.role = 'customer'";
         $model->performQuery($sql);
 
-        $sql = "INSERT INTO transaction VALUES (NULL, $interest, $user->userID, NULL, NOW(), , 'interest')";
+        $sql = "INSERT INTO transaction VALUES (NULL, $interest, $user->userID, NULL, NOW(), 'interest')";
         $model->performQuery($sql);
     }
+
+    
+    // Get balance after interest
+    $sql = "SELECT balance FROM user WHERE userID = '$user->userID'";
+    $result2 = $model->performQuery($sql);
+    $balance = mysqli_fetch_row($result2)[0];
+
+    // Update month starting balance
+    $sql = "UPDATE user SET user.monthStartBalance = $balance WHERE user.role = 'customer' AND userID = '$user->userID'";
+    $model->performQuery($sql);
+
+    //echo $sql . "<br/.";
 }
 
 
-// Update month starting balance
-$sql = "UPDATE user SET monthStartBalance = balance AND user.role = 'customer'";
-$model->performQuery($sql);
