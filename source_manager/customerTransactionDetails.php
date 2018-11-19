@@ -167,7 +167,7 @@ if(isset($_GET['type']) && isset($_GET['transactionID'])){
                                    </label>
                                    <?php
                                      $amount="$0";
-                                   if($transaction['amount']<5 && $currentUserName==$transaction['userFrom']){
+                                   if($transaction['amount']<5){
                                          //only deduct if transfer from own account
                                          $amount = "-$0.50";
                                    }
