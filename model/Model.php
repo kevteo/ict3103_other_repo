@@ -133,6 +133,8 @@ class Model {
      * 2. username must be unique
      */
     public function register($user) {
+        $date = new DateTime();
+        $datetime = $date->format('Y-m-d H-i-s');
         // Generate user name 
         $randomUsername = substr(str_shuffle(str_repeat($user->name, 5)), 0, 5);
         $user->username = $randomUsername."".substr($user->nric,2,4);
@@ -166,7 +168,7 @@ class Model {
         $sql = "INSERT INTO User VALUES (NULL, '$user->username', '$user->password', '$user->role', '$user->name',
             '$user->nric', '$user->mobileNumber', '$user->email','$user->address', '$user->account', 
             '$user->salary','$user->balance', '$user->status', '$user->isActive', '$user->requestToggleActive', 
-            NULL, '$user->isTerminated',0,1, '$user->balance', '$user->balance')";
+            NULL, '$user->isTerminated',0,1, '$user->balance', '$user->balance', '$datetime')";
         $result = $this->performQuery($sql);
         if ($result) { return true; }
         else { return null; }
