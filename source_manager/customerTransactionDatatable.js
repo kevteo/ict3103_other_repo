@@ -54,11 +54,11 @@ var DefaultDatatableTransactionsM = function() {
                             var a = {
                                 "transfer": {
                                     title: "Transfer",
-                                    class: " m-badge--metal"
+                                    class: " m-badge--brand"
                                 },
                                 "charge": {
                                     title: "Charge",
-                                    class: " m-badge--danger"
+                                    class: " m-badge--metal"
                                 },
                                 "deposit": {
                                     title: "Deposit",
@@ -66,7 +66,7 @@ var DefaultDatatableTransactionsM = function() {
                                 },
                                 "withdraw": {
                                     title: "Withdraw",
-                                    class: " m-badge--focus"
+                                    class: " m-badge--danger"
                                 }
                             };
                             return '<span class="m-badge ' + a[t.type].class + ' m-badge--wide">'  + a[t.type].title+ "</span>"
