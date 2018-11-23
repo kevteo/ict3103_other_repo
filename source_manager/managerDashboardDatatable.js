@@ -82,7 +82,7 @@ var DefaultDatatableManagerDash = function() {
 						var url = "managerViewCustomerDetails.php?user_id="+t.userID;
 						var url2 = "managerEditCustomerDetails.php?user_id="+t.userID;
 					
-						return '\t\t\t\t\t\t\t\<a href="'+url+'" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View">\t\t\t\t\t\t\t<i class="la la-eye"></i>\t\t\t\t\t\t</a>&nbsp<a href="'+url2+'" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit">\t\t\t\t\t\t\t<i class="la la-edit"></i>\t\t\t\t\t\t</a>';
+						return '\t\t\t\t\t\t\t\<a href="'+url+'" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View">\t\t\t\t\t\t\t<i class="la la-eye"></i>\t\t\t\t\t\t</a>&nbsp<a href="'+url2+'" class="btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Edit">\t\t\t\t\t\t\t<i class="la la-edit"></i>\t\t\t\t\t\t</a>';
                     }
                 }]
             }), $("#m_datatable_clear").on("click", function() {
