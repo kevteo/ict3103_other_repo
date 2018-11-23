@@ -1,8 +1,8 @@
+<!-- Run on first day every month -->
+
 <?php
 require_once("../Model.php");
 $model = Model::getInstance();
-
-// Run on first day every month
 
 
 // Compound Interest
