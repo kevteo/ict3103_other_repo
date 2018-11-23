@@ -84,8 +84,8 @@ var WizardDemo = function() {
 						var postalcode = document.getElementById("postalcode").value;
 						document.getElementById("postalcodeCheck").innerHTML = postalcode;
 						
-						var password1 = document.getElementById("password").value;
-						document.getElementById("passwordCheck").innerHTML = password1;
+						//var password1 = document.getElementById("password").value;
+						//document.getElementById("passwordCheck").innerHTML = password1;
 						
 						var salary = document.getElementById("salary");
 						var salaryCheck = salary.options[salary.selectedIndex].text;
@@ -99,7 +99,7 @@ var WizardDemo = function() {
 						
 						console.log(name);
 						
-						var user = JSON.stringify({userId:null, password1: password1,role: "customer",name: name, nric: nric, mobileNumber: phone, email: email , address: address1 +" "+ address2 +" Singapore "+ postalcode, account: null,salary: salaryCheck ,balance: "0", status1: "0", isActive: "1", requestToggleActive: "0", isTerminated: "0", f2a: "0", bankID: "1", balance: "0", balance: "0"});
+						var user = JSON.stringify({userId:null,role: "customer",name: name, nric: nric, mobileNumber: phone, email: email , address: address1 +" "+ address2 +" Singapore "+ postalcode, account: null,salary: salaryCheck ,balance: "0", status1: "0", isActive: "1", requestToggleActive: "0", isTerminated: "0", f2a: "0", bankID: "1", balance: "0", balance: "0"});
 						
 						console.log(user);
 						

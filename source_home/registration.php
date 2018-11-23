@@ -465,7 +465,7 @@ isset($_POST['postalcode'])
 																			<span class="m-form__control-static" id="usernameCheck">
 																			</span>
 																		</div>
-																	</div> -->
+																	</div> 
 																	<div class="form-group m-form__group m-form__group--sm row">
 																		<label class="col-xl-3 col-lg-3 col-form-label">
 																			Password:
@@ -476,7 +476,7 @@ isset($_POST['postalcode'])
 																		</div>
 																	</div>
 																</div>
-																<div class="m-separator m-separator--dashed m-separator--lg"></div>
+																<div class="m-separator m-separator--dashed m-separator--lg"></div> -->
 																<div class="m-form__section">
 																	<div class="m-form__heading">
 																		<h4 class="m-form__heading-title">
@@ -599,8 +599,8 @@ isset($_POST['postalcode'])
 	//var username = document.getElementById("username").value;
 	//document.getElementById("usernameCheck").innerHTML = username;
 	
-	var password = document.getElementById("password").value;
-	document.getElementById("passwordCheck").innerHTML = password;
+	//var password = document.getElementById("password").value;
+	//document.getElementById("passwordCheck").innerHTML = password;
 	
 	var salary = document.getElementById("salary");
 	var salaryCheck = salary.options[salary.selectedIndex].text;

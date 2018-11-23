@@ -58,7 +58,7 @@ class Model {
      */
 
     public function login($username, $password) {
-        $sql = "SELECT * FROM User WHERE username = '$username' AND password = '$password' and isTerminated='0'";
+        $sql = "SELECT * FROM User WHERE username = '$username' AND password = '$password' and isTerminated='0' and status ='2'";
         $result = $this->performQuery($sql);
         if ($result == null) { return null; }
 	
@@ -82,7 +82,7 @@ class Model {
             //Send SMS Function
 			require_once '../vendor/autoload.php';
 			
-			//$basic  = new \Nexmo\Client\Credentials\Basic('d94931d2', '9NFiZ178D0KaaflX');
+			//$basic  = new Nexmo\Client\Credentials\Basic('d94931d2', '9NFiZ178D0KaaflX');
 			$basic = new Nexmo\Client\Credentials\Basic('7504a8a5', 'vTyl2fPB972JLlX3');
 			$client = new Nexmo\Client($basic);
 			
@@ -165,8 +165,8 @@ class Model {
         // Insert to database
         $sql = "INSERT INTO User VALUES (NULL, '$user->username', '$user->password', '$user->role', '$user->name',
             '$user->nric', '$user->mobileNumber', '$user->email','$user->address', '$user->account', 
-            '$user->salary','$user->balance', '$user->status', $user->isActive, $user->requestToggleActive, 
-            NULL, $user->isTerminated,0,1, '$user->balance', '$user->balance')";
+            '$user->salary','$user->balance', '$user->status', '$user->isActive', '$user->requestToggleActive', 
+            NULL, '$user->isTerminated',0,1, '$user->balance', '$user->balance')";
         $result = $this->performQuery($sql);
         if ($result) { return true; }
         else { return null; }
