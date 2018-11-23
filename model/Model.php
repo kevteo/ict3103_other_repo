@@ -82,8 +82,8 @@ class Model {
             //Send SMS Function
 			require_once '../vendor/autoload.php';
 			
-			//$basic  = new Nexmo\Client\Credentials\Basic('d94931d2', '9NFiZ178D0KaaflX');
-			$basic = new Nexmo\Client\Credentials\Basic('7504a8a5', 'vTyl2fPB972JLlX3');
+			$basic  = new Nexmo\Client\Credentials\Basic('d94931d2', '9NFiZ178D0KaaflX');
+			//$basic = new Nexmo\Client\Credentials\Basic('7504a8a5', 'vTyl2fPB972JLlX3');
 			$client = new Nexmo\Client($basic);
 			
 			try {
@@ -567,15 +567,15 @@ class Model {
         $result2 = $this->performQuery($sql2);
         $password = mysqli_fetch_row($result2)[0];
         
-        //$basic  = new Nexmo\Client\Credentials\Basic('d94931d2', '9NFiZ178D0KaaflX');
-        $basic = new Nexmo\Client\Credentials\Basic('7504a8a5', 'vTyl2fPB972JLlX3');
+        $basic  = new Nexmo\Client\Credentials\Basic('d94931d2', '9NFiZ178D0KaaflX');
+        //$basic = new Nexmo\Client\Credentials\Basic('7504a8a5', 'vTyl2fPB972JLlX3');
 		$client = new Nexmo\Client($basic);
 		
 		try {
 			$message = $client->message()->send([
 				'to' => '6591816322',
 				'from' => '6591816322',
-				'text' => 'Hello, this is your login password ' .$password
+				'text' => 'Your myBank account have been created, this is your login password ' .$password
 			]);
 
 		} catch (Nexmo\Client\Exception\Request $e) {
