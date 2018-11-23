@@ -287,21 +287,32 @@ class Model {
 		$date = new DateTime();
 		$datetime = $date->format('Y-m-d');
         $user = unserialize($_SESSION['user']);
-		
-        $newBalance = $this->getBalance($user->userID) + $amount;
-        $posAmount = abs($amount);
-		
-		// Update Balance
-        $sql = "UPDATE User SET balance = '$newBalance' WHERE userID = '$user->userID'";
-        $result = $this->performQuery($sql);
-        if (!$result) { return null; }
-		
-		// Log Transaction
-		$sql = "INSERT INTO Transaction VALUES (NULL, '$posAmount', '$user->userID', NULL, '$datetime', 'deposit')";
-		$result = $this->performQuery($sql);
-		if (!$result){ return null; }
-		
-		return true;
+
+        $sql1 = "SELECT * FROM transaction WHERE userID = $user->userID";
+        $result1 = $this->performQuery($sql1);
+        $numRows = mysqli_num_rows($result1);
+        echo "<script>console.log('$numRows')</script>";
+        if ($numRows == 0 && $amount < 1000) 
+            { 
+                //return false;
+            }
+        
+            else { 
+                $newBalance = $this->getBalance($user->userID) + $amount;
+                $posAmount = abs($amount);
+                
+                // Update Balance
+                $sql = "UPDATE User SET balance = '$newBalance' WHERE userID = '$user->userID'";
+                $result = $this->performQuery($sql);
+                if (!$result) { return null; }
+                
+                // Log Transaction
+                $sql = "INSERT INTO Transaction VALUES (NULL, '$posAmount', '$user->userID', NULL, '$datetime', 'deposit')";
+                $result = $this->performQuery($sql);
+                if (!$result){ return null; }
+                
+                return true;
+            }
     }
 	
     public function withdraw($amount) {
@@ -556,7 +567,7 @@ class Model {
         $result2 = $this->performQuery($sql2);
         $password = mysqli_fetch_row($result2)[0];
         
-        //$basic  = new \Nexmo\Client\Credentials\Basic('d94931d2', '9NFiZ178D0KaaflX');
+        //$basic  = new Nexmo\Client\Credentials\Basic('d94931d2', '9NFiZ178D0KaaflX');
         $basic = new Nexmo\Client\Credentials\Basic('7504a8a5', 'vTyl2fPB972JLlX3');
 		$client = new Nexmo\Client($basic);
 		
