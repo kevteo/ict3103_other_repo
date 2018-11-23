@@ -83,7 +83,7 @@ isset($_POST['postalcode'])
 								<div class="m-portlet__head-tools">
 									<ul class="m-portlet__nav">
 										<li class="m-portlet__nav-item">
-											<a href="#" data-toggle="m-tooltip" class="m-portlet__nav-link m-portlet__nav-link--icon" data-direction="left" data-width="auto" title="Get help with filling up this form">
+											<a href="#" data-toggle="m-tooltip" class="m-portlet__nav-link m-portlet__nav-link--icon" data-direction="left" data-width="auto" title="Note: Your account will not be immediately active. We will notify you through your email. Thank you.">
 												<i class="flaticon-info m--icon-font-size-lg3"></i>
 											</a>
 										</li>
@@ -290,9 +290,9 @@ isset($_POST['postalcode'])
 																<h3 class="m-form__heading-title">
 																	Account Details
 																</h3>
-															</div>
+															</div><!--
 															<div class="form-group m-form__group row">
-															<!--
+															
 																<div class="col-lg-6 m-form__group-sub">
 																
 																	<label class="form-control-label">
@@ -302,7 +302,7 @@ isset($_POST['postalcode'])
 																	<span class="m-form__help">
 																		Your username will be used for login
 																	</span>
-																</div> -->
+																</div> 
 																<div class="col-lg-6 m-form__group-sub">
 																	<label class="form-control-label">
 																		* Password:
@@ -312,7 +312,7 @@ isset($_POST['postalcode'])
 																		Please use letters and at least one number and symbol
 																	</span>
 																</div>
-															</div>
+															</div> -->
 															
 															<div class="form-group m-form__group row">
 																<div class="col-lg-6 m-form__group-sub">
@@ -474,15 +474,7 @@ isset($_POST['postalcode'])
 																			<span class="m-form__control-static" id="passwordCheck"> 
 																			</span>
 																		</div>
-																	</div>
-																</div>
-																<div class="m-separator m-separator--dashed m-separator--lg"></div> -->
-																<div class="m-form__section">
-																	<div class="m-form__heading">
-																		<h4 class="m-form__heading-title">
-																			Account Details
-																		</h4>
-																	</div>
+																	</div>-->
 																	<div class="form-group m-form__group m-form__group--sm row">
 																		<label class="col-xl-3 col-lg-3 col-form-label">
 																			Salary Range:
@@ -501,7 +493,23 @@ isset($_POST['postalcode'])
 																			</span>
 																		</div>
 																	</div>
+																	<div class="m-separator m-separator--dashed m-separator--lg"></div>
+																	<div class="form-group m-form__group m-form__group--sm row">
+																		<label class="col-xl-12 col-lg-12 col-form-label">
+																			Note: Your account will not be immediately active. We will notify you through your email. Thank you.
+																		</label>
+																		</div>
+																	</div>
 																</div>
+																<!-- <div class="m-separator m-separator--dashed m-separator--lg"></div>
+																<div class="m-form__section">
+																	<div class="m-form__heading">
+																		<h4 class="m-form__heading-title">
+																			Account Details
+																		</h4>
+																	</div>
+																	
+																</div> -->
 															</div>
 														</div>
 														<!--end::Section-->
