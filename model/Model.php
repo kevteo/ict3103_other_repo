@@ -82,14 +82,14 @@ class Model {
             //Send SMS Function
 			require_once '../vendor/autoload.php';
 			
-			$basic  = new Nexmo\Client\Credentials\Basic('d94931d2', '9NFiZ178D0KaaflX');
+			/*$basic  = new Nexmo\Client\Credentials\Basic('d94931d2', '9NFiZ178D0KaaflX');
 			//$basic = new Nexmo\Client\Credentials\Basic('7504a8a5', 'vTyl2fPB972JLlX3');
 			$client = new Nexmo\Client($basic);
 			
 			try {
 				$message = $client->message()->send([
-					'to' => '6591816322',
-					'from' => '6591816322',
+					'to' => '6591343314',
+					'from' => 'My Bank',
 					'text' => 'Hello, this is your one time password '.$six_digit_random_number
 				]);
 
@@ -102,7 +102,7 @@ class Model {
 				$code     = $e->getCode(); //nexmo error code
 				echo "error";
 				error_log($e->getMessage()); //nexmo error message
-			}
+			}*/
 			
             return true;
         }
@@ -569,14 +569,14 @@ class Model {
         $result2 = $this->performQuery($sql2);
         $password = mysqli_fetch_row($result2)[0];
         
-        $basic  = new Nexmo\Client\Credentials\Basic('d94931d2', '9NFiZ178D0KaaflX');
+        /*$basic  = new Nexmo\Client\Credentials\Basic('d94931d2', '9NFiZ178D0KaaflX');
         //$basic = new Nexmo\Client\Credentials\Basic('7504a8a5', 'vTyl2fPB972JLlX3');
 		$client = new Nexmo\Client($basic);
 		
 		try {
 			$message = $client->message()->send([
-				'to' => '6591816322',
-				'from' => '6591816322',
+				'to' => '6591343314',
+				'from' => 'My Bank',
 				'text' => 'Your myBank account have been created, this is your login password ' .$password
 			]);
 
@@ -591,7 +591,7 @@ class Model {
 			error_log($e->getMessage()); //nexmo error message
 		}
 
-        if ($result1) { return true; } else { return null; }
+        if ($result1) { return true; } else { return null; }*/
     
         return false;
     }
@@ -613,6 +613,8 @@ class Model {
     //admin create manager account
 
     public function createManagerAccount($fullName, $nric, $email, $phoneNum, $address, $username, $password) {
+		$date = new DateTime();
+        $datetime = $date->format('Y-m-d H-i-s');
         // Check if username already exist
         $sql = "SELECT * FROM User WHERE username='$username' OR nric = '$nric'";
         $result = $this->performQuery($sql);
@@ -622,7 +624,7 @@ class Model {
             $date = new DateTime();
             $lastActive = $date->format('Y-m-d H-i-s');
 
-                $sql = "INSERT INTO User VALUES (NULL,'$username', '$password', 'manager', '$fullName', '$nric', '$phoneNum', '$email', '$address', NULL, NULL, 0, 2, 1, 0, '$lastActive', 0, 0, 1, 0, 0)";
+                $sql = "INSERT INTO User VALUES (NULL,'$username', '$password', 'manager', '$fullName', '$nric', '$phoneNum', '$email', '$address', NULL, NULL, 0, 2, 1, 0, '$lastActive', 0, 0, 1, 0, 0, '$datetime')";
 
             $result = $this->performQuery($sql);
             if (!$result) { return false; }
